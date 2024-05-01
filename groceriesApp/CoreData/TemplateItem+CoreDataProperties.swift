@@ -2,7 +2,7 @@
 //  TemplateItem+CoreDataProperties.swift
 //  groceriesApp
 //
-//  Created by Milos Abcd on 2024-04-30.
+//  Created by Milos Abcd on 2024-05-01.
 //
 //
 

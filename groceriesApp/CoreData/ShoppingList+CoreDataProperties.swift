@@ -2,7 +2,7 @@
 //  ShoppingList+CoreDataProperties.swift
 //  groceriesApp
 //
-//  Created by Milos Abcd on 2024-04-30.
+//  Created by Milos Abcd on 2024-05-01.
 //
 //
 
@@ -18,6 +18,7 @@ extension ShoppingList {
 
     @NSManaged public var completionDate: Date?
     @NSManaged public var name: String?
+    @NSManaged public var creationDate: Date?
     @NSManaged public var items: NSSet?
 
 }

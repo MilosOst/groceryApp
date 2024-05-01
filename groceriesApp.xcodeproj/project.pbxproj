@@ -7,31 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5478A7C02BE23718005D1F7D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BB2BE23718005D1F7D /* Poppins-Regular.ttf */; };
+		5478A7C12BE23718005D1F7D /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BC2BE23718005D1F7D /* Poppins-Thin.ttf */; };
+		5478A7C22BE23718005D1F7D /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BD2BE23718005D1F7D /* Poppins-Medium.ttf */; };
+		5478A7C32BE23718005D1F7D /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BE2BE23718005D1F7D /* Poppins-Light.ttf */; };
+		5478A7C42BE23718005D1F7D /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BF2BE23718005D1F7D /* Poppins-ExtraLight.ttf */; };
+		5478A7C72BE237FF005D1F7D /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5478A7C62BE237FF005D1F7D /* UIFont+Extensions.swift */; };
+		5478A7CD2BE23D37005D1F7D /* HomeTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5478A7CC2BE23D37005D1F7D /* HomeTab.swift */; };
 		547CABB92BE16C0E0017C3C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547CABB82BE16C0E0017C3C6 /* AppDelegate.swift */; };
 		547CABBB2BE16C0E0017C3C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547CABBA2BE16C0E0017C3C6 /* SceneDelegate.swift */; };
-		547CABBD2BE16C0E0017C3C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547CABBC2BE16C0E0017C3C6 /* ViewController.swift */; };
+		547CABBD2BE16C0E0017C3C6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547CABBC2BE16C0E0017C3C6 /* HomeViewController.swift */; };
 		547CABC22BE16C0F0017C3C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 547CABC12BE16C0F0017C3C6 /* Assets.xcassets */; };
 		547CABC52BE16C0F0017C3C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 547CABC32BE16C0F0017C3C6 /* LaunchScreen.storyboard */; };
 		547CABCF2BE170350017C3C6 /* groceriesApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 547CABCD2BE170350017C3C6 /* groceriesApp.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		547926B12BE1967A00EFC972 /* ShoppingList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		547926B22BE1967A00EFC972 /* ShoppingList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingList+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		547926B32BE1967A00EFC972 /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataClass.swift"; sourceTree = "<group>"; };
-		547926B42BE1967A00EFC972 /* Category+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		547926B52BE1967A00EFC972 /* Template+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Template+CoreDataClass.swift"; sourceTree = "<group>"; };
-		547926B62BE1967A00EFC972 /* Template+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Template+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		547926B72BE1967A00EFC972 /* ListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		547926B82BE1967A00EFC972 /* ListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		547926B92BE1967A00EFC972 /* InventoryItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InventoryItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		547926BA2BE1967A00EFC972 /* InventoryItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InventoryItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		547926BB2BE1967A00EFC972 /* TemplateItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TemplateItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		547926BC2BE1967A00EFC972 /* TemplateItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TemplateItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5478A7BB2BE23718005D1F7D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		5478A7BC2BE23718005D1F7D /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
+		5478A7BD2BE23718005D1F7D /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		5478A7BE2BE23718005D1F7D /* Poppins-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.ttf"; sourceTree = "<group>"; };
+		5478A7BF2BE23718005D1F7D /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
+		5478A7C62BE237FF005D1F7D /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		5478A7CC2BE23D37005D1F7D /* HomeTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTab.swift; sourceTree = "<group>"; };
+		5478A7CE2BE24625005D1F7D /* InventoryItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InventoryItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5478A7CF2BE24625005D1F7D /* InventoryItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InventoryItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5478A7D02BE24625005D1F7D /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5478A7D12BE24625005D1F7D /* Category+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5478A7D22BE24625005D1F7D /* ShoppingList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5478A7D32BE24625005D1F7D /* ShoppingList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5478A7D42BE24625005D1F7D /* TemplateItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TemplateItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5478A7D52BE24625005D1F7D /* TemplateItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TemplateItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5478A7D62BE24625005D1F7D /* ListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5478A7D72BE24625005D1F7D /* ListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5478A7D82BE24625005D1F7D /* Template+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Template+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5478A7D92BE24625005D1F7D /* Template+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Template+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		547CABB52BE16C0E0017C3C6 /* groceriesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = groceriesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		547CABB82BE16C0E0017C3C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		547CABBA2BE16C0E0017C3C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		547CABBC2BE16C0E0017C3C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		547CABBC2BE16C0E0017C3C6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		547CABC12BE16C0F0017C3C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		547CABC42BE16C0F0017C3C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		547CABC62BE16C0F0017C3C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +63,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5478A7BA2BE236FE005D1F7D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5478A7BF2BE23718005D1F7D /* Poppins-ExtraLight.ttf */,
+				5478A7BE2BE23718005D1F7D /* Poppins-Light.ttf */,
+				5478A7BD2BE23718005D1F7D /* Poppins-Medium.ttf */,
+				5478A7BB2BE23718005D1F7D /* Poppins-Regular.ttf */,
+				5478A7BC2BE23718005D1F7D /* Poppins-Thin.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		5478A7C52BE237A0005D1F7D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5478A7C62BE237FF005D1F7D /* UIFont+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5478A7C82BE23BFD005D1F7D /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				5478A7C92BE23C03005D1F7D /* Creation */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		5478A7C92BE23C03005D1F7D /* Creation */ = {
+			isa = PBXGroup;
+			children = (
+				5478A7CB2BE23D23005D1F7D /* Models */,
+				5478A7CA2BE23C12005D1F7D /* ViewControllers */,
+			);
+			path = Creation;
+			sourceTree = "<group>";
+		};
+		5478A7CA2BE23C12005D1F7D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				547CABBC2BE16C0E0017C3C6 /* HomeViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5478A7CB2BE23D23005D1F7D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5478A7CC2BE23D37005D1F7D /* HomeTab.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		547CABAC2BE16C0E0017C3C6 = {
 			isa = PBXGroup;
 			children = (
@@ -68,11 +135,13 @@
 		547CABB72BE16C0E0017C3C6 /* groceriesApp */ = {
 			isa = PBXGroup;
 			children = (
+				5478A7C82BE23BFD005D1F7D /* Features */,
+				5478A7C52BE237A0005D1F7D /* Extensions */,
+				5478A7BA2BE236FE005D1F7D /* Fonts */,
 				547CABCD2BE170350017C3C6 /* groceriesApp.xcdatamodeld */,
 				547CABCC2BE1700A0017C3C6 /* CoreData */,
 				547CABB82BE16C0E0017C3C6 /* AppDelegate.swift */,
 				547CABBA2BE16C0E0017C3C6 /* SceneDelegate.swift */,
-				547CABBC2BE16C0E0017C3C6 /* ViewController.swift */,
 				547CABC12BE16C0F0017C3C6 /* Assets.xcassets */,
 				547CABC32BE16C0F0017C3C6 /* LaunchScreen.storyboard */,
 				547CABC62BE16C0F0017C3C6 /* Info.plist */,
@@ -83,18 +152,18 @@
 		547CABCC2BE1700A0017C3C6 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				547926B12BE1967A00EFC972 /* ShoppingList+CoreDataClass.swift */,
-				547926B22BE1967A00EFC972 /* ShoppingList+CoreDataProperties.swift */,
-				547926B32BE1967A00EFC972 /* Category+CoreDataClass.swift */,
-				547926B42BE1967A00EFC972 /* Category+CoreDataProperties.swift */,
-				547926B52BE1967A00EFC972 /* Template+CoreDataClass.swift */,
-				547926B62BE1967A00EFC972 /* Template+CoreDataProperties.swift */,
-				547926B72BE1967A00EFC972 /* ListItem+CoreDataClass.swift */,
-				547926B82BE1967A00EFC972 /* ListItem+CoreDataProperties.swift */,
-				547926B92BE1967A00EFC972 /* InventoryItem+CoreDataClass.swift */,
-				547926BA2BE1967A00EFC972 /* InventoryItem+CoreDataProperties.swift */,
-				547926BB2BE1967A00EFC972 /* TemplateItem+CoreDataClass.swift */,
-				547926BC2BE1967A00EFC972 /* TemplateItem+CoreDataProperties.swift */,
+				5478A7CE2BE24625005D1F7D /* InventoryItem+CoreDataClass.swift */,
+				5478A7CF2BE24625005D1F7D /* InventoryItem+CoreDataProperties.swift */,
+				5478A7D02BE24625005D1F7D /* Category+CoreDataClass.swift */,
+				5478A7D12BE24625005D1F7D /* Category+CoreDataProperties.swift */,
+				5478A7D22BE24625005D1F7D /* ShoppingList+CoreDataClass.swift */,
+				5478A7D32BE24625005D1F7D /* ShoppingList+CoreDataProperties.swift */,
+				5478A7D42BE24625005D1F7D /* TemplateItem+CoreDataClass.swift */,
+				5478A7D52BE24625005D1F7D /* TemplateItem+CoreDataProperties.swift */,
+				5478A7D62BE24625005D1F7D /* ListItem+CoreDataClass.swift */,
+				5478A7D72BE24625005D1F7D /* ListItem+CoreDataProperties.swift */,
+				5478A7D82BE24625005D1F7D /* Template+CoreDataClass.swift */,
+				5478A7D92BE24625005D1F7D /* Template+CoreDataProperties.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -157,8 +226,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5478A7C02BE23718005D1F7D /* Poppins-Regular.ttf in Resources */,
+				5478A7C32BE23718005D1F7D /* Poppins-Light.ttf in Resources */,
+				5478A7C12BE23718005D1F7D /* Poppins-Thin.ttf in Resources */,
 				547CABC52BE16C0F0017C3C6 /* LaunchScreen.storyboard in Resources */,
 				547CABC22BE16C0F0017C3C6 /* Assets.xcassets in Resources */,
+				5478A7C22BE23718005D1F7D /* Poppins-Medium.ttf in Resources */,
+				5478A7C42BE23718005D1F7D /* Poppins-ExtraLight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,9 +243,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				547CABBD2BE16C0E0017C3C6 /* ViewController.swift in Sources */,
+				5478A7CD2BE23D37005D1F7D /* HomeTab.swift in Sources */,
+				547CABBD2BE16C0E0017C3C6 /* HomeViewController.swift in Sources */,
 				547CABCF2BE170350017C3C6 /* groceriesApp.xcdatamodeld in Sources */,
 				547CABB92BE16C0E0017C3C6 /* AppDelegate.swift in Sources */,
+				5478A7C72BE237FF005D1F7D /* UIFont+Extensions.swift in Sources */,
 				547CABBB2BE16C0E0017C3C6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,6 +399,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -350,6 +427,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         
         let tabBar = UITabBarController()
-        let homeVC = ViewController()
+        let homeVC = HomeViewController()
         let homeNavVC = UINavigationController(rootViewController: homeVC)
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
