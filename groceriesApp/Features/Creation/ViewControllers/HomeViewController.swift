@@ -6,19 +6,45 @@
 //
 
 import UIKit
+import CoreData
 
-class HomeViewController: UITableViewController {
+private let listCellIdentifier = "ListCell"
+
+class HomeViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private let segmentedControl = UISegmentedControl()
     
     private var tabSelection: HomeTab = .lists
+    private var lists = [ShoppingList]()
+    
+    private lazy var fetchedListsController: NSFetchedResultsController<ShoppingList> = {
+        let fetchRequest = ShoppingList.fetchRequest()
+        let predicate = NSPredicate(format: "completionDate == nil")
+        let sortByDate = NSSortDescriptor(key: #keyPath(ShoppingList.creationDate), ascending: false)
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = [sortByDate]
+        
+        let resultsController = NSFetchedResultsController<ShoppingList>(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        resultsController.delegate = self
+        return resultsController
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        do {
+            try fetchedListsController.performFetch()
+            print("Success, returned \(fetchedListsController.sections![0].numberOfObjects)")
+        } catch {
+            print(error)
+        }
     }
     
     private func setupUI() {
         setupNavBar()
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: listCellIdentifier)
     }
     
     private func setupNavBar() {
@@ -48,7 +74,9 @@ class HomeViewController: UITableViewController {
     @objc func addButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Show appropriate creation page depending on current tab selection
         if tabSelection == .lists {
-            print("Showing list creation")
+            let navVC = UINavigationController(rootViewController: CreateListViewController())
+            navVC.modalPresentationStyle = .fullScreen
+            present(navVC, animated: true)
         } else {
             print("Showing Template creation")
         }
@@ -56,6 +84,31 @@ class HomeViewController: UITableViewController {
     
     private func selectTab(_ tab: HomeTab) {
         self.tabSelection = tab
+    }
+    
+    // MARK: - TableView Delegate Methods
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return fetchedListsController.sections?.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fetchedListsController.sections![0].numberOfObjects
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: listCellIdentifier, for: indexPath)
+        cell.textLabel?.text = fetchedListsController.object(at: indexPath).name
+        return cell
+    }
+    
+    // MARK: NSFetchedResultsController Delegate Methods
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.reloadData()
+        default:
+            print("Break")
+        }
     }
 }
 

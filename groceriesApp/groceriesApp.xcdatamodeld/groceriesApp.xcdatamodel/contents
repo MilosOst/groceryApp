@@ -27,11 +27,13 @@
     <entity name="ShoppingList" representedClassName="ShoppingList" syncable="YES" codeGenerationType="class">
         <attribute name="completionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="itemCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ListItem" inverseName="list" inverseEntity="ListItem"/>
     </entity>
     <entity name="Template" representedClassName="Template" syncable="YES" codeGenerationType="class">
         <attribute name="isFavourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="itemCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateItem" inverseName="template" inverseEntity="TemplateItem"/>
         <uniquenessConstraints>

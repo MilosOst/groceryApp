@@ -2,7 +2,7 @@
 //  Template+CoreDataProperties.swift
 //  groceriesApp
 //
-//  Created by Milos Abcd on 2024-05-01.
+//  Created by Milos Abcd on 2024-05-02.
 //
 //
 
@@ -18,6 +18,7 @@ extension Template {
 
     @NSManaged public var isFavourite: Bool
     @NSManaged public var name: String?
+    @NSManaged public var itemCount: Int16
     @NSManaged public var items: NSSet?
 
 }

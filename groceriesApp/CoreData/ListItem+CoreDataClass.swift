@@ -2,7 +2,7 @@
 //  ListItem+CoreDataClass.swift
 //  groceriesApp
 //
-//  Created by Milos Abcd on 2024-05-01.
+//  Created by Milos Abcd on 2024-05-02.
 //
 //
 

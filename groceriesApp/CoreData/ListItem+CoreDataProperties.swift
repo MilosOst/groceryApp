@@ -2,7 +2,7 @@
 //  ListItem+CoreDataProperties.swift
 //  groceriesApp
 //
-//  Created by Milos Abcd on 2024-05-01.
+//  Created by Milos Abcd on 2024-05-02.
 //
 //
 
@@ -16,8 +16,8 @@ extension ListItem {
         return NSFetchRequest<ListItem>(entityName: "ListItem")
     }
 
-    @NSManaged public var quantity: Float
     @NSManaged public var isChecked: Bool
+    @NSManaged public var quantity: Float
     @NSManaged public var item: InventoryItem?
     @NSManaged public var list: ShoppingList?
 
