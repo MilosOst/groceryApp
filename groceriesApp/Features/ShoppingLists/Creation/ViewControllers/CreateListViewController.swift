@@ -173,7 +173,7 @@ class CreateListViewController: UITableViewController {
     }
 }
 
-extension CreateListViewController: TextFieldTableViewCellDelegate {
+extension CreateListViewController: TextFieldCellDelegate {
     func textDidChange(_ text: String) {
         listName = text
     }

@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol TextFieldTableViewCellDelegate: AnyObject {
+protocol TextFieldCellDelegate: AnyObject {
     func textDidChange(_ text: String)
 }
 
 class TextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
-    weak var delegate: TextFieldTableViewCellDelegate?
+    weak var delegate: TextFieldCellDelegate?
     
     let textField = UITextField()
     

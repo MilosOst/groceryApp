@@ -68,6 +68,7 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         segmentedControl.setTitleTextAttributes(attr, for: .normal)
         
         navigationItem.titleView = segmentedControl
+        title = "Home"
     }
     
     // MARK: - Actions
@@ -99,6 +100,15 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         let cell = tableView.dequeueReusableCell(withIdentifier: listCellIdentifier, for: indexPath)
         cell.textLabel?.text = fetchedListsController.object(at: indexPath).name
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: May need to differentiate based on which view is shown
+        let shoppingList = fetchedListsController.object(at: indexPath)
+        let detailVC = DetailedListViewController(list: shoppingList)
+        detailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(detailVC, animated: true)
+        // TODO: Fix jumpy animation from toolbar showing up
     }
     
     // MARK: NSFetchedResultsController Delegate Methods
