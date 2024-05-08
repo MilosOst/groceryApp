@@ -2,7 +2,7 @@
 //  InventoryItem+CoreDataProperties.swift
 //  groceriesApp
 //
-//  Created by Milos Abcd on 2024-05-06.
+//  Created by Milos Abcd on 2024-05-08.
 //
 //
 

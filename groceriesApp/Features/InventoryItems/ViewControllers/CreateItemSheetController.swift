@@ -27,6 +27,8 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
     private var itemState = InventoryItemCreationState()
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    private let doneButton = UIBarButtonItem()
+    
     init() {
         super.init(style: .insetGrouped)
     }
@@ -55,7 +57,12 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
     
     private func setupNavbar() {
         let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closePressed))
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
+        doneButton.title = "Done"
+        doneButton.target = self
+        doneButton.action = #selector(donePressed)
+        doneButton.isEnabled = false
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
+        
         navigationItem.leftBarButtonItem = closeButton
         navigationItem.rightBarButtonItem = doneButton
         title = "Create Item"
@@ -147,7 +154,7 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
             item.category = itemState.category
             item.unit = itemState.unit
             item.isFavourite = itemState.isFavourite
-            
+
             try context.save()
             dismiss(animated: true)
         } catch {
@@ -159,9 +166,11 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
     func textDidChange(inCell cell: LabelTextFieldTableViewCell, to text: String?) {
         if cell == tableView.cellForRow(at: IndexPath(row: 0, section: 0)) {
             itemState.name = text ?? ""
-        } else if cell == tableView.cellForRow(at: IndexPath(row: 1, section: 0)) {
+        } else if cell == tableView.cellForRow(at: IndexPath(row: 2, section: 0)) {
             itemState.unit = text ?? ""
         }
+        
+        doneButton.isEnabled = !itemState.name.isTrimmedEmpty
     }
     
     func toggleDidChange(_ newValue: Bool) {

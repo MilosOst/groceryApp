@@ -118,6 +118,7 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
         alertController.addTextField { (textField) in
             textField.placeholder = "Name"
             textField.font = .poppinsFont(varation: .light, size: 14)
+            textField.autocapitalizationType = .sentences
         }
         
         alertController.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak self, weak alertController] (_ ) in

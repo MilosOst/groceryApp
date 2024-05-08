@@ -9,8 +9,12 @@ import UIKit
 import CoreData
 
 protocol SelectInventoryItemDelegate: AnyObject {
-    func didSelectItem(_ item: InventoryItem)
+    func didToggleItem(_ item: InventoryItem)
+    
+    func isItemSelected(_ item: InventoryItem) -> Bool
 }
+
+private let cellIdentifier = "ItemCell"
 
 // TODO: Add search contrlller functionality
 class SelectInventoryItemViewController: UITableViewController, UISearchResultsUpdating, NSFetchedResultsControllerDelegate {
@@ -28,6 +32,15 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     }()
     
     let searchController = UISearchController()
+    
+    init(delegate: SelectInventoryItemDelegate? = nil) {
+        super.init(style: .grouped)
+        self.delegate = delegate
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init:coder not supported")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,12 +70,11 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         
         navigationItem.titleView = searchController.searchBar
         
-        // TODO: Setup Toolbar, selected item count
         let createItemButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createButtonPressed(_:)))
         setToolbarItems([.flexibleSpace(), .flexibleSpace(), createItemButton], animated: true)
         navigationController?.setToolbarHidden(false, animated: true)
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(InventoryItemSelectionCell.self, forCellReuseIdentifier: cellIdentifier)
         
     }
 
@@ -76,14 +88,28 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = fetchedResultsController.object(at: indexPath).name
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! InventoryItemSelectionCell
+        let item = fetchedResultsController.object(at: indexPath)
+        cell.configure(name: item.name!, isFavourite: item.isFavourite, isSelected: delegate?.isItemSelected(item) ?? false)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let item = fetchedResultsController.object(at: indexPath)
+        delegate?.didToggleItem(item)
     }
     
     // MARK: - NSFetchedResultsController Delgate
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        tableView.reloadData()
+        switch type {
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .automatic)
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        default:
+            tableView.reloadData()
+        }
     }
     
     // MARK: - UISearchResultsUpdating Methods

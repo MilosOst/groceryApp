@@ -113,12 +113,11 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
     
     // MARK: NSFetchedResultsController Delegate Methods
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            tableView.reloadData()
-        default:
-            print("Break")
+        guard self == navigationController?.topViewController else {
+            return
         }
+        
+        // TODO: Implement
     }
 }
 

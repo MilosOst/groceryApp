@@ -15,8 +15,8 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="unit" optional="YES" attributeType="String"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="items" inverseEntity="Category"/>
-        <relationship name="listItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ListItem" inverseName="item" inverseEntity="ListItem"/>
-        <relationship name="templateItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateItem" inverseName="item" inverseEntity="TemplateItem"/>
+        <relationship name="listItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ListItem" inverseName="item" inverseEntity="ListItem"/>
+        <relationship name="templateItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateItem" inverseName="item" inverseEntity="TemplateItem"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="name"/>
