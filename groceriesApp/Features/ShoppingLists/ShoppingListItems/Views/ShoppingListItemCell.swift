@@ -65,11 +65,13 @@ class ShoppingListItemCell: UITableViewCell {
             // Set checkbox as checked
             checkButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
             checkButton.imageView?.tintColor = .systemGreen
+            backgroundColor = .systemGreen.withAlphaComponent(0.4)
         } else {
             let attributedName = NSAttributedString(string: item.item!.name!)
             nameLabel.attributedText = attributedName
             checkButton.setImage(UIImage(systemName: "circle"), for: .normal)
             checkButton.imageView?.tintColor = .secondaryLabel
+            backgroundColor = .systemBackground
         }
         
         // Configure quantity badge

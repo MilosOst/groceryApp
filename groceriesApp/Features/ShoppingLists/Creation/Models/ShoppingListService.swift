@@ -9,7 +9,7 @@ import CoreData
 
 class ShoppingListService {
     private let context: NSManagedObjectContext
-    private let fetchedResultsController: NSFetchedResultsController<ListItem>
+    private var fetchedResultsController: NSFetchedResultsController<ListItem>
     private let list: ShoppingList
     
     init(context: NSManagedObjectContext, fetchedResultsController: NSFetchedResultsController<ListItem>, list: ShoppingList) {
@@ -60,5 +60,9 @@ class ShoppingListService {
         } catch {
             print(error)
         }
+    }
+    
+    func updateFetchedResultsController(_ controller: NSFetchedResultsController<ListItem>) {
+        self.fetchedResultsController = controller
     }
 }
