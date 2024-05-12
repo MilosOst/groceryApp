@@ -9,6 +9,7 @@ import UIKit
 
 class ShoppingListItemCell: UITableViewCell {
     private let nameLabel = UILabel()
+    private let notesLabel = UILabel()
     private let checkButton = UIButton()
     
     private var checkboxHandler: ((ShoppingListItemCell) -> Void)? = nil
@@ -29,9 +30,16 @@ class ShoppingListItemCell: UITableViewCell {
         stackView.alignment = .center
         stackView.spacing = 14
         
-        // Add text label
+        // Add stack for name and notes
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = .poppinsFont(varation: .light, size: 16)
+        notesLabel.translatesAutoresizingMaskIntoConstraints = false
+        notesLabel.font = .poppinsFont(varation: .light, size: 14)
+        notesLabel.textColor = .secondaryLabel
+        
+        let infoStack = UIStackView(arrangedSubviews: [nameLabel, notesLabel])
+        infoStack.axis = .vertical
+        infoStack.translatesAutoresizingMaskIntoConstraints = false
         
         // Configure button
         checkButton.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +51,7 @@ class ShoppingListItemCell: UITableViewCell {
         checkButton.removeTarget(self, action: nil, for: .allEvents)
         checkButton.addTarget(self, action: #selector(checkBoxPressed(_:)), for: .touchUpInside)
         
-        stackView.addArrangedSubviews([checkButton, nameLabel])
+        stackView.addArrangedSubviews([checkButton, infoStack])
         contentView.addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
@@ -57,6 +65,9 @@ class ShoppingListItemCell: UITableViewCell {
 
     func configure(with item: ListItem, handler: @escaping ((ShoppingListItemCell) -> Void)) {
         checkboxHandler = handler
+        notesLabel.text = item.notes
+        
+        // Configure name and checkbox
         if item.isChecked {
             let attributedName = NSMutableAttributedString(string: item.item!.name!)
             attributedName.addAttribute(.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributedName.length))
@@ -85,6 +96,7 @@ class ShoppingListItemCell: UITableViewCell {
         let size: CGFloat = 24
         let digits = CGFloat(quantityText.count)
         let width = max(size, 0.55 * size * digits)
+        
         
         let badge = UILabel(frame: .init(x: 0, y: 0, width: width, height: size))
         badge.text = quantityText

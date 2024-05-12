@@ -10,16 +10,22 @@ import CoreData
 
 private let cellId = "ItemCell"
 
-class EditListViewController: UIViewController, UICollectionViewDelegate, ListItemEditDelegate {
-    private let fetchedResultsController: NSFetchedResultsController<ListItem>
-    private lazy var dataSource = makeDataSource()
-    private let initialItem: ListItem
+// Use delegate to inform previous view controller of Unit changes
+protocol ListEditDelegate: AnyObject {
+    func didChangeItemUnit(_ item: ListItem)
+}
+
+class EditListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ListItemEditDelegate {
+    private let shoppingList: ShoppingList
+    private let startItem: ListItem
+    private weak var delegate: ListEditDelegate?
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     lazy var collectionView: UICollectionView = {
         let layout = self.makeLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
+        collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.keyboardDismissMode = .none
         collectionView.register(ListItemDetailCell.self, forCellWithReuseIdentifier: cellId)
@@ -28,11 +34,33 @@ class EditListViewController: UIViewController, UICollectionViewDelegate, ListIt
         return collectionView
     }()
     
-    init(fetchedResultsController: NSFetchedResultsController<ListItem>, startItem: ListItem) {
-        self.fetchedResultsController = fetchedResultsController
-        self.initialItem = startItem
+    // TODO: Refactor to use own fetched results controller
+    private lazy var fetchedResultsController: NSFetchedResultsController<ListItem> = {
+        let fetchRequest = ListItem.fetchRequest()
+        let predicate = NSPredicate(format: "list == %@", shoppingList)
+        let sortDescriptors = [
+            NSSortDescriptor(key: #keyPath(ListItem.isChecked), ascending: true),
+            NSSortDescriptor(key: #keyPath(ListItem.item.name), ascending: true)
+        ]
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sortDescriptors
+        
+        // If sorted by category, add Category NSSortDescriptor
+        if shoppingList.sortOrder == ListItemsSortOption.category.rawValue {
+            let sortByCategory = NSSortDescriptor(key: #keyPath(ListItem.item.category.name), ascending: true)
+            fetchRequest.sortDescriptors?.insert(sortByCategory, at: 0)
+        }
+        
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        controller.delegate = self
+        return controller
+    }()
+    
+    init(shoppingList: ShoppingList, startItem: ListItem, delegate: ListEditDelegate?) {
+        self.shoppingList = shoppingList
+        self.startItem = startItem
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
-        fetchedResultsController.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -42,31 +70,31 @@ class EditListViewController: UIViewController, UICollectionViewDelegate, ListIt
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        self.loadData()
         
-        // Go to selected item position
-        if let indexPath = fetchedResultsController.indexPath(forObject: initialItem) {
-                collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print(error)
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        print("Dissapearing")
-        super.viewWillDisappear(animated)
+        
+        if let indexPath = fetchedResultsController.indexPath(forObject: startItem) {
+            collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        }
     }
     
     private func setupUI() {
         view.addSubview(collectionView)
         collectionView.frame = view.frame
-        self.edgesForExtendedLayout = .bottom
-        self.view.backgroundColor = .systemBackground
+        edgesForExtendedLayout = .bottom
+        view.backgroundColor = .systemBackground
         
+        // Set up navbar items
         let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeSheet(_:)))
         navigationItem.leftBarButtonItem = closeButton
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(closeSheet(_:)))
         navigationItem.rightBarButtonItem = doneButton
         doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
-        title = initialItem.item?.name
+        title = startItem.item?.name
     }
     
     // MARK: - Collection View Setup
@@ -83,25 +111,20 @@ class EditListViewController: UIViewController, UICollectionViewDelegate, ListIt
         return layout
     }
     
-    private func makeDataSource() -> UICollectionViewDiffableDataSource<Int, ListItem> {
-        return UICollectionViewDiffableDataSource(
-            collectionView: collectionView,
-            cellProvider: { (collectionView, indexPath, listItem) in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ListItemDetailCell
-                let listItem = self.fetchedResultsController.object(at: indexPath)
-                cell.configure(with: listItem, delegate: self)
-                return cell
-            }
-        
-        )
+    // MARK: - UICollectionViewDataSource Methods
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
     
-    private func loadData() {
-        guard let fetchedObjects = fetchedResultsController.fetchedObjects else { return }
-        var snapshot = NSDiffableDataSourceSnapshot<Int, ListItem>()
-        snapshot.appendSections([1])
-        snapshot.appendItems(fetchedObjects, toSection: 1)
-        dataSource.applySnapshotUsingReloadData(snapshot)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return fetchedResultsController.fetchedObjects?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ListItemDetailCell
+        let listItem = fetchedResultsController.object(at: indexPath)
+        cell.configure(with: listItem, delegate: self)
+        return cell
     }
     
     // MARK: - UICollectionViewDelegate Methods
@@ -145,6 +168,7 @@ class EditListViewController: UIViewController, UICollectionViewDelegate, ListIt
         do {
             listItem.item?.unit = unit
             try context.save()
+            delegate?.didChangeItemUnit(listItem)
         } catch {
             print(error)
         }
@@ -169,16 +193,13 @@ class EditListViewController: UIViewController, UICollectionViewDelegate, ListIt
             return
         }
         
-        // TODO: Present alert for confirmation
+        // Present confirmation alert
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Remove Item", style: .destructive) { [self] _ in
             let item = fetchedResultsController.object(at: indexPath)
             do {
                 context.delete(item)
-//                var snapshot = dataSource.snapshot()
-//                snapshot.deleteItems([item])
-//                dataSource.apply(snapshot, animatingDifferences: true)
-//                try context.save()
+                try context.save()
             } catch {
                 print(error)
             }
@@ -193,6 +214,15 @@ class EditListViewController: UIViewController, UICollectionViewDelegate, ListIt
 
 extension EditListViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        collectionView.reloadData()
+        switch type {
+        case .delete:
+            if let indexPath = indexPath {
+                collectionView.deleteItems(at: [indexPath])
+            }
+        case .update:
+            break
+        default:
+            collectionView.reloadData()
+        }
     }
 }

@@ -62,6 +62,11 @@ class ShoppingListService {
         }
     }
     
+    func deleteItem(at indexPath: IndexPath) throws {
+        context.delete(fetchedResultsController.object(at: indexPath))
+        try context.save()
+    }
+    
     func updateFetchedResultsController(_ controller: NSFetchedResultsController<ListItem>) {
         self.fetchedResultsController = controller
     }

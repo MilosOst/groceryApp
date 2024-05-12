@@ -15,6 +15,7 @@
 		544501EC2BE96A340018B345 /* InventoryItemSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501EB2BE96A340018B345 /* InventoryItemSelectionCell.swift */; };
 		544C80A92BE2755D004DF718 /* CreateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544C80A82BE2755D004DF718 /* CreateListViewController.swift */; };
 		544C80AD2BE27DD3004DF718 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544C80AC2BE27DD3004DF718 /* TextFieldTableViewCell.swift */; };
+		54502FC32BED655800D0B284 /* ListItemDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54502FC22BED655800D0B284 /* ListItemDetailCell.swift */; };
 		546211872BE4241D002CE98E /* TemplateSelectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546211862BE4241D002CE98E /* TemplateSelectionCellView.swift */; };
 		5478A7C02BE23718005D1F7D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BB2BE23718005D1F7D /* Poppins-Regular.ttf */; };
 		5478A7C12BE23718005D1F7D /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BC2BE23718005D1F7D /* Poppins-Thin.ttf */; };
@@ -47,6 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5417503E2BEF6A0300A38911 /* ListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5417503F2BEF6A0300A38911 /* ListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		544501DD2BE940770018B345 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		544501E02BE94B220018B345 /* InventoryItemCreationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemCreationState.swift; sourceTree = "<group>"; };
 		544501E22BE94D300018B345 /* InventoryItemValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemValidator.swift; sourceTree = "<group>"; };
@@ -55,6 +58,7 @@
 		544501EB2BE96A340018B345 /* InventoryItemSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemSelectionCell.swift; sourceTree = "<group>"; };
 		544C80A82BE2755D004DF718 /* CreateListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListViewController.swift; sourceTree = "<group>"; };
 		544C80AC2BE27DD3004DF718 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		54502FC22BED655800D0B284 /* ListItemDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemDetailCell.swift; sourceTree = "<group>"; };
 		546211862BE4241D002CE98E /* TemplateSelectionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateSelectionCellView.swift; sourceTree = "<group>"; };
 		5478A7BB2BE23718005D1F7D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		5478A7BC2BE23718005D1F7D /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
@@ -209,6 +213,8 @@
 		547CABAC2BE16C0E0017C3C6 = {
 			isa = PBXGroup;
 			children = (
+				5417503E2BEF6A0300A38911 /* ListItem+CoreDataClass.swift */,
+				5417503F2BEF6A0300A38911 /* ListItem+CoreDataProperties.swift */,
 				547CABB72BE16C0E0017C3C6 /* groceriesApp */,
 				547CABB62BE16C0E0017C3C6 /* Products */,
 			);
@@ -248,10 +254,18 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		54889F432BEFDD390017EA8B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		548AD16F2BEBC77100063F9F /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				54AF986D2BEA7B8F001A5B79 /* ShoppingListItemCell.swift */,
+				54502FC22BED655800D0B284 /* ListItemDetailCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -303,9 +317,9 @@
 		54E45C4E2BE660E900FB3419 /* ShoppingListItems */ = {
 			isa = PBXGroup;
 			children = (
+				54889F432BEFDD390017EA8B /* Models */,
 				548AD16F2BEBC77100063F9F /* Views */,
 				54E45C4F2BE660F100FB3419 /* ViewControllers */,
-				548AD1702BEBDBC000063F9F /* EditListViewController.swift */,
 			);
 			path = ShoppingListItems;
 			sourceTree = "<group>";
@@ -313,6 +327,7 @@
 		54E45C4F2BE660F100FB3419 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				548AD1702BEBDBC000063F9F /* EditListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -420,6 +435,7 @@
 				54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */,
 				544501E32BE94D300018B345 /* InventoryItemValidator.swift in Sources */,
 				544501EA2BE968DC0018B345 /* String+Extensions.swift in Sources */,
+				54502FC32BED655800D0B284 /* ListItemDetailCell.swift in Sources */,
 				54A74D412BECE895005C0061 /* InventoryItem+CoreDataClass.swift in Sources */,
 				54A74D102BECD181005C0061 /* ListItemsSortOption.swift in Sources */,
 				54DB50E52BE7F21E0050C2CF /* CategorySelectionViewController.swift in Sources */,

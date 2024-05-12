@@ -31,7 +31,7 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
         resultsController.delegate = self
         return resultsController
     }()
-
+    
     init(currentCategory: Category?, delegate: CategorySelectorDelegate?) {
         self.currentCategory = currentCategory
         self.delegate = delegate

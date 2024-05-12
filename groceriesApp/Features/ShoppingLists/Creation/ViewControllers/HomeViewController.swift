@@ -41,6 +41,11 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     private func setupUI() {
         setupNavBar()
         
