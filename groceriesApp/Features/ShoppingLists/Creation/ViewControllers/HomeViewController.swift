@@ -112,14 +112,12 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         let cell = tableView.dequeueReusableCell(withIdentifier: listCellID, for: indexPath) as! ShoppingListCell
 //        cell.textLabel?.text = fetchedListsController.object(at: indexPath).name
         let shoppingList = fetchedListsController.object(at: indexPath)
-        print(shoppingList.checkedItemsCount)
         cell.configure(with: shoppingList)
         return cell
     }
     
     // MARK: - UITableView Delegate
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        print("Tapped accessory")
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

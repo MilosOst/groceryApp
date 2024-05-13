@@ -45,6 +45,7 @@ class NoCategoriesViewCell: UITableViewCell {
             label.widthAnchor.constraint(equalTo: stackView.widthAnchor)
         ])
         
+        isUserInteractionEnabled = false
         selectionStyle = .none
     }
     

@@ -12,7 +12,10 @@ fileprivate typealias SortOption = ListItemsSortOption
 
 private let cellIdentifier = "ItemCell"
 
-// TODO: Clean up code
+// TODO: Refactor idea:
+/**
+    - Create Model that receives ViewController as a weak delegate, handle all data operations there
+ */
 class DetailedListViewController: UITableViewController, SelectInventoryItemDelegate, NSFetchedResultsControllerDelegate {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private let shoppingList: ShoppingList
