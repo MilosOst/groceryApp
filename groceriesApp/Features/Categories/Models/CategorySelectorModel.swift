@@ -14,6 +14,8 @@ class CategorySelectorModel {
     private(set) var currentCategory: Category?
     weak var controllerDelegate: NSFetchedResultsControllerDelegate?
     
+    private var prevQuery: String = ""
+    
     init(context: NSManagedObjectContext, controllerDelegate: NSFetchedResultsControllerDelegate, initialCategory: Category?) {
         self.context = context
         self.currentCategory = initialCategory
@@ -67,5 +69,23 @@ class CategorySelectorModel {
         let category = fetchedResultsController.object(at: indexPath)
         context.delete(category)
         try context.save()
+    }
+    
+    /// Filters results using the given query string.
+    /// - Returns: Bool indicating whether a new query was performed.
+    func processSearch(_ query: String) throws -> Bool {
+        let query = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard query != prevQuery else { return false }
+        
+        if query.isEmpty {
+            fetchedResultsController.fetchRequest.predicate = nil
+        } else {
+            let newPredicate = NSPredicate(format: "name CONTAINS[cd] %@", query)
+            fetchedResultsController.fetchRequest.predicate = newPredicate
+        }
+        
+        try fetchedResultsController.performFetch()
+        prevQuery = query
+        return true
     }
 }

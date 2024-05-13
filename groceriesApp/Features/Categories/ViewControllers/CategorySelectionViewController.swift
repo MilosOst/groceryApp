@@ -17,7 +17,7 @@ private let categoryCellIdentifier = "CategoryCell"
 
 // TODO: Conform to NSFetchedResultsControllerDelegate, move logic to model
 // TODO: Add category deletion/editing?
-class CategorySelectionViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class CategorySelectionViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
     weak var delegate: CategorySelectorDelegate?
     let currentCategory: Category?
     
@@ -49,6 +49,7 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
         
         // TODO: Add search bar functionality
         let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         
@@ -149,6 +150,18 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
             }
         default:
             tableView.reloadData()
+        }
+    }
+    
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
+        do {
+            if (try model.processSearch(text)) {
+                tableView.reloadData()
+            }
+        } catch {
+            print(error)
         }
     }
 }
