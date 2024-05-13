@@ -29,7 +29,7 @@ class NoTemplatesViewCell: UITableViewCell {
         infoText.translatesAutoresizingMaskIntoConstraints = false
         infoText.font = .poppinsFont(varation: .light, size: 14)
         infoText.textColor = .secondaryLabel
-        infoText.text = "You do not currently have any templates. Once you create a template, it will show up here, and can be used to instantly populate a shopping list."
+        infoText.text = "You do not currently have any templates. Once you create a template, you will be able to select it here to instantly populate a list."
         infoText.numberOfLines = 0
         infoText.textAlignment = .center
         

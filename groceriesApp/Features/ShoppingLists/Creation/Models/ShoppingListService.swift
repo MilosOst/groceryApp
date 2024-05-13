@@ -33,7 +33,6 @@ class ShoppingListService {
             do {
                 let object = fetchedResultsController.fetchedObjects![index]
                 context.delete(object)
-                list.itemCount -= 1
                 try context.save()
             } catch {
                 print(error)
@@ -44,7 +43,6 @@ class ShoppingListService {
                 listItem.item = item
                 listItem.quantity = 1
                 list.addToItems(listItem)
-                list.itemCount += 1
                 try context.save()
             } catch {
                 print(error)

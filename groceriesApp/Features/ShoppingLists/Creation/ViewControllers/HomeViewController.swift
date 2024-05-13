@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-private let listCellIdentifier = "ListCell"
+private let listCellID = "ListCell"
 
 class HomeViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -28,6 +28,14 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         resultsController.delegate = self
         return resultsController
     }()
+    
+    init() {
+        super.init(style: .grouped)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init:coder not supported")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +43,6 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         
         do {
             try fetchedListsController.performFetch()
-            print("Success, returned \(fetchedListsController.sections![0].numberOfObjects)")
         } catch {
             print(error)
         }
@@ -49,7 +56,7 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
     private func setupUI() {
         setupNavBar()
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: listCellIdentifier)
+        tableView.register(ShoppingListCell.self, forCellReuseIdentifier: listCellID)
     }
     
     private func setupNavBar() {
@@ -92,7 +99,7 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         self.tabSelection = tab
     }
     
-    // MARK: - TableView Delegate Methods
+    // MARK: - UITableViewDataSource Delegate
     override func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedListsController.sections?.count ?? 0
     }
@@ -102,9 +109,17 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: listCellIdentifier, for: indexPath)
-        cell.textLabel?.text = fetchedListsController.object(at: indexPath).name
+        let cell = tableView.dequeueReusableCell(withIdentifier: listCellID, for: indexPath) as! ShoppingListCell
+//        cell.textLabel?.text = fetchedListsController.object(at: indexPath).name
+        let shoppingList = fetchedListsController.object(at: indexPath)
+        print(shoppingList.checkedItemsCount)
+        cell.configure(with: shoppingList)
         return cell
+    }
+    
+    // MARK: - UITableView Delegate
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        print("Tapped accessory")
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -116,6 +131,27 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         // TODO: Fix jumpy animation from toolbar showing up
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Present deletion confirmation alert
+            let alert = UIAlertController(title: "Delete List", message: "Are you sure you want to delete this list? This action cannot be undone.", preferredStyle: .actionSheet)
+            let actions = [
+                UIAlertAction(title: "Cancel", style: .cancel),
+                UIAlertAction(title: "Delete", style: .destructive, handler: { [self] _ in
+                    let object = self.fetchedListsController.object(at: indexPath)
+                    do {
+                        context.delete(object)
+                        try context.save()
+                    } catch {
+                        presentPlainErrorAlert()
+                    }
+                })
+            ]
+            alert.addActions(actions)
+            present(alert, animated: true)
+        }
+    }
+    
     // MARK: NSFetchedResultsController Delegate Methods
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         guard self == navigationController?.topViewController else {
@@ -123,6 +159,12 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         }
         
         // TODO: Implement
+        switch type {
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        default:
+            return
+        }
     }
 }
 
