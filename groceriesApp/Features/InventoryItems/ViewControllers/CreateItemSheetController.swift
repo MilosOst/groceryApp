@@ -62,6 +62,7 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
         doneButton.action = #selector(donePressed)
         doneButton.isEnabled = false
         doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .disabled)
         
         navigationItem.leftBarButtonItem = closeButton
         navigationItem.rightBarButtonItem = doneButton

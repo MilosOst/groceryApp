@@ -47,7 +47,6 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: categoryCellIdentifier)
         title = "Categories"
         
-        // TODO: Add search bar functionality
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -56,6 +55,7 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
         let createCategoryBtn = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(addButtonPressed(_:)))
         createCategoryBtn.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
         navigationItem.rightBarButtonItem = createCategoryBtn
+        setPlainBackButton()
     }
 
     // MARK: - UITableViewDataSource Methods
@@ -79,7 +79,8 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
             config.textProperties.font = .poppinsFont(varation: .light, size: 14)
             config.text = category.name?.capitalized
             cell.contentConfiguration = config
-            cell.accessoryType = (category == currentCategory) ? .checkmark : .none
+            cell.backgroundColor = (category == currentCategory) ? .systemGreen.withAlphaComponent(0.4) : .systemBackground
+            cell.accessoryType = .detailButton
         }
         
         return cell
@@ -102,6 +103,13 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
                 presentPlainErrorAlert()
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        // TODO: Present VC to edit category
+        let category = model.category(at: indexPath)
+        let editVC = EditCategoryViewController(category: category)
+        navigationController?.pushViewController(editVC, animated: true)
     }
     
     // MARK: - Actions

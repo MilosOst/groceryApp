@@ -49,6 +49,8 @@
 		54FCFAA02BF23B8B00FFDF46 /* CategorySelectorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFA9F2BF23B8B00FFDF46 /* CategorySelectorModel.swift */; };
 		54FCFAA42BF282B600FFDF46 /* CategoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAA32BF282B600FFDF46 /* CategoryError.swift */; };
 		54FCFAA62BF2B18500FFDF46 /* SelectInventoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAA52BF2B18500FFDF46 /* SelectInventoryItemModel.swift */; };
+		54FCFAAB2BF3574400FFDF46 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAAA2BF3574400FFDF46 /* EditCategoryViewController.swift */; };
+		54FCFAAD2BF35CAA00FFDF46 /* EditCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAAC2BF35CAA00FFDF46 /* EditCategoryModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +98,8 @@
 		54FCFA9F2BF23B8B00FFDF46 /* CategorySelectorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorModel.swift; sourceTree = "<group>"; };
 		54FCFAA32BF282B600FFDF46 /* CategoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryError.swift; sourceTree = "<group>"; };
 		54FCFAA52BF2B18500FFDF46 /* SelectInventoryItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInventoryItemModel.swift; sourceTree = "<group>"; };
+		54FCFAAA2BF3574400FFDF46 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
+		54FCFAAC2BF35CAA00FFDF46 /* EditCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 			children = (
 				54FCFA9F2BF23B8B00FFDF46 /* CategorySelectorModel.swift */,
 				54FCFAA32BF282B600FFDF46 /* CategoryError.swift */,
+				54FCFAAC2BF35CAA00FFDF46 /* EditCategoryModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				54DB50E42BE7F21E0050C2CF /* CategorySelectionViewController.swift */,
+				54FCFAAA2BF3574400FFDF46 /* EditCategoryViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -439,6 +445,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				544501E12BE94B220018B345 /* InventoryItemCreationState.swift in Sources */,
+				54FCFAAD2BF35CAA00FFDF46 /* EditCategoryModel.swift in Sources */,
 				54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */,
 				544501E32BE94D300018B345 /* InventoryItemValidator.swift in Sources */,
 				544501EA2BE968DC0018B345 /* String+Extensions.swift in Sources */,
@@ -462,6 +469,7 @@
 				547F4A902BF157FC0055C580 /* ShoppingListCell.swift in Sources */,
 				54DA69412BE7A5920062F9B3 /* SelectedCategoryCell.swift in Sources */,
 				54DB50E92BE7FF850050C2CF /* NoCategoriesViewCell.swift in Sources */,
+				54FCFAAB2BF3574400FFDF46 /* EditCategoryViewController.swift in Sources */,
 				544501DE2BE940770018B345 /* UIViewController+Extensions.swift in Sources */,
 				54FCFAA62BF2B18500FFDF46 /* SelectInventoryItemModel.swift in Sources */,
 				54D864652BF206B900BAB0C3 /* UIAlertController+Extensions.swift in Sources */,

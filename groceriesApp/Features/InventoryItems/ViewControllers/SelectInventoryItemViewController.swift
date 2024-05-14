@@ -134,7 +134,7 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         let createItemVC = CreateItemSheetController()
         createItemVC.modalPresentationStyle = .pageSheet
         if let sheetPresentationController = createItemVC.sheetPresentationController {
-            sheetPresentationController.detents = [.medium(), .large()]
+            sheetPresentationController.detents = [.medium()]
             sheetPresentationController.prefersGrabberVisible = true
         }
         
