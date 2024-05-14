@@ -16,22 +16,15 @@ protocol SelectInventoryItemDelegate: AnyObject {
 
 private let cellIdentifier = "ItemCell"
 
-// TODO: Add search contrlller functionality
 class SelectInventoryItemViewController: UITableViewController, UISearchResultsUpdating, NSFetchedResultsControllerDelegate {
-    weak var delegate: SelectInventoryItemDelegate?
     
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private lazy var fetchedResultsController: NSFetchedResultsController<InventoryItem> = {
-        let fetchRequest = InventoryItem.fetchRequest()
-        let sortByName = NSSortDescriptor(key: #keyPath(InventoryItem.name), ascending: true)
-        fetchRequest.sortDescriptors = [sortByName]
-        
-        let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        resultsController.delegate = self
-        return resultsController
+    weak var delegate: SelectInventoryItemDelegate?
+    private lazy var model: SelectInventoryItemModel = {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        return SelectInventoryItemModel(context: context, delegate: self)
     }()
     
-    let searchController = UISearchController()
+    private let searchController = UISearchController()
     
     init(delegate: SelectInventoryItemDelegate? = nil) {
         super.init(style: .grouped)
@@ -45,17 +38,11 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        // Load data
-        do {
-            try fetchedResultsController.performFetch()
-            tableView.reloadData()
-        } catch {
-            print(error)
-        }
+        tableView.reloadData()
     }
     
     private func setupUI() {
+        // TODO: Clean up code
         let filterButton = UIBarButtonItem()
         filterButton.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
         navigationItem.rightBarButtonItem = filterButton
@@ -65,39 +52,52 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         searchController.searchBar.searchBarStyle = .minimal
         searchController.hidesNavigationBarDuringPresentation = false
         navigationItem.hidesSearchBarWhenScrolling = false
-//        navigationItem.searchController = searchController
         definesPresentationContext = true
-        
-        navigationItem.titleView = searchController.searchBar
         
         let createItemButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createButtonPressed(_:)))
         setToolbarItems([.flexibleSpace(), .flexibleSpace(), createItemButton], animated: true)
         navigationController?.setToolbarHidden(false, animated: true)
+        navigationItem.titleView = searchController.searchBar
         
         tableView.register(InventoryItemSelectionCell.self, forCellReuseIdentifier: cellIdentifier)
         
     }
 
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource Delegate
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController.sections?.count ?? 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.sections![0].numberOfObjects
+        return model.numberOfItems
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! InventoryItemSelectionCell
-        let item = fetchedResultsController.object(at: indexPath)
-        cell.configure(name: item.name!, isFavourite: item.isFavourite, isSelected: delegate?.isItemSelected(item) ?? false)
+        let item = model.item(at: indexPath)
+        cell.configure(name: item.name ?? "", isFavourite: item.isFavourite, isSelected: delegate?.isItemSelected(item) ?? false)
         return cell
     }
     
+    // MARK: - UITableView Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let item = fetchedResultsController.object(at: indexPath)
+        let item = model.item(at: indexPath)
         delegate?.didToggleItem(item)
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard model.numberOfItems > 0 else { return }
+        if editingStyle == .delete {
+            let alert = UIAlertController.makeDeleteDialog(title: "Delete Item?", message: "This will also remove all list/template items associated with this item. This action cannot be undone.", handler: { [self] _ in
+                do {
+                    try self.model.deleteItem(at: indexPath)
+                } catch {
+                    self.presentPlainErrorAlert()
+                }
+            })
+            present(alert, animated: true)
+        }
     }
     
     // MARK: - NSFetchedResultsController Delgate
@@ -107,6 +107,10 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
             tableView.reloadRows(at: [indexPath!], with: .automatic)
         case .insert:
             tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
         default:
             tableView.reloadData()
         }
@@ -114,7 +118,14 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     
     // MARK: - UISearchResultsUpdating Methods
     func updateSearchResults(for searchController: UISearchController) {
-        // TODO: Implement
+        guard let text = searchController.searchBar.text else { return }
+        do {
+            if (try model.processSearch(text)) {
+                tableView.reloadData()
+            }
+        } catch {
+            print(error)
+        }
     }
     
     // MARK: - Actions
@@ -123,7 +134,7 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         let createItemVC = CreateItemSheetController()
         createItemVC.modalPresentationStyle = .pageSheet
         if let sheetPresentationController = createItemVC.sheetPresentationController {
-            sheetPresentationController.detents = [.medium()]
+            sheetPresentationController.detents = [.medium(), .large()]
             sheetPresentationController.prefersGrabberVisible = true
         }
         
