@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIViewController {
+@nonobjc extension UIViewController {
     func setTitleFont(_ font: UIFont) {
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.font: font
@@ -31,5 +31,26 @@ extension UIViewController {
     
     var isTopViewController: Bool {
         navigationController?.topViewController == self
+    }
+    
+    // MARK: - Container VC Helpers
+    func add(_ child: UIViewController, frame: CGRect? = nil) {
+        addChild(child)
+        if let frame = frame {
+            child.view.frame = frame
+        }
+        
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+    }
+    
+    func remove() {
+        guard parent != nil else {
+            return
+        }
+        
+        willMove(toParent: nil)
+        view.removeFromSuperview()
+        removeFromParent()
     }
 }
