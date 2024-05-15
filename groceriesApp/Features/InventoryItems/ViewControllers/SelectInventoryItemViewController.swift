@@ -42,7 +42,6 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     }
     
     private func setupUI() {
-        // TODO: Clean up code
         let filterButton = UIBarButtonItem()
         filterButton.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
         navigationItem.rightBarButtonItem = filterButton
@@ -130,7 +129,6 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     
     // MARK: - Actions
     @objc func createButtonPressed(_ sender: UIBarButtonItem) {
-        // TODO: Show creation
         let createItemVC = CreateItemSheetController()
         createItemVC.modalPresentationStyle = .pageSheet
         if let sheetPresentationController = createItemVC.sheetPresentationController {

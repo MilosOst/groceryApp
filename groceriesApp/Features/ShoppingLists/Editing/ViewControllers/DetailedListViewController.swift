@@ -8,28 +8,20 @@
 import UIKit
 import CoreData
 
-fileprivate typealias SortOption = ListItemsSortOption
-
 private let cellIdentifier = "ItemCell"
 
-// TODO: Refactor idea:
-/**
-    - Create Model that receives ViewController as a weak delegate, handle all data operations there
- */
-class DetailedListViewController: UITableViewController, SelectInventoryItemDelegate, NSFetchedResultsControllerDelegate {
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+class DetailedListViewController: UITableViewController, NSFetchedResultsControllerDelegate, ListDetailMenuDelegate {
     private let shoppingList: ShoppingList
-    private lazy var fetchedItemsController: NSFetchedResultsController<ListItem> = {
-        let controller = createFetchedResultsController(SortOption(rawValue: shoppingList.sortOrder)!)
-        controller.delegate = self
-        return controller
-    }()
-    
-    private lazy var service: ShoppingListService = {
-        return ShoppingListService(context: context, fetchedResultsController: fetchedItemsController, list: shoppingList)
+    private lazy var model: EditListModel = {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let model = EditListModel(context: context, list: shoppingList, fetchedResultsControllerDelegate: self)
+        return model
     }()
     
     private let middleButton = UIBarButtonItem()
+    private lazy var optionsMenu: ListDetailMenuView = {
+        return ListDetailMenuView(sortOption: ListItemsSortOption(rawValue: shoppingList.sortOrder) ?? .category, delegate: self)
+    }()
     
     init(list: ShoppingList) {
         self.shoppingList = list
@@ -45,7 +37,8 @@ class DetailedListViewController: UITableViewController, SelectInventoryItemDele
         setupUI()
         
         do {
-            try fetchedItemsController.performFetch()
+            try model.loadData()
+            tableView.reloadData()
         } catch {
             print(error)
         }
@@ -68,29 +61,8 @@ class DetailedListViewController: UITableViewController, SelectInventoryItemDele
         title = shoppingList.name
         let optionsButton = UIBarButtonItem()
         optionsButton.image = UIImage(systemName: "ellipsis.circle")
-        
-        // Set up sort options
-        let sortByName = UIAction(title: "Name", handler: { [weak self] _ in self?.setSortOption(.name) })
-        let sortByCategory = UIAction(title: "Category", handler: { [weak self] _ in self?.setSortOption(.category)})
-        if shoppingList.sortOrder == SortOption.name.rawValue {
-            sortByName.state = .on
-        } else {
-            sortByCategory.state = .on
-        }
-        
-        let sortMenu = UIMenu(options: [.singleSelection, .displayInline], children: [sortByName, sortByCategory])
-        
-        
-        let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { _ in })
-        let markCompleteAction = UIAction(title: "Mark Complete", image: UIImage(systemName: "checkmark.circle"), handler: { _ in })
-        let actionsMenu = UIMenu(options: .displayInline, children: [markCompleteAction, deleteAction])
-        
-        
-        let optionsMenu = UIMenu(options: .displayInline, children: [sortMenu, actionsMenu])
-        
-        optionsButton.menu = optionsMenu
+        optionsButton.menu = optionsMenu.menu
         navigationItem.rightBarButtonItem = optionsButton
-
     }
     
     private func setupToolbar() {
@@ -105,48 +77,23 @@ class DetailedListViewController: UITableViewController, SelectInventoryItemDele
     
     /// Configures the title for the middle buton
     private func configureMiddleButton() {
-        let itemCount = fetchedItemsController.fetchedObjects?.count ?? 0
+        let itemCount = model.numberOfItems
         middleButton.title = "\(itemCount) \(itemCount != 1 ? "Items" : "Item")"
-    }
-    
-    // MARK: - Data Initializaiton
-    /// Creates a NSFetchedResultsController for the given sort option.
-    /// - NOTE: The delegate is set to nil.
-    private func createFetchedResultsController(_ sortOption: ListItemsSortOption) -> NSFetchedResultsController<ListItem> {
-        let fetchRequest = ListItem.fetchRequest()
-        let predicate = NSPredicate(format: "list == %@", shoppingList)
-        let sortDescriptors = [
-            NSSortDescriptor(key: #keyPath(ListItem.isChecked), ascending: true),
-            NSSortDescriptor(key: #keyPath(ListItem.item.name), ascending: true)
-        ]
-        fetchRequest.predicate = predicate
-        fetchRequest.sortDescriptors = sortDescriptors
-        
-        // If sorting by category, need to add category sort descriptor and section keypath
-        var sectionKeyPath: String? = nil
-        if sortOption == .category {
-            let sortByCategory = NSSortDescriptor(key: #keyPath(ListItem.item.category.name), ascending: true)
-            fetchRequest.sortDescriptors?.insert(sortByCategory, at: 0)
-            sectionKeyPath = #keyPath(ListItem.item.categoryName)
-        }
-        
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: sectionKeyPath, cacheName: nil)
-        return controller
     }
 
     // MARK: - UITableViewDataSource Methods
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedItemsController.sections?.count ?? 0
+        return model.numberOfSections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         configureMiddleButton()
-        return fetchedItemsController.sections?[section].numberOfObjects ?? 0
+        return model.numberOfItemsInSection(section)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ShoppingListItemCell
-        let item = fetchedItemsController.object(at: indexPath)
+        let item = model.item(at: indexPath)
         cell.configure(with: item, handler: { [weak self] cell in
             self?.checkButtonPressed(cell)
         })
@@ -154,15 +101,15 @@ class DetailedListViewController: UITableViewController, SelectInventoryItemDele
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return fetchedItemsController.sections?[section].name
+        return model.sectionName(for: section)
     }
     
     // MARK: - UITableViewDelegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedItem = fetchedItemsController.object(at: indexPath)
+        let selectedItem = model.item(at: indexPath)
         
-        let destVC = EditListViewController(shoppingList: shoppingList, startItem: selectedItem, delegate: self)
+        let destVC = EditListItemsViewController(shoppingList: shoppingList, startItem: selectedItem, delegate: self)
         let navVC = UINavigationController(rootViewController: destVC)
         navVC.modalPresentationStyle = .formSheet
         navVC.sheetPresentationController?.detents = [.custom(resolver: {_ in return 280})]
@@ -178,36 +125,21 @@ class DetailedListViewController: UITableViewController, SelectInventoryItemDele
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             do {
-                try service.deleteItem(at: indexPath)
+                try model.deleteItem(at: indexPath)
             } catch {
                 print(error)
             }
         }
     }
     
-    // MARK: - Item Selection Delegate methods
-    func didToggleItem(_ item: InventoryItem) {
-        service.toggleItem(item)
-    }
-    
-    func isItemSelected(_ item: InventoryItem) -> Bool {
-        return service.isItemSelected(item)
-    }
-    
     // MARK: - NSFetchedResultsControllerDelegate
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        guard self == navigationController?.topViewController else {
-            return
-        }
+        guard isTopViewController else { return }
         tableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        // Do not process request if not current viewcontroller
-        guard self == navigationController?.topViewController else {
-            return
-        }
-        
+        guard isTopViewController else { return }
         switch type {
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .automatic)
@@ -218,22 +150,18 @@ class DetailedListViewController: UITableViewController, SelectInventoryItemDele
             tableView.insertRows(at: [newIndexPath!], with: .automatic)
         case .delete:
             tableView.deleteRows(at: [indexPath!], with: .automatic)
-        default:
-            break
+        @unknown default:
+            tableView.reloadData()
         }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        guard self == navigationController?.topViewController else {
-            return
-        }
+        guard isTopViewController else { return }
         self.tableView.endUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        guard self == navigationController?.topViewController else {
-            return
-        }
+        guard isTopViewController else { return }
         
         switch type {
         case .insert:
@@ -241,50 +169,57 @@ class DetailedListViewController: UITableViewController, SelectInventoryItemDele
         case .delete:
             tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
         default:
-            return
+            tableView.reloadData()
         }
     }
-    
     
     // MARK: - Actions
     @objc func addButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Present InventoryItem selection
-        let destVC = SelectInventoryItemViewController(delegate: self)
+        let destVC = SelectInventoryItemViewController(delegate: model)
         navigationController?.pushViewController(destVC, animated: true)
     }
     
     private func checkButtonPressed(_ sender: ShoppingListItemCell) {
         guard let indexPath = tableView.indexPath(for: sender) else { return }
-        service.checkItem(fetchedItemsController.object(at: indexPath))
+        do {
+            try model.checkedItem(at: indexPath)
+        } catch {
+            presentPlainErrorAlert()
+        }
     }
     
-    private func setSortOption(_ option: ListItemsSortOption) {
-        guard option.rawValue != shoppingList.sortOrder else {
-            return
+    // MARK: - ListDetailMenuDelegate Methods
+    func didSelectSortOption(_ option: ListItemsSortOption) {
+        // TODO: Only reload on change
+        let prevOrder = model.sortOrder
+        let updatedOrder = model.changedSortOption(to: option)
+        if (prevOrder != updatedOrder) {
+            tableView.reloadData()
         }
-        
-        do {
-            let newFetchedResultsController = createFetchedResultsController(option)
+    }
+    
+    func didSelectDelete() {
+        let alert = UIAlertController.makeDeleteDialog(title: "Delete List?", message: "Are you sure you want to delete this list? This action cannot be undone.", handler: { [self] _ in
             do {
-                try newFetchedResultsController.performFetch()
-                newFetchedResultsController.delegate = self
-                fetchedItemsController.delegate = nil
-                fetchedItemsController = newFetchedResultsController
-                
-                shoppingList.sortOrder = option.rawValue
-                try context.save()
-                service.updateFetchedResultsController(newFetchedResultsController)
-                tableView.reloadData()
+                try self.model.deleteList()
+                navigationController?.popViewController(animated: true)
             } catch {
-                print(error)
+                presentPlainErrorAlert()
             }
-        }
+        })
+        present(alert, animated: true)
+    }
+    
+    func didSelectMarkComplete() {
+        // TODO: Implement
     }
 }
 
+// Add delegate conformance to reload rows when InventoryItem changes
 extension DetailedListViewController: ListEditDelegate {
     func didChangeItemUnit(_ item: ListItem) {
-        if let indexPath = fetchedItemsController.indexPath(forObject: item) {
+        if let indexPath = model.indexPath(forItem: item) {
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }

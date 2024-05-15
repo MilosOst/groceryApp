@@ -28,7 +28,6 @@ class ShoppingListCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.spacing = 8
         
-        // TODO: Attributes to show: Name, CreationDate, competionStatus
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = .poppinsFont(varation: .medium, size: 16)
         
@@ -36,7 +35,6 @@ class ShoppingListCell: UITableViewCell {
         creationDateLabel.font = .poppinsFont(varation: .light, size: 14)
         creationDateLabel.textColor = .secondaryLabel
         
-        // TODO: Attempt progress view
         let progressStackView = UIStackView()
         progressStackView.translatesAutoresizingMaskIntoConstraints = false
         progressStackView.axis = .horizontal

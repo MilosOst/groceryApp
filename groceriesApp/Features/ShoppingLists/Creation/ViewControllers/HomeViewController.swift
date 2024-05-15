@@ -130,33 +130,26 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        // TODO: Refactor using extension?
         if editingStyle == .delete {
             // Present deletion confirmation alert
-            let alert = UIAlertController(title: "Delete List", message: "Are you sure you want to delete this list? This action cannot be undone.", preferredStyle: .actionSheet)
-            let actions = [
-                UIAlertAction(title: "Cancel", style: .cancel),
-                UIAlertAction(title: "Delete", style: .destructive, handler: { [self] _ in
-                    let object = self.fetchedListsController.object(at: indexPath)
-                    do {
-                        context.delete(object)
-                        try context.save()
-                    } catch {
-                        presentPlainErrorAlert()
-                    }
-                })
-            ]
-            alert.addActions(actions)
+            let alert = UIAlertController.makeDeleteDialog(title: "Delete List", message: "Are you sure you want to delete this list? This action cannot be undone.", handler: { [self] _ in
+                let object = self.fetchedListsController.object(at: indexPath)
+                do {
+                    context.delete(object)
+                    try context.save()
+                } catch {
+                    presentPlainErrorAlert()
+                }
+            })
             present(alert, animated: true)
         }
     }
     
     // MARK: NSFetchedResultsController Delegate Methods
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard self == navigationController?.topViewController else {
-            return
-        }
+        guard isTopViewController else { return }
         
-        // TODO: Implement
         switch type {
         case .delete:
             tableView.deleteRows(at: [indexPath!], with: .automatic)
@@ -165,4 +158,3 @@ class HomeViewController: UITableViewController, NSFetchedResultsControllerDeleg
         }
     }
 }
-

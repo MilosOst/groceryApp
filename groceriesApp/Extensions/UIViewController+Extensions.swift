@@ -28,4 +28,8 @@ extension UIViewController {
     func presentPlainErrorAlert() {
         presentAlert(title: "Error", message: "Sorry, something went wrong.")
     }
+    
+    var isTopViewController: Bool {
+        navigationController?.topViewController == self
+    }
 }

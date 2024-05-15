@@ -15,8 +15,6 @@ protocol CategorySelectorDelegate: AnyObject {
 private let emptyCellID = "EmptyResultsCell"
 private let categoryCellIdentifier = "CategoryCell"
 
-// TODO: Conform to NSFetchedResultsControllerDelegate, move logic to model
-// TODO: Add category deletion/editing?
 class CategorySelectionViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
     weak var delegate: CategorySelectorDelegate?
     let currentCategory: Category?
@@ -106,7 +104,6 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        // TODO: Present VC to edit category
         let category = model.category(at: indexPath)
         let editVC = EditCategoryViewController(category: category)
         navigationController?.pushViewController(editVC, animated: true)

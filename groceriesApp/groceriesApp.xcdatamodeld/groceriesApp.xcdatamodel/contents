@@ -37,7 +37,7 @@
         <attribute name="itemCount" optional="YES" attributeType="Integer 16" derived="YES" derivationExpression="items.@count" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="sortOrder" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
-        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ListItem" inverseName="list" inverseEntity="ListItem"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ListItem" inverseName="list" inverseEntity="ListItem"/>
     </entity>
     <entity name="Template" representedClassName="Template" syncable="YES" codeGenerationType="class">
         <attribute name="isFavourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>

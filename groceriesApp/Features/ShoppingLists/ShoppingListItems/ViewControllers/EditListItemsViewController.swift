@@ -15,7 +15,7 @@ protocol ListEditDelegate: AnyObject {
     func didChangeItemUnit(_ item: ListItem)
 }
 
-class EditListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ListItemEditDelegate {
+class EditListItemsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ListItemEditDelegate {
     private let shoppingList: ShoppingList
     private let startItem: ListItem
     private weak var delegate: ListEditDelegate?
@@ -212,7 +212,7 @@ class EditListViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
 }
 
-extension EditListViewController: NSFetchedResultsControllerDelegate {
+extension EditListItemsViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .delete:

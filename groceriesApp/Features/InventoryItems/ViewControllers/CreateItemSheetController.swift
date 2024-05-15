@@ -18,18 +18,22 @@ class CreateItemSheetController: UINavigationController {
 }
 
 // TODO: Change some delegates to callbacks?
-fileprivate class CreateItemViewController: UITableViewController, LabelTextFieldCellDelegate, ToggleCellDelegate, CategorySelectorDelegate {
+fileprivate class CreateItemViewController: UITableViewController, LabelTextFieldCellDelegate, ToggleCellDelegate {
     private let textFieldCellIdentifier = "TextFieldCell"
     private let toggleCellIdentifier = "ToggleCell"
     private let categoryCellIdentifier = "CategoryCell"
     
-    // Creation State Variables
-    private var itemState = InventoryItemCreationState()
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private lazy var doneButton: DoneBarButtonItem = {
+        let button = DoneBarButtonItem(target: self, selector: #selector(donePressed))
+        button.isEnabled = false
+        return button
+    }()
     
-    private let doneButton = UIBarButtonItem()
+    private let model: CreateInventoryItemModel
     
     init() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        self.model = CreateInventoryItemModel(context: context)
         super.init(style: .insetGrouped)
     }
     
@@ -49,21 +53,12 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
     }
     
     private func setupUI() {
-        setupNavbar()
         tableView.register(LabelTextFieldTableViewCell.self, forCellReuseIdentifier: textFieldCellIdentifier)
-        tableView.register(ToggleTableViewCell.self, forCellReuseIdentifier: toggleCellIdentifier)
         tableView.register(SelectedCategoryCell.self, forCellReuseIdentifier: categoryCellIdentifier)
-    }
-    
-    private func setupNavbar() {
-        let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closePressed))
-        doneButton.title = "Done"
-        doneButton.target = self
-        doneButton.action = #selector(donePressed)
-        doneButton.isEnabled = false
-        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
-        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .disabled)
+        tableView.register(ToggleTableViewCell.self, forCellReuseIdentifier: toggleCellIdentifier)
         
+        // Set up navbar
+        let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closePressed))
         navigationItem.leftBarButtonItem = closeButton
         navigationItem.rightBarButtonItem = doneButton
         title = "Create Item"
@@ -87,11 +82,11 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
             cell = configureTextFieldCell(tableView, indexPath: indexPath)
         case 1:
             let categoryCell = tableView.dequeueReusableCell(withIdentifier: categoryCellIdentifier, for: indexPath) as! SelectedCategoryCell
-            categoryCell.configure(categoryName: itemState.category?.name)
+            categoryCell.configure(categoryName: model.categoryName)
             cell = categoryCell
         case 3:
             let toggleCell = tableView.dequeueReusableCell(withIdentifier: toggleCellIdentifier, for: indexPath) as! ToggleTableViewCell
-            toggleCell.configure(label: "Favourite", isActive: itemState.isFavourite)
+            toggleCell.configure(label: "Favourite", isActive: model.itemState.isFavourite)
             toggleCell.delegate = self
             cell = toggleCell
         default:
@@ -107,22 +102,22 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
         
         // Deselect row and display category selection
         tableView.deselectRow(at: indexPath, animated: true)
-        let categorySelectVC = CategorySelectionViewController(currentCategory: itemState.category, delegate: self)
+        let categorySelectVC = CategorySelectionViewController(currentCategory: model.itemState.category, delegate: model)
         navigationController?.pushViewController(categorySelectVC, animated: true)
     }
     
     private func configureTextFieldCell(_ tableView: UITableView, indexPath: IndexPath) -> LabelTextFieldTableViewCell {
         // Cell 0 is for Name, Cell 2 for Unit
         let cell = tableView.dequeueReusableCell(withIdentifier: textFieldCellIdentifier, for: indexPath) as! LabelTextFieldTableViewCell
-        let label = (indexPath.row == 0) ? "Name": "Unit"
-        let placeholder = (indexPath.row == 0) ? "Groceries": "kg"
-        let text = (indexPath.row == 0) ? itemState.name: itemState.unit
-        
-        cell.configure(label: label, placeholder: placeholder, text: text)
         cell.delegate = self
+        if indexPath.row == 0 {
+            // Configure name field
+            cell.configure(label: "Name", placeholder: "Groceries", text: model.itemState.name)
+        } else {
+            cell.configure(label: "Unit", placeholder: "kg", text: model.itemState.unit)
+            cell.textField.autocapitalizationType = .none
+        }
         
-        // Turn off autocapitalization for unit
-        if indexPath.row == 2 { cell.textField.autocapitalizationType = .none }
         return cell
     }
     
@@ -132,32 +127,13 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
     }
     
     @objc func donePressed() {
-        let validator = InventoryItemValidator(coreDataContext: context)
         do {
-            try validator.validateItem(itemState)
-        } catch {
-            switch error {
-            case InventoryItemCreationError.emptyName:
-                presentAlert(title: "Invalid Item", message: "You must provide a non-empty name.")
-            case InventoryItemCreationError.duplicateName:
-                presentAlert(title: "Invalid Item", message: "This name is already taken.")
-            default:
-                presentPlainErrorAlert()
-            }
-            
-            return
-        }
-        
-        // Item is valid
-        do {
-            let item = InventoryItem(context: context)
-            item.name = itemState.name
-            item.category = itemState.category
-            item.unit = itemState.unit
-            item.isFavourite = itemState.isFavourite
-
-            try context.save()
+            try model.createItem()
             dismiss(animated: true)
+        } catch InventoryItemCreationError.emptyName {
+            presentAlert(title: "Invalid Item", message: "You must provide a non-empty name.")
+        } catch InventoryItemCreationError.duplicateName {
+            presentAlert(title: "Invalid Item", message: "This name is already taken.")
         } catch {
             presentPlainErrorAlert()
         }
@@ -166,20 +142,14 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
     // MARK: - TextField Delegate Methods
     func textDidChange(inCell cell: LabelTextFieldTableViewCell, to text: String?) {
         if cell == tableView.cellForRow(at: IndexPath(row: 0, section: 0)) {
-            itemState.name = text ?? ""
+            model.setName(text)
         } else if cell == tableView.cellForRow(at: IndexPath(row: 2, section: 0)) {
-            itemState.unit = text ?? ""
+            model.setUnit(text)
         }
-        
-        doneButton.isEnabled = !itemState.name.isTrimmedEmpty
+        doneButton.isEnabled = model.canSave
     }
     
     func toggleDidChange(_ newValue: Bool) {
-        itemState.isFavourite = newValue
-    }
-    
-    // MARK: - Category Methods
-    func didSelectCategory(_ category: Category) {
-        itemState.category = category
+        model.setFavourite(newValue)
     }
 }
