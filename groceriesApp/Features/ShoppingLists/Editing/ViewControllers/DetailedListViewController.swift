@@ -212,7 +212,12 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
     }
     
     func didSelectMarkComplete() {
-        // TODO: Implement
+        do {
+            try model.markComplete()
+            navigationController?.popViewController(animated: true)
+        } catch {
+            presentPlainErrorAlert()
+        }
     }
 }
 

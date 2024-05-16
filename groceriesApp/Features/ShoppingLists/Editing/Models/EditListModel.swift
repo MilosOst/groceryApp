@@ -101,6 +101,14 @@ class EditListModel: SelectInventoryItemDelegate {
         try context.save()
     }
     
+    func markComplete() throws {
+        for listItem in fetchedResultsController.fetchedObjects ?? [] {
+            listItem.isChecked = true
+        }
+        list.isCompleted = true
+        try context.save()
+    }
+    
     /// Handles the changes to the sort order of the list items.
     /// - Returns: The sort option after the operation was performed.
     func changedSortOption(to option: ListItemsSortOption) -> ListItemsSortOption {

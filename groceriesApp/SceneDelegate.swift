@@ -26,7 +26,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let homeNavVC = UINavigationController(rootViewController: homeVC)
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
-        tabBar.viewControllers = [homeNavVC]
+        let historyVC = HistoryViewController()
+        let historyNavVC = UINavigationController(rootViewController: historyVC)
+        historyVC.tabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: 1)
+        
+        tabBar.viewControllers = [homeNavVC, historyNavVC]
         window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
     }

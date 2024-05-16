@@ -35,6 +35,8 @@
 		54B630A92BF3A151007874DF /* CreateInventoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B630A82BF3A151007874DF /* CreateInventoryItemModel.swift */; };
 		54B630AD2BF3A1FA007874DF /* DoneBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B630AC2BF3A1FA007874DF /* DoneBarButtonItem.swift */; };
 		54B630AF2BF3CFF6007874DF /* EditListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B630AE2BF3CFF6007874DF /* EditListModel.swift */; };
+		54C766DF2BF5F63600F0A5CC /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766DE2BF5F63600F0A5CC /* HistoryViewController.swift */; };
+		54C766E22BF5F72400F0A5CC /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766E12BF5F72400F0A5CC /* HistoryModel.swift */; };
 		54D864652BF206B900BAB0C3 /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D864642BF206B900BAB0C3 /* UIAlertController+Extensions.swift */; };
 		54DA69382BE6C1240062F9B3 /* CreateItemSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA69372BE6C1240062F9B3 /* CreateItemSheetController.swift */; };
 		54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA693A2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift */; };
@@ -89,6 +91,8 @@
 		54B630A82BF3A151007874DF /* CreateInventoryItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInventoryItemModel.swift; sourceTree = "<group>"; };
 		54B630AC2BF3A1FA007874DF /* DoneBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneBarButtonItem.swift; sourceTree = "<group>"; };
 		54B630AE2BF3CFF6007874DF /* EditListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListModel.swift; sourceTree = "<group>"; };
+		54C766DE2BF5F63600F0A5CC /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		54C766E12BF5F72400F0A5CC /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		54D864642BF206B900BAB0C3 /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
 		54DA69372BE6C1240062F9B3 /* CreateItemSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemSheetController.swift; sourceTree = "<group>"; };
 		54DA693A2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -196,6 +200,7 @@
 		5478A7C82BE23BFD005D1F7D /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				54C766DC2BF5F61E00F0A5CC /* History */,
 				54DB50E32BE7F2080050C2CF /* Categories */,
 				54E45C502BE6621200FB3419 /* InventoryItems */,
 				54E45C4D2BE660C800FB3419 /* ShoppingLists */,
@@ -339,6 +344,31 @@
 				54FD98D62BF4A9D500A60F08 /* ListDetailMenuView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		54C766DC2BF5F61E00F0A5CC /* History */ = {
+			isa = PBXGroup;
+			children = (
+				54C766E02BF5F71500F0A5CC /* Models */,
+				54C766DD2BF5F62300F0A5CC /* ViewControllers */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		54C766DD2BF5F62300F0A5CC /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				54C766DE2BF5F63600F0A5CC /* HistoryViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		54C766E02BF5F71500F0A5CC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				54C766E12BF5F72400F0A5CC /* HistoryModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		54DA69392BE785AE0062F9B3 /* Views */ = {
@@ -547,11 +577,13 @@
 				54FCFAA02BF23B8B00FFDF46 /* CategorySelectorModel.swift in Sources */,
 				54DB50E52BE7F21E0050C2CF /* CategorySelectionViewController.swift in Sources */,
 				544501EC2BE96A340018B345 /* InventoryItemSelectionCell.swift in Sources */,
+				54C766E22BF5F72400F0A5CC /* HistoryModel.swift in Sources */,
 				544C80A92BE2755D004DF718 /* CreateListViewController.swift in Sources */,
 				5478A7CD2BE23D37005D1F7D /* HomeTab.swift in Sources */,
 				54E45C532BE6623500FB3419 /* SelectInventoryItemViewController.swift in Sources */,
 				546211872BE4241D002CE98E /* TemplateSelectionCellView.swift in Sources */,
 				54B630AF2BF3CFF6007874DF /* EditListModel.swift in Sources */,
+				54C766DF2BF5F63600F0A5CC /* HistoryViewController.swift in Sources */,
 				548AD1712BEBDBC000063F9F /* EditListItemsViewController.swift in Sources */,
 				54DA69382BE6C1240062F9B3 /* CreateItemSheetController.swift in Sources */,
 				544C80AD2BE27DD3004DF718 /* TextFieldTableViewCell.swift in Sources */,
