@@ -112,7 +112,8 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
         let destVC = EditListItemsViewController(shoppingList: shoppingList, startItem: selectedItem, delegate: self)
         let navVC = UINavigationController(rootViewController: destVC)
         navVC.modalPresentationStyle = .formSheet
-        navVC.sheetPresentationController?.detents = [.custom(resolver: {_ in return 280})]
+//        navVC.sheetPresentationController?.detents = [.custom(resolver: {_ in return 280})]
+        navVC.sheetPresentationController?.detents = [.medium()]
         navVC.sheetPresentationController?.prefersGrabberVisible = true
         navVC.view.backgroundColor = .systemBackground
         present(navVC, animated: true)

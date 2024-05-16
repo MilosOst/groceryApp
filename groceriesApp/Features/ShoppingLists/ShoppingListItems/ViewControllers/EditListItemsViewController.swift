@@ -16,10 +16,9 @@ protocol ListEditDelegate: AnyObject {
 }
 
 class EditListItemsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ListItemEditDelegate {
-    private let shoppingList: ShoppingList
     private let startItem: ListItem
     private weak var delegate: ListEditDelegate?
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let model: EditListItemsModel
     
     lazy var collectionView: UICollectionView = {
         let layout = self.makeLayout()
@@ -33,34 +32,14 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         collectionView.delaysContentTouches = false
         return collectionView
     }()
-    
-    // TODO: Refactor to use own fetched results controller
-    private lazy var fetchedResultsController: NSFetchedResultsController<ListItem> = {
-        let fetchRequest = ListItem.fetchRequest()
-        let predicate = NSPredicate(format: "list == %@", shoppingList)
-        let sortDescriptors = [
-            NSSortDescriptor(key: #keyPath(ListItem.isChecked), ascending: true),
-            NSSortDescriptor(key: #keyPath(ListItem.item.name), ascending: true)
-        ]
-        fetchRequest.predicate = predicate
-        fetchRequest.sortDescriptors = sortDescriptors
-        
-        // If sorted by category, add Category NSSortDescriptor
-        if shoppingList.sortOrder == ListItemsSortOption.category.rawValue {
-            let sortByCategory = NSSortDescriptor(key: #keyPath(ListItem.item.category.name), ascending: true)
-            fetchRequest.sortDescriptors?.insert(sortByCategory, at: 0)
-        }
-        
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        controller.delegate = self
-        return controller
-    }()
-    
+
     init(shoppingList: ShoppingList, startItem: ListItem, delegate: ListEditDelegate?) {
-        self.shoppingList = shoppingList
         self.startItem = startItem
         self.delegate = delegate
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        self.model = EditListItemsModel(shoppingList: shoppingList, context: context)
         super.init(nibName: nil, bundle: nil)
+        model.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -72,12 +51,12 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         setupUI()
         
         do {
-            try fetchedResultsController.performFetch()
+            try model.loadData()
         } catch {
             print(error)
         }
         
-        if let indexPath = fetchedResultsController.indexPath(forObject: startItem) {
+        if let indexPath = model.indexPath(for: startItem) {
             collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         }
     }
@@ -117,12 +96,12 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fetchedResultsController.fetchedObjects?.count ?? 0
+        return model.numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ListItemDetailCell
-        let listItem = fetchedResultsController.object(at: indexPath)
+        let listItem = model.item(at: indexPath)
         cell.configure(with: listItem, delegate: self)
         return cell
     }
@@ -130,7 +109,11 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     // MARK: - UICollectionViewDelegate Methods
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard collectionView.indexPathsForVisibleItems.count > 0 else { return }
-        title = fetchedResultsController.object(at: collectionView.indexPathsForVisibleItems[0]).item?.name
+        if collectionView.indexPathsForVisibleItems.count > 0 {
+            let indexPath = collectionView.indexPathsForVisibleItems[0]
+            let item = model.item(at: indexPath)
+            title = item.item?.name
+        }
     }
     
     // MARK: - Actions
@@ -145,17 +128,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
             return
         }
         
-        let listItem = fetchedResultsController.object(at: indexPath)
-        // Verify string can be formed and is non-negative
-        let updatedQuantity = max(Float(quantity ?? "") ?? 0, 0)
-        
-        // Update core data entity
-        do {
-            listItem.quantity = updatedQuantity
-            try context.save()
-        } catch {
-            print(error)
-        }
+        try? model.updateQuantity(at: indexPath, quantityStr: quantity)
     }
     
     func unitDidChange(_ cell: ListItemDetailCell, to unit: String?) {
@@ -163,12 +136,22 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
             return
         }
         
-        // TODO: Fix unit not updating in previous view OR remove unit change ability
-        let listItem = fetchedResultsController.object(at: indexPath)
         do {
-            listItem.item?.unit = unit
-            try context.save()
-            delegate?.didChangeItemUnit(listItem)
+            try model.updateUnit(at: indexPath, unitStr: unit)
+            let item = model.item(at: indexPath)
+            delegate?.didChangeItemUnit(item)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func priceDidChange(_ cell: ListItemDetailCell, to price: String?) {
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+        
+        do {
+            try model.updatePrice(at: indexPath, priceStr: price)
         } catch {
             print(error)
         }
@@ -178,37 +161,25 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         guard let indexPath = collectionView.indexPath(for: cell) else {
             return
         }
-        
-        let listItem = fetchedResultsController.object(at: indexPath)
-        do {
-            listItem.notes = text.isEmpty ? nil : text
-            try context.save()
-        } catch {
-            print(error)
-        }
+        try? model.updateNotes(at: indexPath, notes: text)
     }
     
     func removePressed(_ cell: ListItemDetailCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else {
             return
         }
-        
-        // Present confirmation alert
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Remove Item", style: .destructive) { [self] _ in
-            let item = fetchedResultsController.object(at: indexPath)
+        let alert = UIAlertController.makeDeleteDialog(title: nil, message: nil, handler: { [self] _ in
             do {
-                context.delete(item)
-                try context.save()
+                try model.deleteItem(at: indexPath)
             } catch {
-                print(error)
+                presentPlainErrorAlert()
             }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alert.addAction(deleteAction)
-        alert.addAction(cancelAction)
+        })
         present(alert, animated: true)
+    }
+    
+    func editPressed(_ cell: ListItemDetailCell) {
+        // TODO: Present category item editing
     }
 }
 

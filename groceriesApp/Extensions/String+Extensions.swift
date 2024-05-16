@@ -8,9 +8,13 @@
 import Foundation
 
 extension String {
+    var trimmed: String {
+        self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
     /// Returns whether the trimmed version of the string is empty
     var isTrimmedEmpty: Bool {
-        self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        self.trimmed.isEmpty
     }
     
     /// Returns whether the string is composed of only numeric characters (including decimals)

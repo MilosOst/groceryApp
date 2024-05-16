@@ -7,17 +7,38 @@
 
 import UIKit
 
+// TODO: Add edit function
 protocol ListItemEditDelegate: AnyObject {
     func quantityDidChange(_ cell: ListItemDetailCell, to quantity: String?)
     func unitDidChange(_ cell: ListItemDetailCell, to unit: String?)
+    func priceDidChange(_ cell: ListItemDetailCell, to price: String?)
     func notesDidChange(_ cell: ListItemDetailCell, to text: String)
+    func editPressed(_ cell: ListItemDetailCell)
     func removePressed(_ cell: ListItemDetailCell)
 }
 
-class ListItemDetailCell: UICollectionViewCell, UITextFieldDelegate, UITextViewDelegate {
-    private let notesField = UITextView()
-    private let quantityTextField = UITextField()
-    private let unitField = UITextField()
+class ListItemDetailCell: UICollectionViewCell, UITextFieldDelegate, ExpandingTextViewDelegate {
+    private lazy var notesField: ExpandingTextView = {
+        return ExpandingTextView(placeholder: "Notes", returnStyle: .onNewline, delegate: self)
+    }()
+    
+    private lazy var quantityField: LabelTextFieldView = {
+        return LabelTextFieldView(label: "Quantity", placeholder: "Quantity", keyboardType: .decimalPad, onTextChange: { [self] text in
+            self.delegate?.quantityDidChange(self, to: text)
+        })
+    }()
+    
+    private lazy var unitField: LabelTextFieldView = {
+        return LabelTextFieldView(label: "Unit", placeholder: "Unit", onTextChange: { [self] text in
+            self.delegate?.unitDidChange(self, to: text)
+        })
+    }()
+    
+    private lazy var priceField: LabelTextFieldView = {
+        return LabelTextFieldView(label: "Price", placeholder: "Price", keyboardType: .decimalPad, onTextChange: { [self] price in
+            delegate?.priceDidChange(self, to: price)
+        })
+    }()
     
     weak var delegate: ListItemEditDelegate?
     
@@ -37,13 +58,10 @@ class ListItemDetailCell: UICollectionViewCell, UITextFieldDelegate, UITextViewD
         stackView.spacing = 14
         stackView.distribution = .fill
         
-        let quantityRow = makeQuantityRow()
-        let unitRow = makeUnitRow()
-        setupNotesField()
-        
+        let editButton = setupEditButton()
         let deleteButton = setupDeleteButton()
         
-        stackView.addArrangedSubviews([quantityRow, unitRow, notesField, deleteButton, UIView()])
+        stackView.addArrangedSubviews([quantityField, unitField, priceField, notesField, editButton, deleteButton, UIView()])
         stackView.setCustomSpacing(20, after: notesField)
         contentView.addSubview(stackView)
         NSLayoutConstraint.activate([
@@ -54,94 +72,20 @@ class ListItemDetailCell: UICollectionViewCell, UITextFieldDelegate, UITextViewD
         ])
     }
     
-    private func makeQuantityRow() -> UIStackView {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.spacing = 10
+    private func setupEditButton() -> UIButton {
+        var config = UIButton.Configuration.bordered()
+        config.baseBackgroundColor = .systemBlue
+        config.baseForegroundColor = .white
+        config.image = UIImage(systemName: "pencil")
+        config.imagePadding = 12
         
-        let quantityLabel = UILabel()
-        quantityLabel.translatesAutoresizingMaskIntoConstraints = false
-        quantityLabel.text = "Quantity"
-        quantityLabel.font = .poppinsFont(varation: .light, size: 16)
-        quantityLabel.isUserInteractionEnabled = true
-        
-        // Add gesture recognizer for label to send focus to textfield
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(quantityLabelPressed(_:)))
-        quantityLabel.addGestureRecognizer(gestureRecognizer)
-        
-        quantityTextField.translatesAutoresizingMaskIntoConstraints = false
-        quantityTextField.keyboardType = .decimalPad
-        quantityTextField.placeholder = "Quantity"
-        quantityTextField.textAlignment = .center
-        quantityTextField.font = .poppinsFont(varation: .light, size: 16)
-        quantityTextField.borderStyle = .roundedRect
-        quantityTextField.clearButtonMode = .whileEditing
-        quantityTextField.backgroundColor = .secondarySystemBackground
-        quantityTextField.addTarget(self, action: #selector(quantityDidChange(_:)), for: .editingChanged)
-        quantityTextField.delegate = self
-        
-        stackView.addArrangedSubviews([quantityLabel, quantityTextField])
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
-        stackView.isLayoutMarginsRelativeArrangement = true
-        NSLayoutConstraint.activate([
-            quantityTextField.widthAnchor.constraint(equalToConstant: 90),
-        ])
-        return stackView
-    }
-    
-    private func makeUnitRow() -> UIStackView {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.spacing = 10
-        
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Unit"
-        label.font = .poppinsFont(varation: .light, size: 16)
-        label.isUserInteractionEnabled = true
-        
-        // Add gesture recognizer for label to send focus to textfield
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(unitLabelPressed(_:)))
-        label.addGestureRecognizer(gestureRecognizer)
-        
-        unitField.translatesAutoresizingMaskIntoConstraints = false
-        unitField.placeholder = "Unit"
-        unitField.textAlignment = .center
-        unitField.delegate = self
-        unitField.borderStyle = .roundedRect
-        unitField.clearButtonMode = .whileEditing
-        unitField.autocapitalizationType = .none
-        unitField.font = .poppinsFont(varation: .light, size: 16)
-        unitField.backgroundColor = .secondarySystemBackground
-        unitField.addTarget(self, action: #selector(unitDidChange(_:)), for: .editingChanged)
-        
-        stackView.addArrangedSubviews([label, unitField])
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
-        stackView.isLayoutMarginsRelativeArrangement = true
-        NSLayoutConstraint.activate([
-            unitField.widthAnchor.constraint(equalToConstant: 90)
-        ])
-        return stackView
-    }
-    
-    private func setupNotesField() {
-        notesField.translatesAutoresizingMaskIntoConstraints = false
-        notesField.isEditable = true
-        notesField.isScrollEnabled = false
-        notesField.text = "Notes"
-        notesField.textColor = .lightGray
-        notesField.textContainerInset = .init(top: 8, left: 8, bottom: 8, right: 8)
-        notesField.layer.borderColor = UIColor.secondaryLabel.cgColor
-        notesField.layer.borderWidth = 1
-        notesField.layer.cornerRadius = 8
-        notesField.font = UIFont.poppinsFont(varation: .light, size: 14)
-        notesField.textContainer.heightTracksTextView = true
-        notesField.textContainer.lineFragmentPadding = 8
-        notesField.delegate = self
+        let button = UIButton(configuration: config)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let title = NSMutableAttributedString(string: "Edit Item")
+        title.addAttribute(.font, value: UIFont.poppinsFont(varation: .medium, size: 16), range: NSRange(location: 0, length: title.length))
+        button.setAttributedTitle(title, for: .normal)
+        button.setTitleColor(.systemBlue.withAlphaComponent(0.5), for: .highlighted)
+        return button
     }
     
     private func setupDeleteButton() -> UIButton {
@@ -151,8 +95,6 @@ class ListItemDetailCell: UICollectionViewCell, UITextFieldDelegate, UITextViewD
         config.imagePadding = 12
         
         let deleteButton = UIButton(configuration: config)
-//        let deleteButton = UIButton(type: .system)
-//        deleteButton.configuration = config
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         deleteButton.addTarget(self, action: #selector(deletePressed(_:)), for: .touchUpInside)
         deleteButton.role = .destructive
@@ -166,76 +108,19 @@ class ListItemDetailCell: UICollectionViewCell, UITextFieldDelegate, UITextViewD
     
     func configure(with item: ListItem, delegate: ListItemEditDelegate?) {
         self.delegate = delegate
-        quantityTextField.text = "\(item.quantity.formatted())"
-        unitField.text = item.item?.unit
-        
-        if let notes = item.notes, !notes.isEmpty {
-            notesField.text = notes
-            notesField.textColor = .label
-        }
+        quantityField.setText(item.quantity.formatted())
+        unitField.setText(item.item?.unit)
+        let priceStr = item.price == 0 ? nil : item.price.formatted()
+        priceField.setText(priceStr)
+        notesField.setText(text: item.notes)
     }
     
-    // MARK: - UITextFieldDelegate
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // All characters allowed in Unit field, only number in quantity
-        guard textField == quantityTextField else { return true }
-        if textField.text?.filter({ $0 == "." }).count == 1 && string == "." {
-            return false
-        }
-        
-        return string.isNumeric
-    }
-    
-    // MARK: - UITextViewDelegate
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        // Remove placeholder if no current text
-        if textView.textColor == .lightGray {
-            textView.text = nil
-            textView.textColor = .label
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Notes"
-            textView.textColor = .lightGray
-        }
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        delegate?.notesDidChange(self, to: textView.text)
+    // MARK: - ExpandingTextView Delegate
+    func expandingTextViewDidChange(_ text: String) {
+        delegate?.notesDidChange(self, to: text)
     }
     
     // MARK: - Actions
-    @objc func quantityLabelPressed(_ sender: UILabel) {
-        quantityTextField.becomeFirstResponder()
-    }
-    
-    @objc func unitLabelPressed(_ sender: UILabel) {
-        unitField.becomeFirstResponder()
-    }
-    
-    @objc func quantityDidChange(_ sender: UITextField) {
-        delegate?.quantityDidChange(self, to: sender.text)
-    }
-    
-    @objc func unitDidChange(_ sender: UITextField) {
-        delegate?.unitDidChange(self, to: sender.text)
-    }
-    
     @objc func deletePressed(_ sender: UIButton) {
         delegate?.removePressed(self)
     }

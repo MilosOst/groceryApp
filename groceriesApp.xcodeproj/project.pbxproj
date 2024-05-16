@@ -37,6 +37,9 @@
 		54B630AF2BF3CFF6007874DF /* EditListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B630AE2BF3CFF6007874DF /* EditListModel.swift */; };
 		54C766DF2BF5F63600F0A5CC /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766DE2BF5F63600F0A5CC /* HistoryViewController.swift */; };
 		54C766E22BF5F72400F0A5CC /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766E12BF5F72400F0A5CC /* HistoryModel.swift */; };
+		54C766E42BF6005E00F0A5CC /* EditListItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766E32BF6005E00F0A5CC /* EditListItemsModel.swift */; };
+		54C766E72BF6278700F0A5CC /* ExpandingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766E62BF6278700F0A5CC /* ExpandingTextView.swift */; };
+		54C766E92BF62FFB00F0A5CC /* LabelTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766E82BF62FFB00F0A5CC /* LabelTextFieldView.swift */; };
 		54D864652BF206B900BAB0C3 /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D864642BF206B900BAB0C3 /* UIAlertController+Extensions.swift */; };
 		54DA69382BE6C1240062F9B3 /* CreateItemSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA69372BE6C1240062F9B3 /* CreateItemSheetController.swift */; };
 		54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA693A2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift */; };
@@ -93,6 +96,9 @@
 		54B630AE2BF3CFF6007874DF /* EditListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListModel.swift; sourceTree = "<group>"; };
 		54C766DE2BF5F63600F0A5CC /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		54C766E12BF5F72400F0A5CC /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
+		54C766E32BF6005E00F0A5CC /* EditListItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListItemsModel.swift; sourceTree = "<group>"; };
+		54C766E62BF6278700F0A5CC /* ExpandingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandingTextView.swift; sourceTree = "<group>"; };
+		54C766E82BF62FFB00F0A5CC /* LabelTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextFieldView.swift; sourceTree = "<group>"; };
 		54D864642BF206B900BAB0C3 /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
 		54DA69372BE6C1240062F9B3 /* CreateItemSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemSheetController.swift; sourceTree = "<group>"; };
 		54DA693A2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -158,6 +164,7 @@
 		544C80AB2BE27DC1004DF718 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				54C766E52BF6269400F0A5CC /* Editing */,
 				54B630AB2BF3A1E9007874DF /* Buttons */,
 				54B630AA2BF3A1E1007874DF /* Cells */,
 			);
@@ -279,6 +286,7 @@
 		54889F432BEFDD390017EA8B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				54C766E32BF6005E00F0A5CC /* EditListItemsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -369,6 +377,15 @@
 				54C766E12BF5F72400F0A5CC /* HistoryModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		54C766E52BF6269400F0A5CC /* Editing */ = {
+			isa = PBXGroup;
+			children = (
+				54C766E62BF6278700F0A5CC /* ExpandingTextView.swift */,
+				54C766E82BF62FFB00F0A5CC /* LabelTextFieldView.swift */,
+			);
+			path = Editing;
 			sourceTree = "<group>";
 		};
 		54DA69392BE785AE0062F9B3 /* Views */ = {
@@ -572,6 +589,7 @@
 				54FD98D52BF4A88700A60F08 /* ListDetailMenuDelegate.swift in Sources */,
 				54FD98DE2BF4EC5B00A60F08 /* HomeListsModel.swift in Sources */,
 				54FD98DB2BF4EC3D00A60F08 /* HomeListsViewController.swift in Sources */,
+				54C766E92BF62FFB00F0A5CC /* LabelTextFieldView.swift in Sources */,
 				54A74D412BECE895005C0061 /* InventoryItem+CoreDataClass.swift in Sources */,
 				54A74D102BECD181005C0061 /* ListItemsSortOption.swift in Sources */,
 				54FCFAA02BF23B8B00FFDF46 /* CategorySelectorModel.swift in Sources */,
@@ -594,6 +612,8 @@
 				54DB50E92BE7FF850050C2CF /* NoCategoriesViewCell.swift in Sources */,
 				54FCFAAB2BF3574400FFDF46 /* EditCategoryViewController.swift in Sources */,
 				544501DE2BE940770018B345 /* UIViewController+Extensions.swift in Sources */,
+				54C766E42BF6005E00F0A5CC /* EditListItemsModel.swift in Sources */,
+				54C766E72BF6278700F0A5CC /* ExpandingTextView.swift in Sources */,
 				54FCFAA62BF2B18500FFDF46 /* SelectInventoryItemModel.swift in Sources */,
 				54D864652BF206B900BAB0C3 /* UIAlertController+Extensions.swift in Sources */,
 				54DA693F2BE7920A0062F9B3 /* ToggleTableViewCell.swift in Sources */,

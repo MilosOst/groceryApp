@@ -24,6 +24,11 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
         fatalError("init:coder not supported")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ShoppingListCell.self, forCellReuseIdentifier: cellID)
