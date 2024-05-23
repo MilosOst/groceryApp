@@ -130,9 +130,9 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
         do {
             try model.createItem()
             dismiss(animated: true)
-        } catch InventoryItemCreationError.emptyName {
+        } catch InventoryItemError.emptyName {
             presentAlert(title: "Invalid Item", message: "You must provide a non-empty name.")
-        } catch InventoryItemCreationError.duplicateName {
+        } catch InventoryItemError.duplicateName {
             presentAlert(title: "Invalid Item", message: "This name is already taken.")
         } catch {
             presentPlainErrorAlert()

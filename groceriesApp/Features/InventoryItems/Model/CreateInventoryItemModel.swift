@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 // TODO: Refactor to Generic EntityError?
-enum InventoryItemCreationError: Error {
+enum InventoryItemError: Error {
     case emptyName
     case duplicateName
 }
@@ -49,7 +49,7 @@ class CreateInventoryItemModel: CategorySelectorDelegate {
     func createItem() throws {
         // Verify name is non-empty
         let name = itemState.name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !name.isEmpty else { throw InventoryItemCreationError.emptyName }
+        guard !name.isEmpty else { throw InventoryItemError.emptyName }
         
         // Verify name is unique
         let fetchRequest = InventoryItem.fetchRequest()
@@ -58,7 +58,7 @@ class CreateInventoryItemModel: CategorySelectorDelegate {
         fetchRequest.fetchLimit = 1
         
         let count = try context.count(for: fetchRequest)
-        guard count == 0 else { throw InventoryItemCreationError.duplicateName }
+        guard count == 0 else { throw InventoryItemError.duplicateName }
         
         // Item is validate, create it
         let item = InventoryItem(context: context)

@@ -40,6 +40,8 @@
 		54C766E42BF6005E00F0A5CC /* EditListItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766E32BF6005E00F0A5CC /* EditListItemsModel.swift */; };
 		54C766E72BF6278700F0A5CC /* ExpandingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766E62BF6278700F0A5CC /* ExpandingTextView.swift */; };
 		54C766E92BF62FFB00F0A5CC /* LabelTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766E82BF62FFB00F0A5CC /* LabelTextFieldView.swift */; };
+		54C766EB2BF64B2800F0A5CC /* EditInventoryItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766EA2BF64B2800F0A5CC /* EditInventoryItemViewController.swift */; };
+		54C766ED2BF64B5D00F0A5CC /* EditInventoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C766EC2BF64B5D00F0A5CC /* EditInventoryItemModel.swift */; };
 		54D864652BF206B900BAB0C3 /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D864642BF206B900BAB0C3 /* UIAlertController+Extensions.swift */; };
 		54DA69382BE6C1240062F9B3 /* CreateItemSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA69372BE6C1240062F9B3 /* CreateItemSheetController.swift */; };
 		54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA693A2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift */; };
@@ -99,6 +101,8 @@
 		54C766E32BF6005E00F0A5CC /* EditListItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListItemsModel.swift; sourceTree = "<group>"; };
 		54C766E62BF6278700F0A5CC /* ExpandingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandingTextView.swift; sourceTree = "<group>"; };
 		54C766E82BF62FFB00F0A5CC /* LabelTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextFieldView.swift; sourceTree = "<group>"; };
+		54C766EA2BF64B2800F0A5CC /* EditInventoryItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInventoryItemViewController.swift; sourceTree = "<group>"; };
+		54C766EC2BF64B5D00F0A5CC /* EditInventoryItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInventoryItemModel.swift; sourceTree = "<group>"; };
 		54D864642BF206B900BAB0C3 /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
 		54DA69372BE6C1240062F9B3 /* CreateItemSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemSheetController.swift; sourceTree = "<group>"; };
 		54DA693A2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 				544501E02BE94B220018B345 /* InventoryItemCreationState.swift */,
 				54FCFAA52BF2B18500FFDF46 /* SelectInventoryItemModel.swift */,
 				54B630A82BF3A151007874DF /* CreateInventoryItemModel.swift */,
+				54C766EC2BF64B5D00F0A5CC /* EditInventoryItemModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -468,6 +473,7 @@
 			children = (
 				54E45C522BE6623500FB3419 /* SelectInventoryItemViewController.swift */,
 				54DA69372BE6C1240062F9B3 /* CreateItemSheetController.swift */,
+				54C766EA2BF64B2800F0A5CC /* EditInventoryItemViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -586,6 +592,7 @@
 				54B630AD2BF3A1FA007874DF /* DoneBarButtonItem.swift in Sources */,
 				544501EA2BE968DC0018B345 /* String+Extensions.swift in Sources */,
 				54502FC32BED655800D0B284 /* ListItemDetailCell.swift in Sources */,
+				54C766ED2BF64B5D00F0A5CC /* EditInventoryItemModel.swift in Sources */,
 				54FD98D52BF4A88700A60F08 /* ListDetailMenuDelegate.swift in Sources */,
 				54FD98DE2BF4EC5B00A60F08 /* HomeListsModel.swift in Sources */,
 				54FD98DB2BF4EC3D00A60F08 /* HomeListsViewController.swift in Sources */,
@@ -612,6 +619,7 @@
 				54DB50E92BE7FF850050C2CF /* NoCategoriesViewCell.swift in Sources */,
 				54FCFAAB2BF3574400FFDF46 /* EditCategoryViewController.swift in Sources */,
 				544501DE2BE940770018B345 /* UIViewController+Extensions.swift in Sources */,
+				54C766EB2BF64B2800F0A5CC /* EditInventoryItemViewController.swift in Sources */,
 				54C766E42BF6005E00F0A5CC /* EditListItemsModel.swift in Sources */,
 				54C766E72BF6278700F0A5CC /* ExpandingTextView.swift in Sources */,
 				54FCFAA62BF2B18500FFDF46 /* SelectInventoryItemModel.swift in Sources */,

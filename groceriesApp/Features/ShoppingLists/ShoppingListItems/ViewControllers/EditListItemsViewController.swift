@@ -15,6 +15,9 @@ protocol ListEditDelegate: AnyObject {
     func didChangeItemUnit(_ item: ListItem)
 }
 
+// TODO: Implement notifier to previous view on InventoryItemChanged
+/// IDEA: Pass delegate into next ViewController, notify on change
+
 class EditListItemsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ListItemEditDelegate {
     private let startItem: ListItem
     private weak var delegate: ListEditDelegate?
@@ -61,6 +64,15 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        // Update current collectionViewCell in case InventoryItem was edited
+        if collectionView.indexPathsForVisibleItems.count > 0 {
+            let indexPath = collectionView.indexPathsForVisibleItems[0]
+            collectionView.reloadItems(at: [indexPath])
+        }
+    }
+    
     private func setupUI() {
         view.addSubview(collectionView)
         collectionView.frame = view.frame
@@ -74,6 +86,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         navigationItem.rightBarButtonItem = doneButton
         doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
         title = startItem.item?.name
+        setTitleFont(.poppinsFont(varation: .medium, size: 16))
     }
     
     // MARK: - Collection View Setup
@@ -179,7 +192,13 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func editPressed(_ cell: ListItemDetailCell) {
-        // TODO: Present category item editing
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+        
+        let item = model.item(at: indexPath)
+        let editVC = EditInventoryItemViewController(item: item.item!)
+        navigationController?.pushViewController(editVC, animated: true)
     }
 }
 

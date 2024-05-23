@@ -17,7 +17,7 @@ protocol ListItemEditDelegate: AnyObject {
     func removePressed(_ cell: ListItemDetailCell)
 }
 
-class ListItemDetailCell: UICollectionViewCell, UITextFieldDelegate, ExpandingTextViewDelegate {
+class ListItemDetailCell: UICollectionViewCell, ExpandingTextViewDelegate {
     private lazy var notesField: ExpandingTextView = {
         return ExpandingTextView(placeholder: "Notes", returnStyle: .onNewline, delegate: self)
     }()
@@ -85,6 +85,7 @@ class ListItemDetailCell: UICollectionViewCell, UITextFieldDelegate, ExpandingTe
         title.addAttribute(.font, value: UIFont.poppinsFont(varation: .medium, size: 16), range: NSRange(location: 0, length: title.length))
         button.setAttributedTitle(title, for: .normal)
         button.setTitleColor(.systemBlue.withAlphaComponent(0.5), for: .highlighted)
+        button.addTarget(self, action: #selector(editPressed(_:)), for: .touchUpInside)
         return button
     }
     
@@ -118,6 +119,10 @@ class ListItemDetailCell: UICollectionViewCell, UITextFieldDelegate, ExpandingTe
     // MARK: - ExpandingTextView Delegate
     func expandingTextViewDidChange(_ text: String) {
         delegate?.notesDidChange(self, to: text)
+    }
+    
+    @objc func editPressed(_ sender: UIButton) {
+        delegate?.editPressed(self)
     }
     
     // MARK: - Actions
