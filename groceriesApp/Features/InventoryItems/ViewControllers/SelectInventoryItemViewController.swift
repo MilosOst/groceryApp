@@ -83,6 +83,7 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         tableView.deselectRow(at: indexPath, animated: true)
         let item = model.item(at: indexPath)
         delegate?.didToggleItem(item)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

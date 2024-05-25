@@ -50,9 +50,23 @@ class HomeRootViewController: UIViewController {
     // MARK: - Actions
     @objc func addButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Differentiate between tabs
-        let navVC = UINavigationController(rootViewController: CreateListViewController())
-        navVC.modalPresentationStyle = .fullScreen
+        let createVC = createListViewController(for: currentTab ?? .lists)
+        let navVC = UINavigationController(rootViewController: createVC)
+        if currentTab == .templates {
+            navVC.modalPresentationStyle = .formSheet
+            navVC.sheetPresentationController?.detents = [.custom { _ in 275 }]
+        } else {
+            navVC.modalPresentationStyle = .fullScreen
+        }
+        
         present(navVC, animated: true)
+    }
+    
+    private func createListViewController(for tab: HomeTab) -> UIViewController {
+        if tab == .lists {
+            return CreateListViewController()
+        }
+        return CreateTemplateViewController()
     }
     
     private func showTab(_ tab: HomeTab) {

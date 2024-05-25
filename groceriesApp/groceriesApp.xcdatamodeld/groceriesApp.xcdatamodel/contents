@@ -26,7 +26,7 @@
     <entity name="ListItem" representedClassName="ListItem" syncable="YES" codeGenerationType="class">
         <attribute name="isChecked" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
-        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" minValueString="0" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Float" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InventoryItem" inverseName="listItems" inverseEntity="InventoryItem"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingList" inverseName="items" inverseEntity="ShoppingList"/>
@@ -43,8 +43,9 @@
     </entity>
     <entity name="Template" representedClassName="Template" syncable="YES" codeGenerationType="class">
         <attribute name="isFavourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="itemCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="itemCount" optional="YES" attributeType="Integer 16" derived="YES" derivationExpression="items.@count" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="sortOrder" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateItem" inverseName="template" inverseEntity="TemplateItem"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -53,6 +54,8 @@
         </uniquenessConstraints>
     </entity>
     <entity name="TemplateItem" representedClassName="TemplateItem" syncable="YES" codeGenerationType="class">
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="price" optional="YES" attributeType="Float" minValueString="0" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InventoryItem" inverseName="templateItems" inverseEntity="InventoryItem"/>
         <relationship name="template" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Template" inverseName="items" inverseEntity="Template"/>

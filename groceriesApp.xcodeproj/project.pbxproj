@@ -31,6 +31,13 @@
 		548AD1712BEBDBC000063F9F /* EditListItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD1702BEBDBC000063F9F /* EditListItemsViewController.swift */; };
 		54A74D102BECD181005C0061 /* ListItemsSortOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A74D0F2BECD181005C0061 /* ListItemsSortOption.swift */; };
 		54A74D412BECE895005C0061 /* InventoryItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */; };
+		54ADAFE02C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFDF2C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift */; };
+		54ADAFE32C00B352005EAC13 /* TemplateItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFE22C00B352005EAC13 /* TemplateItemCell.swift */; };
+		54ADAFE52C010CDA005EAC13 /* LabeledPickerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFE42C010CDA005EAC13 /* LabeledPickerViewCell.swift */; };
+		54ADAFE72C025336005EAC13 /* CreateTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFE62C025336005EAC13 /* CreateTemplateViewController.swift */; };
+		54ADAFEA2C02560F005EAC13 /* CreateTemplateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFE92C02560F005EAC13 /* CreateTemplateModel.swift */; };
+		54ADAFEC2C025672005EAC13 /* CreateTemplateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFEB2C025672005EAC13 /* CreateTemplateObject.swift */; };
+		54ADAFF02C025C3B005EAC13 /* EntityCreationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFEF2C025C3B005EAC13 /* EntityCreationError.swift */; };
 		54AF986E2BEA7B8F001A5B79 /* ShoppingListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AF986D2BEA7B8F001A5B79 /* ShoppingListItemCell.swift */; };
 		54B630A92BF3A151007874DF /* CreateInventoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B630A82BF3A151007874DF /* CreateInventoryItemModel.swift */; };
 		54B630AD2BF3A1FA007874DF /* DoneBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B630AC2BF3A1FA007874DF /* DoneBarButtonItem.swift */; };
@@ -92,6 +99,13 @@
 		548AD1702BEBDBC000063F9F /* EditListItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListItemsViewController.swift; sourceTree = "<group>"; };
 		54A74D0F2BECD181005C0061 /* ListItemsSortOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemsSortOption.swift; sourceTree = "<group>"; };
 		54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InventoryItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		54ADAFDF2C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
+		54ADAFE22C00B352005EAC13 /* TemplateItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateItemCell.swift; sourceTree = "<group>"; };
+		54ADAFE42C010CDA005EAC13 /* LabeledPickerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledPickerViewCell.swift; sourceTree = "<group>"; };
+		54ADAFE62C025336005EAC13 /* CreateTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTemplateViewController.swift; sourceTree = "<group>"; };
+		54ADAFE92C02560F005EAC13 /* CreateTemplateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTemplateModel.swift; sourceTree = "<group>"; };
+		54ADAFEB2C025672005EAC13 /* CreateTemplateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTemplateObject.swift; sourceTree = "<group>"; };
+		54ADAFEF2C025C3B005EAC13 /* EntityCreationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityCreationError.swift; sourceTree = "<group>"; };
 		54AF986D2BEA7B8F001A5B79 /* ShoppingListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListItemCell.swift; sourceTree = "<group>"; };
 		54B630A82BF3A151007874DF /* CreateInventoryItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInventoryItemModel.swift; sourceTree = "<group>"; };
 		54B630AC2BF3A1FA007874DF /* DoneBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneBarButtonItem.swift; sourceTree = "<group>"; };
@@ -137,6 +151,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		540A81FB2BFFDCA600B9420F /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				54ADAFE12C00B333005EAC13 /* Views */,
+				540A81FD2BFFDCB200B9420F /* Models */,
+				540A81FC2BFFDCAC00B9420F /* ViewControllers */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		540A81FC2BFFDCAC00B9420F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				54ADAFE62C025336005EAC13 /* CreateTemplateViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		540A81FD2BFFDCB200B9420F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				54ADAFE92C02560F005EAC13 /* CreateTemplateModel.swift */,
+				54ADAFEB2C025672005EAC13 /* CreateTemplateObject.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		544501DF2BE94B050018B345 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +202,7 @@
 		544C80AA2BE27DBD004DF718 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				54ADAFED2C025C2D005EAC13 /* Models */,
 				544C80AB2BE27DC1004DF718 /* Views */,
 			);
 			path = Shared;
@@ -205,6 +247,7 @@
 				544501DD2BE940770018B345 /* UIViewController+Extensions.swift */,
 				544501E92BE968DC0018B345 /* String+Extensions.swift */,
 				54D864642BF206B900BAB0C3 /* UIAlertController+Extensions.swift */,
+				54ADAFDF2C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -212,6 +255,7 @@
 		5478A7C82BE23BFD005D1F7D /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				540A81FB2BFFDCA600B9420F /* Templates */,
 				54C766DC2BF5F61E00F0A5CC /* History */,
 				54DB50E32BE7F2080050C2CF /* Categories */,
 				54E45C502BE6621200FB3419 /* InventoryItems */,
@@ -306,12 +350,37 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		54ADAFE12C00B333005EAC13 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				54ADAFE22C00B352005EAC13 /* TemplateItemCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		54ADAFED2C025C2D005EAC13 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				54ADAFEE2C025C32005EAC13 /* Errors */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		54ADAFEE2C025C32005EAC13 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				54ADAFEF2C025C3B005EAC13 /* EntityCreationError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
 		54B630AA2BF3A1E1007874DF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				544C80AC2BE27DD3004DF718 /* TextFieldTableViewCell.swift */,
 				54DA693A2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift */,
 				54DA693E2BE7920A0062F9B3 /* ToggleTableViewCell.swift */,
+				54ADAFE42C010CDA005EAC13 /* LabeledPickerViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -584,6 +653,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54ADAFE02C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift in Sources */,
 				544501E12BE94B220018B345 /* InventoryItemCreationState.swift in Sources */,
 				54FCFAAD2BF35CAA00FFDF46 /* EditCategoryModel.swift in Sources */,
 				54FD98D72BF4A9D500A60F08 /* ListDetailMenuView.swift in Sources */,
@@ -591,11 +661,14 @@
 				54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */,
 				54B630AD2BF3A1FA007874DF /* DoneBarButtonItem.swift in Sources */,
 				544501EA2BE968DC0018B345 /* String+Extensions.swift in Sources */,
+				54ADAFF02C025C3B005EAC13 /* EntityCreationError.swift in Sources */,
 				54502FC32BED655800D0B284 /* ListItemDetailCell.swift in Sources */,
 				54C766ED2BF64B5D00F0A5CC /* EditInventoryItemModel.swift in Sources */,
 				54FD98D52BF4A88700A60F08 /* ListDetailMenuDelegate.swift in Sources */,
 				54FD98DE2BF4EC5B00A60F08 /* HomeListsModel.swift in Sources */,
 				54FD98DB2BF4EC3D00A60F08 /* HomeListsViewController.swift in Sources */,
+				54ADAFEA2C02560F005EAC13 /* CreateTemplateModel.swift in Sources */,
+				54ADAFEC2C025672005EAC13 /* CreateTemplateObject.swift in Sources */,
 				54C766E92BF62FFB00F0A5CC /* LabelTextFieldView.swift in Sources */,
 				54A74D412BECE895005C0061 /* InventoryItem+CoreDataClass.swift in Sources */,
 				54A74D102BECD181005C0061 /* ListItemsSortOption.swift in Sources */,
@@ -608,6 +681,7 @@
 				54E45C532BE6623500FB3419 /* SelectInventoryItemViewController.swift in Sources */,
 				546211872BE4241D002CE98E /* TemplateSelectionCellView.swift in Sources */,
 				54B630AF2BF3CFF6007874DF /* EditListModel.swift in Sources */,
+				54ADAFE72C025336005EAC13 /* CreateTemplateViewController.swift in Sources */,
 				54C766DF2BF5F63600F0A5CC /* HistoryViewController.swift in Sources */,
 				548AD1712BEBDBC000063F9F /* EditListItemsViewController.swift in Sources */,
 				54DA69382BE6C1240062F9B3 /* CreateItemSheetController.swift in Sources */,
@@ -627,9 +701,11 @@
 				54DA693F2BE7920A0062F9B3 /* ToggleTableViewCell.swift in Sources */,
 				54FCFAA42BF282B600FFDF46 /* CategoryError.swift in Sources */,
 				54B630A92BF3A151007874DF /* CreateInventoryItemModel.swift in Sources */,
+				54ADAFE52C010CDA005EAC13 /* LabeledPickerViewCell.swift in Sources */,
 				547CABCF2BE170350017C3C6 /* groceriesApp.xcdatamodeld in Sources */,
 				547CABB92BE16C0E0017C3C6 /* AppDelegate.swift in Sources */,
 				5478A7C72BE237FF005D1F7D /* UIFont+Extensions.swift in Sources */,
+				54ADAFE32C00B352005EAC13 /* TemplateItemCell.swift in Sources */,
 				54DA693D2BE787260062F9B3 /* UIStackView+Extensions.swift in Sources */,
 				54E45C462BE6228A00FB3419 /* DetailedListViewController.swift in Sources */,
 				547CABBB2BE16C0E0017C3C6 /* SceneDelegate.swift in Sources */,
