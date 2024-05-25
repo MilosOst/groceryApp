@@ -10,12 +10,7 @@ import UIKit
 class HomeRootViewController: UIViewController {
     private let segmentedControl = UISegmentedControl()
     private let listsController = HomeListsViewController()
-    // TODO: Replace with real templates controller
-    private let templatesController: UIViewController = {
-        let controller = UIViewController()
-        controller.view.backgroundColor = .red
-        return controller
-    }()
+    private let templatesController = HomeTemplatesViewController()
     
     private var currentTab: HomeTab?
     private var shownViewController: UIViewController?
@@ -50,7 +45,7 @@ class HomeRootViewController: UIViewController {
     // MARK: - Actions
     @objc func addButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Differentiate between tabs
-        let createVC = createListViewController(for: currentTab ?? .lists)
+        let createVC = creationViewController(for: currentTab ?? .lists)
         let navVC = UINavigationController(rootViewController: createVC)
         if currentTab == .templates {
             navVC.modalPresentationStyle = .formSheet
@@ -62,7 +57,7 @@ class HomeRootViewController: UIViewController {
         present(navVC, animated: true)
     }
     
-    private func createListViewController(for tab: HomeTab) -> UIViewController {
+    private func creationViewController(for tab: HomeTab) -> UIViewController {
         if tab == .lists {
             return CreateListViewController()
         }

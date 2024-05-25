@@ -9,6 +9,6 @@ import Foundation
 
 struct CreateTemplateObject {
     var name: String = ""
-    var sortOrder: ListItemsSortOption = .name
+    var sortOrder: ListItemsSortOption = .category
     var isFavourite: Bool = false
 }

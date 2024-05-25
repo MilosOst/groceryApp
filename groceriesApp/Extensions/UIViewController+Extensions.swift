@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 @nonobjc extension UIViewController {
     func setTitleFont(_ font: UIFont) {
@@ -52,5 +53,9 @@ import UIKit
         willMove(toParent: nil)
         view.removeFromSuperview()
         removeFromParent()
+    }
+    
+    var coreDataContext: NSManagedObjectContext {
+        (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
 }
