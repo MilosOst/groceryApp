@@ -84,6 +84,12 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
         return model.sectionName(for: section)
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            try? model.deleteItem(at: indexPath)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = model.item(at: indexPath)
@@ -106,19 +112,17 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
         var categoriesDidChange = false
         if let changes = notification.userInfo?["updated"] as? Set<NSManagedObject> {
             for object in changes {
-                if let object = object as? Category {
+                if object is Category {
                     categoriesDidChange = true
                 }
             }
         }
         
         // If categories changed, reload data
-        // TODO: What if deleting item? Do not trigger change
         if categoriesDidChange {
             do {
                 try model.loadData()
                 tableView.reloadData()
-                print("Reloading")
             } catch {
                 print(error)
             }
@@ -126,12 +130,39 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
     }
     
     // MARK: - NSFetchedResultsControllerDelegate
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard isTopViewController else { return }
+        tableView.beginUpdates()
+    }
+    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        guard isTopViewController else { return }
         switch type {
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .automatic)
         default:
             break
         }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        guard isTopViewController else { return }
+        
+        switch type {
+        case .insert:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+        case .delete:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        default:
+            tableView.reloadData()
+        }
+    }
+    
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard isTopViewController else { return }
+        tableView.endUpdates()
     }
 }

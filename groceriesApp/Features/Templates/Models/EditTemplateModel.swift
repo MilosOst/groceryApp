@@ -71,6 +71,12 @@ class EditTemplateModel: SelectInventoryItemDelegate {
         fetchedResultsController.fetchedObjects?.first(where: { $0.item == inventoryItem })
     }
     
+    func deleteItem(at indexPath: IndexPath) throws {
+        let item = item(at: indexPath)
+        context.delete(item)
+        try context.save()
+    }
+    
     // MARK: - InventoryItem Selection
     func isItemSelected(_ item: InventoryItem) -> Bool {
         return matchingItem(for: item) != nil
