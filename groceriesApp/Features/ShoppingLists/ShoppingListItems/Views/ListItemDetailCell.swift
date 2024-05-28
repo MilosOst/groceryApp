@@ -7,7 +7,6 @@
 
 import UIKit
 
-// TODO: Add edit function
 protocol ListItemEditDelegate: AnyObject {
     func quantityDidChange(_ cell: ListItemDetailCell, to quantity: String?)
     func unitDidChange(_ cell: ListItemDetailCell, to unit: String?)
@@ -121,12 +120,12 @@ class ListItemDetailCell: UICollectionViewCell, ExpandingTextViewDelegate {
         delegate?.notesDidChange(self, to: text)
     }
     
-    @objc func editPressed(_ sender: UIButton) {
-        delegate?.editPressed(self)
-    }
-    
     // MARK: - Actions
     @objc func deletePressed(_ sender: UIButton) {
         delegate?.removePressed(self)
+    }
+    
+    @objc func editPressed(_ sender: UIButton) {
+        delegate?.editPressed(self)
     }
 }

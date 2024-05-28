@@ -36,6 +36,11 @@ class HomeTemplatesViewController: UITableViewController, NSFetchedResultsContro
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
+    }
+    
     private func setupUI() {
         
     }
@@ -56,6 +61,13 @@ class HomeTemplatesViewController: UITableViewController, NSFetchedResultsContro
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let template = model.template(at: indexPath)
+        let editVC = EditTemplateViewController(template: template)
+        editVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(editVC, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             do {
@@ -66,8 +78,15 @@ class HomeTemplatesViewController: UITableViewController, NSFetchedResultsContro
         }
     }
     
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        // TODO: Present sheet with options for (rename, favourite, delete)?
+    }
+    
     // MARK: - NSFetchedResultsController Delegate
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        // Prevent reloading of item counts when not in view
+        if type == .update && !isTopViewController { return }
+        
         switch type {
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .automatic)

@@ -90,6 +90,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     // MARK: - Collection View Setup
+    // TODO: Remove and use extension
     private func makeLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)

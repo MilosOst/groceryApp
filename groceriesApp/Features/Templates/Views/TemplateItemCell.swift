@@ -22,6 +22,8 @@ class TemplateItemCell: UITableViewCell {
     }
     
     private func setupUI() {
+        // TODO: Fields: Name, Price, Quantity + Unit, Notes
+        // TODO: Alternate: VStack of Name, Quantity, Notes, -> Price on right
         // TODO: Make top HStack display name, quantity ,price | Bottom HStack -> Notes (if exist)
         let containerView = UIStackView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,9 +36,12 @@ class TemplateItemCell: UITableViewCell {
         infoStack.distribution = .fill
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.text = "Test"
         nameLabel.font = .poppinsFont(varation: .light, size: 16)
-        infoStack.addArrangedSubviews([nameLabel])
+        quantityLabel.translatesAutoresizingMaskIntoConstraints = false
+        quantityLabel.font = .poppinsFont(varation: .light, size: 14)
+        quantityLabel.textColor = .secondaryLabel
+        
+        infoStack.addArrangedSubviews([nameLabel, quantityLabel])
         
         containerView.addArrangedSubviews([infoStack])
         contentView.addSubview(containerView)
@@ -48,8 +53,14 @@ class TemplateItemCell: UITableViewCell {
         ])
     }
     
-    func configure(price: Float, quantity: Float, notes: String?, inventoryItem: InventoryItem) {
-        // TODO: Configure with TemplateItem using background context?
-        nameLabel.text = inventoryItem.name
+    func configure(with item: TemplateItem) {
+        nameLabel.text = item.item?.name
+        if item.quantity != 0 {
+            var quantityStr = "\(item.quantity.formatted())"
+            if let unit = item.unit {
+                quantityStr += " " + unit
+            }
+            quantityLabel.text = quantityStr
+        }
     }
 }

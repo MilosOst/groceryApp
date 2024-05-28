@@ -59,6 +59,7 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
     
     private func setupNavbar() {
         title = shoppingList.name
+        setTitleFont(.poppinsFont(varation: .medium, size: 16))
         let optionsButton = UIBarButtonItem()
         optionsButton.image = UIImage(systemName: "ellipsis.circle")
         optionsButton.menu = optionsMenu.menu
@@ -112,7 +113,6 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
         let destVC = EditListItemsViewController(shoppingList: shoppingList, startItem: selectedItem, delegate: self)
         let navVC = UINavigationController(rootViewController: destVC)
         navVC.modalPresentationStyle = .formSheet
-//        navVC.sheetPresentationController?.detents = [.custom(resolver: {_ in return 280})]
         navVC.sheetPresentationController?.detents = [.medium()]
         navVC.sheetPresentationController?.prefersGrabberVisible = true
         navVC.view.backgroundColor = .systemBackground
@@ -192,7 +192,6 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
     
     // MARK: - ListDetailMenuDelegate Methods
     func didSelectSortOption(_ option: ListItemsSortOption) {
-        // TODO: Only reload on change
         let prevOrder = model.sortOrder
         let updatedOrder = model.changedSortOption(to: option)
         if (prevOrder != updatedOrder) {

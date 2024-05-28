@@ -41,6 +41,12 @@
 		54ADAFF22C0264A8005EAC13 /* HomeTemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFF12C0264A8005EAC13 /* HomeTemplatesViewController.swift */; };
 		54ADAFF62C0264C4005EAC13 /* HomeTemplatesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFF52C0264C4005EAC13 /* HomeTemplatesModel.swift */; };
 		54ADAFF82C026773005EAC13 /* TemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFF72C026773005EAC13 /* TemplateCell.swift */; };
+		54ADAFFA2C027DD8005EAC13 /* EditTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFF92C027DD8005EAC13 /* EditTemplateViewController.swift */; };
+		54ADAFFC2C027DDF005EAC13 /* EditTemplateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFFB2C027DDF005EAC13 /* EditTemplateModel.swift */; };
+		54ADAFFE2C03B1A9005EAC13 /* EditTemplateItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFFD2C03B1A9005EAC13 /* EditTemplateItemsViewController.swift */; };
+		54ADB0002C03B1DE005EAC13 /* EditTemplateItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFFF2C03B1DE005EAC13 /* EditTemplateItemsModel.swift */; };
+		54ADB0022C03B373005EAC13 /* TemplateItemEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADB0012C03B373005EAC13 /* TemplateItemEditCell.swift */; };
+		54ADB0042C03B3CC005EAC13 /* UICollectionViewLayout+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADB0032C03B3CC005EAC13 /* UICollectionViewLayout+Extensions.swift */; };
 		54AF986E2BEA7B8F001A5B79 /* ShoppingListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AF986D2BEA7B8F001A5B79 /* ShoppingListItemCell.swift */; };
 		54B630A92BF3A151007874DF /* CreateInventoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B630A82BF3A151007874DF /* CreateInventoryItemModel.swift */; };
 		54B630AD2BF3A1FA007874DF /* DoneBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B630AC2BF3A1FA007874DF /* DoneBarButtonItem.swift */; };
@@ -112,6 +118,12 @@
 		54ADAFF12C0264A8005EAC13 /* HomeTemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTemplatesViewController.swift; sourceTree = "<group>"; };
 		54ADAFF52C0264C4005EAC13 /* HomeTemplatesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTemplatesModel.swift; sourceTree = "<group>"; };
 		54ADAFF72C026773005EAC13 /* TemplateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCell.swift; sourceTree = "<group>"; };
+		54ADAFF92C027DD8005EAC13 /* EditTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateViewController.swift; sourceTree = "<group>"; };
+		54ADAFFB2C027DDF005EAC13 /* EditTemplateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateModel.swift; sourceTree = "<group>"; };
+		54ADAFFD2C03B1A9005EAC13 /* EditTemplateItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateItemsViewController.swift; sourceTree = "<group>"; };
+		54ADAFFF2C03B1DE005EAC13 /* EditTemplateItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateItemsModel.swift; sourceTree = "<group>"; };
+		54ADB0012C03B373005EAC13 /* TemplateItemEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateItemEditCell.swift; sourceTree = "<group>"; };
+		54ADB0032C03B3CC005EAC13 /* UICollectionViewLayout+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+Extensions.swift"; sourceTree = "<group>"; };
 		54AF986D2BEA7B8F001A5B79 /* ShoppingListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListItemCell.swift; sourceTree = "<group>"; };
 		54B630A82BF3A151007874DF /* CreateInventoryItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInventoryItemModel.swift; sourceTree = "<group>"; };
 		54B630AC2BF3A1FA007874DF /* DoneBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneBarButtonItem.swift; sourceTree = "<group>"; };
@@ -172,6 +184,8 @@
 			children = (
 				54ADAFE62C025336005EAC13 /* CreateTemplateViewController.swift */,
 				54ADAFF12C0264A8005EAC13 /* HomeTemplatesViewController.swift */,
+				54ADAFF92C027DD8005EAC13 /* EditTemplateViewController.swift */,
+				54ADAFFD2C03B1A9005EAC13 /* EditTemplateItemsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -182,6 +196,8 @@
 				54ADAFE92C02560F005EAC13 /* CreateTemplateModel.swift */,
 				54ADAFEB2C025672005EAC13 /* CreateTemplateObject.swift */,
 				54ADAFF52C0264C4005EAC13 /* HomeTemplatesModel.swift */,
+				54ADAFFB2C027DDF005EAC13 /* EditTemplateModel.swift */,
+				54ADAFFF2C03B1DE005EAC13 /* EditTemplateItemsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -256,6 +272,7 @@
 				544501E92BE968DC0018B345 /* String+Extensions.swift */,
 				54D864642BF206B900BAB0C3 /* UIAlertController+Extensions.swift */,
 				54ADAFDF2C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift */,
+				54ADB0032C03B3CC005EAC13 /* UICollectionViewLayout+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -363,6 +380,7 @@
 			children = (
 				54ADAFE22C00B352005EAC13 /* TemplateItemCell.swift */,
 				54ADAFF72C026773005EAC13 /* TemplateCell.swift */,
+				54ADB0012C03B373005EAC13 /* TemplateItemEditCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -668,12 +686,15 @@
 				54FD98D72BF4A9D500A60F08 /* ListDetailMenuView.swift in Sources */,
 				54FD98E42BF5173200A60F08 /* HomeRootViewController.swift in Sources */,
 				54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */,
+				54ADB0022C03B373005EAC13 /* TemplateItemEditCell.swift in Sources */,
 				54B630AD2BF3A1FA007874DF /* DoneBarButtonItem.swift in Sources */,
 				544501EA2BE968DC0018B345 /* String+Extensions.swift in Sources */,
+				54ADAFFA2C027DD8005EAC13 /* EditTemplateViewController.swift in Sources */,
 				54ADAFF02C025C3B005EAC13 /* EntityCreationError.swift in Sources */,
 				54502FC32BED655800D0B284 /* ListItemDetailCell.swift in Sources */,
 				54C766ED2BF64B5D00F0A5CC /* EditInventoryItemModel.swift in Sources */,
 				54FD98D52BF4A88700A60F08 /* ListDetailMenuDelegate.swift in Sources */,
+				54ADAFFE2C03B1A9005EAC13 /* EditTemplateItemsViewController.swift in Sources */,
 				54FD98DE2BF4EC5B00A60F08 /* HomeListsModel.swift in Sources */,
 				54FD98DB2BF4EC3D00A60F08 /* HomeListsViewController.swift in Sources */,
 				54ADAFEA2C02560F005EAC13 /* CreateTemplateModel.swift in Sources */,
@@ -691,12 +712,14 @@
 				54E45C532BE6623500FB3419 /* SelectInventoryItemViewController.swift in Sources */,
 				546211872BE4241D002CE98E /* TemplateSelectionCellView.swift in Sources */,
 				54B630AF2BF3CFF6007874DF /* EditListModel.swift in Sources */,
+				54ADAFFC2C027DDF005EAC13 /* EditTemplateModel.swift in Sources */,
 				54ADAFE72C025336005EAC13 /* CreateTemplateViewController.swift in Sources */,
 				54C766DF2BF5F63600F0A5CC /* HistoryViewController.swift in Sources */,
 				548AD1712BEBDBC000063F9F /* EditListItemsViewController.swift in Sources */,
 				54DA69382BE6C1240062F9B3 /* CreateItemSheetController.swift in Sources */,
 				54ADAFF62C0264C4005EAC13 /* HomeTemplatesModel.swift in Sources */,
 				544C80AD2BE27DD3004DF718 /* TextFieldTableViewCell.swift in Sources */,
+				54ADB0042C03B3CC005EAC13 /* UICollectionViewLayout+Extensions.swift in Sources */,
 				54AF986E2BEA7B8F001A5B79 /* ShoppingListItemCell.swift in Sources */,
 				54E45C442BE5734E00FB3419 /* NoTemplatesViewCell.swift in Sources */,
 				547F4A902BF157FC0055C580 /* ShoppingListCell.swift in Sources */,
@@ -715,6 +738,7 @@
 				54ADAFE52C010CDA005EAC13 /* LabeledPickerViewCell.swift in Sources */,
 				547CABCF2BE170350017C3C6 /* groceriesApp.xcdatamodeld in Sources */,
 				547CABB92BE16C0E0017C3C6 /* AppDelegate.swift in Sources */,
+				54ADB0002C03B1DE005EAC13 /* EditTemplateItemsModel.swift in Sources */,
 				5478A7C72BE237FF005D1F7D /* UIFont+Extensions.swift in Sources */,
 				54ADAFE32C00B352005EAC13 /* TemplateItemCell.swift in Sources */,
 				54DA693D2BE787260062F9B3 /* UIStackView+Extensions.swift in Sources */,
