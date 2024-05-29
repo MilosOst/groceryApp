@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		541BB91D2C07999500F37E59 /* EditTemplateMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */; };
+		541BB9222C07B94100F37E59 /* TemplateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB9212C07B94100F37E59 /* TemplateValidator.swift */; };
 		544501DE2BE940770018B345 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501DD2BE940770018B345 /* UIViewController+Extensions.swift */; };
 		544501E12BE94B220018B345 /* InventoryItemCreationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501E02BE94B220018B345 /* InventoryItemCreationState.swift */; };
 		544501EA2BE968DC0018B345 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501E92BE968DC0018B345 /* String+Extensions.swift */; };
@@ -82,6 +84,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateMenuView.swift; sourceTree = "<group>"; };
+		541BB9212C07B94100F37E59 /* TemplateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateValidator.swift; sourceTree = "<group>"; };
 		544501DD2BE940770018B345 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		544501E02BE94B220018B345 /* InventoryItemCreationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemCreationState.swift; sourceTree = "<group>"; };
 		544501E92BE968DC0018B345 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 				54ADAFF52C0264C4005EAC13 /* HomeTemplatesModel.swift */,
 				54ADAFFB2C027DDF005EAC13 /* EditTemplateModel.swift */,
 				54ADAFFF2C03B1DE005EAC13 /* EditTemplateItemsModel.swift */,
+				541BB9212C07B94100F37E59 /* TemplateValidator.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -381,6 +386,7 @@
 				54ADAFE22C00B352005EAC13 /* TemplateItemCell.swift */,
 				54ADAFF72C026773005EAC13 /* TemplateCell.swift */,
 				54ADB0012C03B373005EAC13 /* TemplateItemEditCell.swift */,
+				541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -693,6 +699,7 @@
 				54ADAFF02C025C3B005EAC13 /* EntityCreationError.swift in Sources */,
 				54502FC32BED655800D0B284 /* ListItemDetailCell.swift in Sources */,
 				54C766ED2BF64B5D00F0A5CC /* EditInventoryItemModel.swift in Sources */,
+				541BB9222C07B94100F37E59 /* TemplateValidator.swift in Sources */,
 				54FD98D52BF4A88700A60F08 /* ListDetailMenuDelegate.swift in Sources */,
 				54ADAFFE2C03B1A9005EAC13 /* EditTemplateItemsViewController.swift in Sources */,
 				54FD98DE2BF4EC5B00A60F08 /* HomeListsModel.swift in Sources */,
@@ -739,6 +746,7 @@
 				547CABCF2BE170350017C3C6 /* groceriesApp.xcdatamodeld in Sources */,
 				547CABB92BE16C0E0017C3C6 /* AppDelegate.swift in Sources */,
 				54ADB0002C03B1DE005EAC13 /* EditTemplateItemsModel.swift in Sources */,
+				541BB91D2C07999500F37E59 /* EditTemplateMenuView.swift in Sources */,
 				5478A7C72BE237FF005D1F7D /* UIFont+Extensions.swift in Sources */,
 				54ADAFE32C00B352005EAC13 /* TemplateItemCell.swift in Sources */,
 				54DA693D2BE787260062F9B3 /* UIStackView+Extensions.swift in Sources */,

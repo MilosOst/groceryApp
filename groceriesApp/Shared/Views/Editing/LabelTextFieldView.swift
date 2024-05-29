@@ -7,8 +7,6 @@
 
 import UIKit
 
-typealias Callback = ((String?) -> Void)?
-
 /// Custom UITextField with a UILabel that sends focus to the text field.
 /// - NOTE: Only supports text validation for .decimalPad UIKeyboardType
 class LabelTextFieldView: UIView, UITextFieldDelegate {
@@ -50,7 +48,6 @@ class LabelTextFieldView: UIView, UITextFieldDelegate {
         textField.delegate = self
         textField.addTarget(self, action: #selector(textDidChange(_:)), for: .editingChanged)
             
-        // TODO: Add on change
         stackView.addArrangedSubviews([label, textField])
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
         stackView.isLayoutMarginsRelativeArrangement = true

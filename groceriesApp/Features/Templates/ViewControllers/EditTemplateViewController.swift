@@ -10,9 +10,12 @@ import CoreData
 
 private let cellID = "TemplateItemCell"
 
-class EditTemplateViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    
+class EditTemplateViewController: UITableViewController, NSFetchedResultsControllerDelegate, EditTemplateMenuDelegate {
     private var model: EditTemplateModel!
+    private lazy var optionsMenu: EditTemplateMenuView = {
+        let sortOrder = ListItemsSortOption(rawValue: model.template.sortOrder) ?? .category
+        return EditTemplateMenuView(sortOrder: sortOrder, delegate: self)
+    }()
     
     init(template: Template) {
         super.init(style: .grouped)
@@ -54,7 +57,7 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
         setTitleFont(.poppinsFont(varation: .medium, size: 16))
         let optionsButton = UIBarButtonItem()
         optionsButton.image = UIImage(systemName: "ellipsis.circle")
-        // TODO: Add options menu
+        optionsButton.menu = optionsMenu.menu
         navigationItem.rightBarButtonItem = optionsButton
         navigationItem.backBarButtonItem = .createEmptyButton()
     }
@@ -164,5 +167,51 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard isTopViewController else { return }
         tableView.endUpdates()
+    }
+    
+    // MARK: - Options Menu Delegate
+    func didSelectSortOption(_ option: ListItemsSortOption) {
+        if (model.setSortOrder(option)) {
+            tableView.reloadData()
+        }
+    }
+    
+    func didSelectCreateList() {
+        do {
+            let newList = try model.createList()
+            navigationController?.pushViewController(DetailedListViewController(list: newList), animated: true)
+        } catch {
+            print(error)
+            presentPlainErrorAlert()
+        }
+    }
+    
+    func didSelectRename() {
+        let alert = UIAlertController.makeTextFieldAlert(title: "Rename Template", message: "Enter the new name for the template below.", placeholder: "Name", text: model.templateName, handler: { [self] newName in
+            do {
+                try model.setName(to: newName)
+                title = model.templateName
+            } catch EntityCreationError.emptyName {
+                presentAlert(title: "Invalid Name", message: "Template name must not be empty.")
+            } catch EntityCreationError.duplicateName {
+                presentAlert(title: "Duplicate Name", message: "This name is already taken.")
+            } catch {
+                presentPlainErrorAlert()
+            }
+        })
+        present(alert, animated: true)
+    }
+    
+    func didSelectDelete() {
+        let alert = UIAlertController.makeDeleteDialog(title: "Delete List", message: "This action cannot be undone.", handler: { [self] _ in
+            do {
+                try model.deleteTemplate()
+                navigationController?.popViewController(animated: true)
+            } catch {
+                presentPlainErrorAlert()
+            }
+        })
+        
+        present(alert, animated: true)
     }
 }

@@ -26,7 +26,6 @@ class HomeTemplatesViewController: UITableViewController, NSFetchedResultsContro
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(TemplateCell.self, forCellReuseIdentifier: cellID)
-        setupUI()
         
         do {
             try model.loadData()
@@ -40,13 +39,8 @@ class HomeTemplatesViewController: UITableViewController, NSFetchedResultsContro
         super.viewWillAppear(true)
         tableView.reloadData()
     }
-    
-    private func setupUI() {
-        
-    }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -84,8 +78,8 @@ class HomeTemplatesViewController: UITableViewController, NSFetchedResultsContro
     
     // MARK: - NSFetchedResultsController Delegate
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        // Prevent reloading of item counts when not in view
-        if type == .update && !isTopViewController { return }
+        // Prevent updates when not visible
+        guard viewIfLoaded?.window != nil else { return }
         
         switch type {
         case .update:
