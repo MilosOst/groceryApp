@@ -10,22 +10,16 @@ import CoreData
 
 private let cellIdentifier = "ItemCell"
 
-class DetailedListViewController: UITableViewController, NSFetchedResultsControllerDelegate, ListDetailMenuDelegate {
-    private let shoppingList: ShoppingList
-    private lazy var model: EditListModel = {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let model = EditListModel(context: context, list: shoppingList, fetchedResultsControllerDelegate: self)
-        return model
+class EditShoppingListViewController: UITableViewController, NSFetchedResultsControllerDelegate, EditListMenuDelegate {
+    private var model: EditListModel!
+    private lazy var optionsMenu: EditListMenuView = {
+        return EditListMenuView(sortOrder: ListItemsSortOption(rawValue: model.list.sortOrder) ?? .category, delegate: self)
     }()
-    
     private let middleButton = UIBarButtonItem()
-    private lazy var optionsMenu: ListDetailMenuView = {
-        return ListDetailMenuView(sortOption: ListItemsSortOption(rawValue: shoppingList.sortOrder) ?? .category, delegate: self)
-    }()
     
     init(list: ShoppingList) {
-        self.shoppingList = list
         super.init(style: .grouped)
+        self.model = EditListModel(list: list, context: coreDataContext, delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -35,12 +29,13 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(contextDidChange(_:)), name: .NSManagedObjectContextObjectsDidChange, object: nil)
         
         do {
             try model.loadData()
             tableView.reloadData()
         } catch {
-            print(error)
+            presentPlainErrorAlert()
         }
     }
     
@@ -54,16 +49,16 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
         tableView.register(ShoppingListItemCell.self, forCellReuseIdentifier: cellIdentifier)
         setupNavbar()
         setupToolbar()
-        setPlainBackButton()
     }
     
     private func setupNavbar() {
-        title = shoppingList.name
+        title = model.listName
         setTitleFont(.poppinsFont(varation: .medium, size: 16))
         let optionsButton = UIBarButtonItem()
         optionsButton.image = UIImage(systemName: "ellipsis.circle")
         optionsButton.menu = optionsMenu.menu
         navigationItem.rightBarButtonItem = optionsButton
+        navigationItem.backBarButtonItem = .createEmptyButton()
     }
     
     private func setupToolbar() {
@@ -110,8 +105,10 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedItem = model.item(at: indexPath)
         
-        let destVC = EditListItemsViewController(shoppingList: shoppingList, startItem: selectedItem, delegate: self)
-        let navVC = UINavigationController(rootViewController: destVC)
+//        let destVC = EditListItemsViewController(shoppingList: shoppingList, startItem: selectedItem, delegate: self)
+        let item = model.item(at: indexPath)
+        let editVC = EditListItemsViewController(shoppingList: model.list, startItem: item)
+        let navVC = UINavigationController(rootViewController: editVC)
         navVC.modalPresentationStyle = .formSheet
         navVC.sheetPresentationController?.detents = [.medium()]
         navVC.sheetPresentationController?.prefersGrabberVisible = true
@@ -119,14 +116,42 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
         present(navVC, animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            try? model.deleteItem(at: indexPath)
+        }
+    }
+    
+    // MARK: - Actions
+    @objc func addButtonPressed(_ sender: UIBarButtonItem) {
+        let destVC = SelectInventoryItemViewController(delegate: model)
+        navigationController?.pushViewController(destVC, animated: true)
+    }
+    
+    private func checkButtonPressed(_ sender: ShoppingListItemCell) {
+        guard let indexPath = tableView.indexPath(for: sender) else { return }
+        do {
+            try model.checkedItem(at: indexPath)
+        } catch {
+            presentPlainErrorAlert()
+        }
+    }
+    
+    @objc func contextDidChange(_ notification: Notification) {
+        var categoriesDidChange = false
+        if let changes = notification.userInfo?["updated"] as? Set<NSManagedObject> {
+            for object in changes {
+                if object is Category {
+                    categoriesDidChange = true
+                }
+            }
+        }
+        
+        // If categories changed, reload data
+        if categoriesDidChange {
             do {
-                try model.deleteItem(at: indexPath)
+                try model.loadData()
+                tableView.reloadData()
             } catch {
                 print(error)
             }
@@ -156,45 +181,26 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        guard isTopViewController else { return }
-        self.tableView.endUpdates()
-    }
-    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         guard isTopViewController else { return }
-        
         switch type {
         case .insert:
             tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
         case .delete:
-            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
         default:
             tableView.reloadData()
         }
     }
     
-    // MARK: - Actions
-    @objc func addButtonPressed(_ sender: UIBarButtonItem) {
-        // TODO: Present InventoryItem selection
-        let destVC = SelectInventoryItemViewController(delegate: model)
-        navigationController?.pushViewController(destVC, animated: true)
-    }
-    
-    private func checkButtonPressed(_ sender: ShoppingListItemCell) {
-        guard let indexPath = tableView.indexPath(for: sender) else { return }
-        do {
-            try model.checkedItem(at: indexPath)
-        } catch {
-            presentPlainErrorAlert()
-        }
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard isTopViewController else { return }
+        self.tableView.endUpdates()
     }
     
     // MARK: - ListDetailMenuDelegate Methods
     func didSelectSortOption(_ option: ListItemsSortOption) {
-        let prevOrder = model.sortOrder
-        let updatedOrder = model.changedSortOption(to: option)
-        if (prevOrder != updatedOrder) {
+        if (model.setSortOrder(option)) {
             tableView.reloadData()
         }
     }
@@ -211,21 +217,26 @@ class DetailedListViewController: UITableViewController, NSFetchedResultsControl
         present(alert, animated: true)
     }
     
+    func didSelectRename() {
+        let alert = UIAlertController.makeTextFieldAlert(title: "Rename List", message: "Enter the new name for the list below.", placeholder: "Name", text: model.listName, handler: { [self] newName in
+            do {
+                try model.setName(to: newName)
+                title = model.listName
+            } catch EntityCreationError.emptyName {
+                presentAlert(title: "Invalid Name", message: "Template name must not be empty.")
+            } catch {
+                presentPlainErrorAlert()
+            }
+        })
+        present(alert, animated: true)
+    }
+    
     func didSelectMarkComplete() {
         do {
             try model.markComplete()
             navigationController?.popViewController(animated: true)
         } catch {
             presentPlainErrorAlert()
-        }
-    }
-}
-
-// Add delegate conformance to reload rows when InventoryItem changes
-extension DetailedListViewController: ListEditDelegate {
-    func didChangeItemUnit(_ item: ListItem) {
-        if let indexPath = model.indexPath(forItem: item) {
-            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
 }

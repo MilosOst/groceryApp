@@ -7,8 +7,9 @@
 
 import Foundation
 
-protocol ListDetailMenuDelegate: AnyObject {
+protocol EditListMenuDelegate: AnyObject {
     func didSelectSortOption(_ option: ListItemsSortOption)
     func didSelectDelete()
     func didSelectMarkComplete()
+    func didSelectRename()
 }

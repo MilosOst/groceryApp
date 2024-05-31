@@ -69,7 +69,7 @@ class EditTemplateItemsViewController: UIViewController, UICollectionViewDelegat
         navigationItem.leftBarButtonItem = closeButton
         let doneButton = DoneBarButtonItem(target: self, selector: #selector(closeSheet(_:)))
         navigationItem.rightBarButtonItem = doneButton
-        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
+//        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
         title = model.startItem.item?.name
         setTitleFont(.poppinsFont(varation: .medium, size: 16))
     }
@@ -91,7 +91,6 @@ class EditTemplateItemsViewController: UIViewController, UICollectionViewDelegat
     
     // MARK: - CollectionView Delegate
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard collectionView.indexPathsForVisibleItems.count > 0 else { return }
         if collectionView.indexPathsForVisibleItems.count > 0 {
             let indexPath = collectionView.indexPathsForVisibleItems[0]
             let item = model.item(at: indexPath)

@@ -9,49 +9,56 @@ import Foundation
 import CoreData
 
 class EditListModel: SelectInventoryItemDelegate {
+    let list: ShoppingList
     private let context: NSManagedObjectContext
     private var fetchedResultsController: NSFetchedResultsController<ListItem>!
-    private let list: ShoppingList
     private weak var fetchedResultsControllerDelegate: NSFetchedResultsControllerDelegate?
     
-    init(context: NSManagedObjectContext, list: ShoppingList, fetchedResultsControllerDelegate: NSFetchedResultsControllerDelegate? = nil) {
-        self.context = context
+    init(list: ShoppingList, context: NSManagedObjectContext, delegate: NSFetchedResultsControllerDelegate?) {
         self.list = list
-        self.fetchedResultsControllerDelegate = fetchedResultsControllerDelegate
-        let controller = createFetchedResultsController(ListItemsSortOption(rawValue: list.sortOrder) ?? .category)
-        controller.delegate = fetchedResultsControllerDelegate
-        self.fetchedResultsController = controller
+        self.context = context
+        self.fetchedResultsControllerDelegate = delegate
+        self.fetchedResultsController = createFetchedResultsController(with: ListItemsSortOption(rawValue: list.sortOrder) ?? .category)
+        self.fetchedResultsController.delegate = delegate
     }
     
-    private func createFetchedResultsController(_ sortOption: ListItemsSortOption) -> NSFetchedResultsController<ListItem> {
+    private func createFetchedResultsController(with sortOrder: ListItemsSortOption) -> NSFetchedResultsController<ListItem> {
         let fetchRequest = ListItem.fetchRequest()
         let predicate = NSPredicate(format: "list == %@", list)
-        let sortDescriptors = [
+        var sortDescriptors = [
             NSSortDescriptor(key: #keyPath(ListItem.isChecked), ascending: true),
             NSSortDescriptor(key: #keyPath(ListItem.item.name), ascending: true)
         ]
-        fetchRequest.predicate = predicate
-        fetchRequest.sortDescriptors = sortDescriptors
+        
         
         // If sorting by category, need to add category sort descriptor and section keypath
         var sectionKeyPath: String? = nil
-        if sortOption == .category {
+        if sortOrder == .category {
             let sortByCategory = NSSortDescriptor(key: #keyPath(ListItem.item.category.name), ascending: true)
-            fetchRequest.sortDescriptors?.insert(sortByCategory, at: 0)
+            sortDescriptors.insert(sortByCategory, at: 0)
             sectionKeyPath = #keyPath(ListItem.item.categoryName)
         }
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sortDescriptors
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: sectionKeyPath, cacheName: nil)
         return controller
     }
     
-    // MARK: - Accessors
-    var numberOfSections: Int {
-        fetchedResultsController.sections?.count ?? 0
+    func loadData() throws {
+        try fetchedResultsController.performFetch()
+    }
+    
+    var listName: String {
+        list.name!
     }
     
     var numberOfItems: Int {
         fetchedResultsController.fetchedObjects?.count ?? 0
+    }
+    
+    var numberOfSections: Int {
+        fetchedResultsController.sections?.count ?? 0
     }
     
     func numberOfItemsInSection(_ section: Int) -> Int {
@@ -62,26 +69,17 @@ class EditListModel: SelectInventoryItemDelegate {
         ListItemsSortOption(rawValue: list.sortOrder) ?? .category
     }
     
+    func sectionName(for section: Int) -> String {
+        fetchedResultsController.sections?[section].name ?? ""
+    }
+    
     func item(at indexPath: IndexPath) -> ListItem {
         fetchedResultsController.object(at: indexPath)
-    }
-    
-    func indexPath(forItem: ListItem) -> IndexPath? {
-        fetchedResultsController.indexPath(forObject: forItem)
-    }
-    
-    func sectionName(for section: Int) -> String? {
-        return fetchedResultsController.sections?[section].name
     }
     
     /// Searches the ListItems to see if there is one using the provided inventory item.
     private func matchingListItem(with item: InventoryItem) -> ListItem? {
         fetchedResultsController.fetchedObjects?.first(where: { $0.item == item })
-    }
-    
-    // MARK: - Methods
-    func loadData() throws {
-        try fetchedResultsController.performFetch()
     }
     
     func checkedItem(at indexPath: IndexPath) throws {
@@ -93,6 +91,33 @@ class EditListModel: SelectInventoryItemDelegate {
     func deleteItem(at indexPath: IndexPath) throws {
         let object = fetchedResultsController.object(at: indexPath)
         context.delete(object)
+        try context.save()
+    }
+    
+    // MARK: - ShoppingList Editing Methods
+    func setSortOrder(_ order: ListItemsSortOption) -> Bool {
+        guard order.rawValue != list.sortOrder else { return false }
+        let newController = createFetchedResultsController(with: order)
+        do {
+            try newController.performFetch()
+            list.sortOrder = order.rawValue
+            try context.save()
+        } catch {
+            print(error)
+            return false
+        }
+        
+        // Remove delegate from previous controller and update to new one
+        fetchedResultsController.delegate = nil
+        newController.delegate = fetchedResultsControllerDelegate
+        fetchedResultsController = newController
+        return true
+    }
+    
+    func setName(to name: String) throws {
+        let name = name.trimmed
+        guard !name.isEmpty else { throw EntityCreationError.emptyName }
+        list.name = name
         try context.save()
     }
     
@@ -109,27 +134,6 @@ class EditListModel: SelectInventoryItemDelegate {
         try context.save()
     }
     
-    /// Handles the changes to the sort order of the list items.
-    /// - Returns: The sort option after the operation was performed.
-    func changedSortOption(to option: ListItemsSortOption) -> ListItemsSortOption {
-        guard option.rawValue != list.sortOrder else { return option }
-        let newController = createFetchedResultsController(option)
-        do {
-            try newController.performFetch()
-            list.sortOrder = option.rawValue
-            try context.save()
-        } catch {
-            print(error)
-            return ListItemsSortOption(rawValue: list.sortOrder) ?? .category
-        }
-        
-        // Update delegates upon succcess
-        fetchedResultsController.delegate = nil
-        newController.delegate = fetchedResultsControllerDelegate
-        fetchedResultsController = newController
-        return option
-    }
-    
     // MARK: - SelectInventoryItemDelegate Methods
     func didToggleItem(_ item: InventoryItem) {
         // Check if item already exists
@@ -142,6 +146,7 @@ class EditListModel: SelectInventoryItemDelegate {
                 let listItem = ListItem(context: context)
                 listItem.item = item
                 listItem.quantity = 1
+                listItem.unit = item.unit
                 list.addToItems(listItem)
                 try context.save()
             }

@@ -30,6 +30,7 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
         super.viewDidLoad()
         tableView.register(TemplateItemCell.self, forCellReuseIdentifier: cellID)
         setupUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(contextDidChange(_:)), name: .NSManagedObjectContextObjectsDidChange, object: nil)
         
         do {
             try model.loadData()
@@ -38,8 +39,6 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
             print(error)
             presentPlainErrorAlert()
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(contextDidChange(_:)), name: .NSManagedObjectContextObjectsDidChange, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,7 +151,6 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         guard isTopViewController else { return }
-        
         switch type {
         case .insert:
             tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
@@ -179,7 +177,7 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
     func didSelectCreateList() {
         do {
             let newList = try model.createList()
-            navigationController?.pushViewController(DetailedListViewController(list: newList), animated: true)
+            navigationController?.pushViewController(EditShoppingListViewController(list: newList), animated: true)
         } catch {
             print(error)
             presentPlainErrorAlert()

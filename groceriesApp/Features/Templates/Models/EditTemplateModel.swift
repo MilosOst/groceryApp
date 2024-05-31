@@ -12,7 +12,6 @@ class EditTemplateModel: SelectInventoryItemDelegate {
     let template: Template
     private let context: NSManagedObjectContext
     private weak var delegate: NSFetchedResultsControllerDelegate?
-    
     private var fetchedResultsController: NSFetchedResultsController<TemplateItem>!
     
     init(template: Template, context: NSManagedObjectContext, delegate: NSFetchedResultsControllerDelegate?) {
@@ -78,6 +77,7 @@ class EditTemplateModel: SelectInventoryItemDelegate {
     }
     
     // MARK: Template Editing Methods
+    
     /// Updates the Template's sort order to the given order and refetches the data.
     /// - Returns: Boolean indicating whether a change was successfully made
     func setSortOrder(_ order: ListItemsSortOption) -> Bool {

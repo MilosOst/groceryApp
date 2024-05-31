@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		541BB91D2C07999500F37E59 /* EditTemplateMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */; };
 		541BB9222C07B94100F37E59 /* TemplateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB9212C07B94100F37E59 /* TemplateValidator.swift */; };
+		543A8E322C08FD7E0087EC3D /* BadgeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543A8E312C08FD7E0087EC3D /* BadgeViewFactory.swift */; };
 		544501DE2BE940770018B345 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501DD2BE940770018B345 /* UIViewController+Extensions.swift */; };
 		544501E12BE94B220018B345 /* InventoryItemCreationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501E02BE94B220018B345 /* InventoryItemCreationState.swift */; };
 		544501EA2BE968DC0018B345 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501E92BE968DC0018B345 /* String+Extensions.swift */; };
 		544501EC2BE96A340018B345 /* InventoryItemSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501EB2BE96A340018B345 /* InventoryItemSelectionCell.swift */; };
 		544C80A92BE2755D004DF718 /* CreateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544C80A82BE2755D004DF718 /* CreateListViewController.swift */; };
 		544C80AD2BE27DD3004DF718 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544C80AC2BE27DD3004DF718 /* TextFieldTableViewCell.swift */; };
-		54502FC32BED655800D0B284 /* ListItemDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54502FC22BED655800D0B284 /* ListItemDetailCell.swift */; };
+		54502FC32BED655800D0B284 /* EditListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54502FC22BED655800D0B284 /* EditListItemCell.swift */; };
 		546211872BE4241D002CE98E /* TemplateSelectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546211862BE4241D002CE98E /* TemplateSelectionCellView.swift */; };
 		5478A7C02BE23718005D1F7D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BB2BE23718005D1F7D /* Poppins-Regular.ttf */; };
 		5478A7C12BE23718005D1F7D /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BC2BE23718005D1F7D /* Poppins-Thin.ttf */; };
@@ -69,15 +70,15 @@
 		54DB50E52BE7F21E0050C2CF /* CategorySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DB50E42BE7F21E0050C2CF /* CategorySelectionViewController.swift */; };
 		54DB50E92BE7FF850050C2CF /* NoCategoriesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DB50E82BE7FF850050C2CF /* NoCategoriesViewCell.swift */; };
 		54E45C442BE5734E00FB3419 /* NoTemplatesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E45C432BE5734E00FB3419 /* NoTemplatesViewCell.swift */; };
-		54E45C462BE6228A00FB3419 /* DetailedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E45C452BE6228A00FB3419 /* DetailedListViewController.swift */; };
+		54E45C462BE6228A00FB3419 /* EditShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E45C452BE6228A00FB3419 /* EditShoppingListViewController.swift */; };
 		54E45C532BE6623500FB3419 /* SelectInventoryItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E45C522BE6623500FB3419 /* SelectInventoryItemViewController.swift */; };
 		54FCFAA02BF23B8B00FFDF46 /* CategorySelectorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFA9F2BF23B8B00FFDF46 /* CategorySelectorModel.swift */; };
 		54FCFAA42BF282B600FFDF46 /* CategoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAA32BF282B600FFDF46 /* CategoryError.swift */; };
 		54FCFAA62BF2B18500FFDF46 /* SelectInventoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAA52BF2B18500FFDF46 /* SelectInventoryItemModel.swift */; };
 		54FCFAAB2BF3574400FFDF46 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAAA2BF3574400FFDF46 /* EditCategoryViewController.swift */; };
 		54FCFAAD2BF35CAA00FFDF46 /* EditCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAAC2BF35CAA00FFDF46 /* EditCategoryModel.swift */; };
-		54FD98D52BF4A88700A60F08 /* ListDetailMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FD98D42BF4A88700A60F08 /* ListDetailMenuDelegate.swift */; };
-		54FD98D72BF4A9D500A60F08 /* ListDetailMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FD98D62BF4A9D500A60F08 /* ListDetailMenuView.swift */; };
+		54FD98D52BF4A88700A60F08 /* EditListMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FD98D42BF4A88700A60F08 /* EditListMenuDelegate.swift */; };
+		54FD98D72BF4A9D500A60F08 /* EditListMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FD98D62BF4A9D500A60F08 /* EditListMenuView.swift */; };
 		54FD98DB2BF4EC3D00A60F08 /* HomeListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FD98DA2BF4EC3D00A60F08 /* HomeListsViewController.swift */; };
 		54FD98DE2BF4EC5B00A60F08 /* HomeListsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FD98DD2BF4EC5B00A60F08 /* HomeListsModel.swift */; };
 		54FD98E42BF5173200A60F08 /* HomeRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FD98E32BF5173200A60F08 /* HomeRootViewController.swift */; };
@@ -86,13 +87,14 @@
 /* Begin PBXFileReference section */
 		541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateMenuView.swift; sourceTree = "<group>"; };
 		541BB9212C07B94100F37E59 /* TemplateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateValidator.swift; sourceTree = "<group>"; };
+		543A8E312C08FD7E0087EC3D /* BadgeViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeViewFactory.swift; sourceTree = "<group>"; };
 		544501DD2BE940770018B345 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		544501E02BE94B220018B345 /* InventoryItemCreationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemCreationState.swift; sourceTree = "<group>"; };
 		544501E92BE968DC0018B345 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		544501EB2BE96A340018B345 /* InventoryItemSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemSelectionCell.swift; sourceTree = "<group>"; };
 		544C80A82BE2755D004DF718 /* CreateListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListViewController.swift; sourceTree = "<group>"; };
 		544C80AC2BE27DD3004DF718 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
-		54502FC22BED655800D0B284 /* ListItemDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemDetailCell.swift; sourceTree = "<group>"; };
+		54502FC22BED655800D0B284 /* EditListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListItemCell.swift; sourceTree = "<group>"; };
 		546211862BE4241D002CE98E /* TemplateSelectionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateSelectionCellView.swift; sourceTree = "<group>"; };
 		5478A7BB2BE23718005D1F7D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		5478A7BC2BE23718005D1F7D /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
@@ -148,15 +150,15 @@
 		54DB50E42BE7F21E0050C2CF /* CategorySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectionViewController.swift; sourceTree = "<group>"; };
 		54DB50E82BE7FF850050C2CF /* NoCategoriesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCategoriesViewCell.swift; sourceTree = "<group>"; };
 		54E45C432BE5734E00FB3419 /* NoTemplatesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTemplatesViewCell.swift; sourceTree = "<group>"; };
-		54E45C452BE6228A00FB3419 /* DetailedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedListViewController.swift; sourceTree = "<group>"; };
+		54E45C452BE6228A00FB3419 /* EditShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShoppingListViewController.swift; sourceTree = "<group>"; };
 		54E45C522BE6623500FB3419 /* SelectInventoryItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInventoryItemViewController.swift; sourceTree = "<group>"; };
 		54FCFA9F2BF23B8B00FFDF46 /* CategorySelectorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorModel.swift; sourceTree = "<group>"; };
 		54FCFAA32BF282B600FFDF46 /* CategoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryError.swift; sourceTree = "<group>"; };
 		54FCFAA52BF2B18500FFDF46 /* SelectInventoryItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInventoryItemModel.swift; sourceTree = "<group>"; };
 		54FCFAAA2BF3574400FFDF46 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 		54FCFAAC2BF35CAA00FFDF46 /* EditCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryModel.swift; sourceTree = "<group>"; };
-		54FD98D42BF4A88700A60F08 /* ListDetailMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailMenuDelegate.swift; sourceTree = "<group>"; };
-		54FD98D62BF4A9D500A60F08 /* ListDetailMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailMenuView.swift; sourceTree = "<group>"; };
+		54FD98D42BF4A88700A60F08 /* EditListMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListMenuDelegate.swift; sourceTree = "<group>"; };
+		54FD98D62BF4A9D500A60F08 /* EditListMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListMenuView.swift; sourceTree = "<group>"; };
 		54FD98DA2BF4EC3D00A60F08 /* HomeListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListsViewController.swift; sourceTree = "<group>"; };
 		54FD98DD2BF4EC5B00A60F08 /* HomeListsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListsModel.swift; sourceTree = "<group>"; };
 		54FD98E32BF5173200A60F08 /* HomeRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRootViewController.swift; sourceTree = "<group>"; };
@@ -207,6 +209,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		543A8E302C08FD680087EC3D /* Badges */ = {
+			isa = PBXGroup;
+			children = (
+				543A8E312C08FD7E0087EC3D /* BadgeViewFactory.swift */,
+			);
+			path = Badges;
+			sourceTree = "<group>";
+		};
 		544501DF2BE94B050018B345 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +250,7 @@
 		544C80AB2BE27DC1004DF718 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				543A8E302C08FD680087EC3D /* Badges */,
 				54C766E52BF6269400F0A5CC /* Editing */,
 				54B630AB2BF3A1E9007874DF /* Buttons */,
 				54B630AA2BF3A1E1007874DF /* Cells */,
@@ -374,7 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				54AF986D2BEA7B8F001A5B79 /* ShoppingListItemCell.swift */,
-				54502FC22BED655800D0B284 /* ListItemDetailCell.swift */,
+				54502FC22BED655800D0B284 /* EditListItemCell.swift */,
 				547F4A8F2BF157FC0055C580 /* ShoppingListCell.swift */,
 			);
 			path = Views;
@@ -439,7 +450,7 @@
 		54B630B12BF3E863007874DF /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				54E45C452BE6228A00FB3419 /* DetailedListViewController.swift */,
+				54E45C452BE6228A00FB3419 /* EditShoppingListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -448,7 +459,7 @@
 			isa = PBXGroup;
 			children = (
 				54B630AE2BF3CFF6007874DF /* EditListModel.swift */,
-				54FD98D42BF4A88700A60F08 /* ListDetailMenuDelegate.swift */,
+				54FD98D42BF4A88700A60F08 /* EditListMenuDelegate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -456,7 +467,7 @@
 		54B630B32BF3E92C007874DF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				54FD98D62BF4A9D500A60F08 /* ListDetailMenuView.swift */,
+				54FD98D62BF4A9D500A60F08 /* EditListMenuView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -689,7 +700,7 @@
 				54ADAFE02C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift in Sources */,
 				544501E12BE94B220018B345 /* InventoryItemCreationState.swift in Sources */,
 				54FCFAAD2BF35CAA00FFDF46 /* EditCategoryModel.swift in Sources */,
-				54FD98D72BF4A9D500A60F08 /* ListDetailMenuView.swift in Sources */,
+				54FD98D72BF4A9D500A60F08 /* EditListMenuView.swift in Sources */,
 				54FD98E42BF5173200A60F08 /* HomeRootViewController.swift in Sources */,
 				54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */,
 				54ADB0022C03B373005EAC13 /* TemplateItemEditCell.swift in Sources */,
@@ -697,15 +708,16 @@
 				544501EA2BE968DC0018B345 /* String+Extensions.swift in Sources */,
 				54ADAFFA2C027DD8005EAC13 /* EditTemplateViewController.swift in Sources */,
 				54ADAFF02C025C3B005EAC13 /* EntityCreationError.swift in Sources */,
-				54502FC32BED655800D0B284 /* ListItemDetailCell.swift in Sources */,
+				54502FC32BED655800D0B284 /* EditListItemCell.swift in Sources */,
 				54C766ED2BF64B5D00F0A5CC /* EditInventoryItemModel.swift in Sources */,
 				541BB9222C07B94100F37E59 /* TemplateValidator.swift in Sources */,
-				54FD98D52BF4A88700A60F08 /* ListDetailMenuDelegate.swift in Sources */,
+				54FD98D52BF4A88700A60F08 /* EditListMenuDelegate.swift in Sources */,
 				54ADAFFE2C03B1A9005EAC13 /* EditTemplateItemsViewController.swift in Sources */,
 				54FD98DE2BF4EC5B00A60F08 /* HomeListsModel.swift in Sources */,
 				54FD98DB2BF4EC3D00A60F08 /* HomeListsViewController.swift in Sources */,
 				54ADAFEA2C02560F005EAC13 /* CreateTemplateModel.swift in Sources */,
 				54ADAFEC2C025672005EAC13 /* CreateTemplateObject.swift in Sources */,
+				543A8E322C08FD7E0087EC3D /* BadgeViewFactory.swift in Sources */,
 				54C766E92BF62FFB00F0A5CC /* LabelTextFieldView.swift in Sources */,
 				54A74D412BECE895005C0061 /* InventoryItem+CoreDataClass.swift in Sources */,
 				54A74D102BECD181005C0061 /* ListItemsSortOption.swift in Sources */,
@@ -750,7 +762,7 @@
 				5478A7C72BE237FF005D1F7D /* UIFont+Extensions.swift in Sources */,
 				54ADAFE32C00B352005EAC13 /* TemplateItemCell.swift in Sources */,
 				54DA693D2BE787260062F9B3 /* UIStackView+Extensions.swift in Sources */,
-				54E45C462BE6228A00FB3419 /* DetailedListViewController.swift in Sources */,
+				54E45C462BE6228A00FB3419 /* EditShoppingListViewController.swift in Sources */,
 				547CABBB2BE16C0E0017C3C6 /* SceneDelegate.swift in Sources */,
 				54ADAFF22C0264A8005EAC13 /* HomeTemplatesViewController.swift in Sources */,
 			);

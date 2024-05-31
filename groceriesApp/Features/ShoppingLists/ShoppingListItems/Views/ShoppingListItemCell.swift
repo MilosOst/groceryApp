@@ -8,11 +8,43 @@
 import UIKit
 
 class ShoppingListItemCell: UITableViewCell {
-    private let nameLabel = UILabel()
-    private let notesLabel = UILabel()
-    private let checkButton = UIButton()
+    var checkBoxHandler: ((ShoppingListItemCell) -> Void)?
     
-    private var checkboxHandler: ((ShoppingListItemCell) -> Void)? = nil
+    private lazy var checkButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "circle"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.imageView?.contentMode = .scaleAspectFit
+        button.imageView?.tintColor = .secondaryLabel
+        button.removeTarget(self, action: nil, for: .allEvents)
+        button.addTarget(self, action: #selector(checkBoxPressed(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .poppinsFont(varation: .light, size: 16)
+        return label
+    }()
+    
+    private lazy var priceLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .poppinsFont(varation: .light, size: 14)
+        label.textColor = .systemGreen
+        return label
+    }()
+    
+    private lazy var notesLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .poppinsFont(varation: .light, size: 14)
+        label.textColor = .secondaryLabel
+        return label
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,28 +62,13 @@ class ShoppingListItemCell: UITableViewCell {
         stackView.alignment = .center
         stackView.spacing = 14
         
-        // Add stack for name and notes
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.font = .poppinsFont(varation: .light, size: 16)
-        notesLabel.translatesAutoresizingMaskIntoConstraints = false
-        notesLabel.font = .poppinsFont(varation: .light, size: 14)
-        notesLabel.textColor = .secondaryLabel
+        let nameNotesStack = UIStackView(arrangedSubviews: [nameLabel, notesLabel])
+        nameNotesStack.translatesAutoresizingMaskIntoConstraints = false
+        nameNotesStack.axis = .vertical
+        nameNotesStack.distribution = .fill
+        nameNotesStack.spacing = 0
         
-        let infoStack = UIStackView(arrangedSubviews: [nameLabel, notesLabel])
-        infoStack.axis = .vertical
-        infoStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Configure button
-        checkButton.translatesAutoresizingMaskIntoConstraints = false
-        checkButton.setImage(UIImage(systemName: "circle"), for: .normal)
-        checkButton.contentVerticalAlignment = .fill
-        checkButton.contentHorizontalAlignment = .fill
-        checkButton.imageView?.contentMode = .scaleAspectFit
-        checkButton.imageView?.tintColor = .secondaryLabel
-        checkButton.removeTarget(self, action: nil, for: .allEvents)
-        checkButton.addTarget(self, action: #selector(checkBoxPressed(_:)), for: .touchUpInside)
-        
-        stackView.addArrangedSubviews([checkButton, infoStack])
+        stackView.addArrangedSubviews([checkButton, nameNotesStack, UIView(), priceLabel])
         contentView.addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
@@ -62,18 +79,18 @@ class ShoppingListItemCell: UITableViewCell {
             checkButton.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
-
-    func configure(with item: ListItem, handler: @escaping ((ShoppingListItemCell) -> Void)) {
-        checkboxHandler = handler
+    
+    func configure(with item: ListItem, handler: ((ShoppingListItemCell) -> Void)?) {
+        checkBoxHandler = handler
+        nameLabel.text = item.item?.name
         notesLabel.text = item.notes
+        notesLabel.isHidden = item.notes == nil
         
-        // Configure name and checkbox
+        // Configure checkbox, background color and text based on if checked
         if item.isChecked {
             let attributedName = NSMutableAttributedString(string: item.item!.name!)
             attributedName.addAttribute(.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributedName.length))
             nameLabel.attributedText = attributedName
-            
-            // Set checkbox as checked
             checkButton.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
             checkButton.imageView?.tintColor = .systemGreen
             backgroundColor = .systemGreen.withAlphaComponent(0.4)
@@ -85,32 +102,37 @@ class ShoppingListItemCell: UITableViewCell {
             backgroundColor = .systemBackground
         }
         
-        // Configure quantity badge
-        var quantityText: String
-        if let unit = item.item?.unit {
-            quantityText = "\(item.quantity.formatted()) \(unit)"
+        // Configure price if exists
+        if item.price == 0 {
+            priceLabel.text = nil
+            priceLabel.isHidden = true
         } else {
-            quantityText = "\(item.quantity.formatted())"
+            let price = Decimal(floatLiteral: Double(item.price))
+            let currencyCode = Locale.current.currency?.identifier
+            let formatStyle = Decimal.FormatStyle.Currency(code: currencyCode ?? "", locale: .current)
+            priceLabel.text = formatStyle.format(price)
+            priceLabel.isHidden = false
         }
         
-        let size: CGFloat = 24
-        let digits = CGFloat(quantityText.count)
-        let width = max(size, 0.55 * size * digits)
-        
-        
-        let badge = UILabel(frame: .init(x: 0, y: 0, width: width, height: size))
-        badge.text = quantityText
-        badge.layer.cornerRadius = size / 2
-        badge.layer.masksToBounds = true
-        badge.textAlignment = .center
-        badge.backgroundColor = .systemBlue
-        badge.textColor = .white
-        badge.font = .poppinsFont(varation: .light, size: 14)
-        accessoryView = badge
-        self.accessoryType = .none
+        // Configure quantity badge
+        if item.quantity != 0 {
+            var quantityStr: String
+            if let unit = item.unit {
+                quantityStr = "\(item.quantity.formatted()) \(unit)"
+            } else {
+                quantityStr = "\(item.quantity.formatted())"
+            }
+            
+            let badge = BadgeViewFactory.makeBadge(text: quantityStr)
+            accessoryView = badge
+            accessoryType = .none
+        } else {
+            accessoryView = nil
+        }
     }
     
+    // MARK: - Actions
     @objc func checkBoxPressed(_ sender: UIButton) {
-        checkboxHandler?(self)
+        checkBoxHandler?(self)
     }
 }

@@ -10,39 +10,25 @@ import CoreData
 
 private let cellId = "ItemCell"
 
-// Use delegate to inform previous view controller of Unit changes
-protocol ListEditDelegate: AnyObject {
-    func didChangeItemUnit(_ item: ListItem)
-}
-
-// TODO: Implement notifier to previous view on InventoryItemChanged
-/// IDEA: Pass delegate into next ViewController, notify on change
-
-class EditListItemsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ListItemEditDelegate {
-    private let startItem: ListItem
-    private weak var delegate: ListEditDelegate?
-    private let model: EditListItemsModel
-    
+class EditListItemsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, EditListItemDelegate, NSFetchedResultsControllerDelegate {
     lazy var collectionView: UICollectionView = {
-        let layout = self.makeLayout()
+        let layout = UICollectionViewLayout.makeFullScreenHorizontalPagingLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.keyboardDismissMode = .none
-        collectionView.register(ListItemDetailCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(EditListItemCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.allowsSelection = false
         collectionView.delaysContentTouches = false
         return collectionView
     }()
+    
+    private var model: EditListItemsModel!
 
-    init(shoppingList: ShoppingList, startItem: ListItem, delegate: ListEditDelegate?) {
-        self.startItem = startItem
-        self.delegate = delegate
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        self.model = EditListItemsModel(shoppingList: shoppingList, context: context)
+    init(shoppingList: ShoppingList, startItem: ListItem) {
         super.init(nibName: nil, bundle: nil)
-        model.delegate = self
+        self.model = EditListItemsModel(list: shoppingList, startItem: startItem, context: coreDataContext, delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -59,7 +45,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
             print(error)
         }
         
-        if let indexPath = model.indexPath(for: startItem) {
+        if let indexPath = model.indexPathForStartItem {
             collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         }
     }
@@ -82,26 +68,10 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         // Set up navbar items
         let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeSheet(_:)))
         navigationItem.leftBarButtonItem = closeButton
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(closeSheet(_:)))
+        let doneButton = DoneBarButtonItem(target: self, selector: #selector(closeSheet(_:)))
         navigationItem.rightBarButtonItem = doneButton
-        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
-        title = startItem.item?.name
+        title = model.startItem.item?.name
         setTitleFont(.poppinsFont(varation: .medium, size: 16))
-    }
-    
-    // MARK: - Collection View Setup
-    // TODO: Remove and use extension
-    private func makeLayout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        layout.configuration.scrollDirection = .horizontal
-        return layout
     }
     
     // MARK: - UICollectionViewDataSource Methods
@@ -114,7 +84,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ListItemDetailCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! EditListItemCell
         let listItem = model.item(at: indexPath)
         cell.configure(with: listItem, delegate: self)
         return cell
@@ -122,7 +92,6 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     
     // MARK: - UICollectionViewDelegate Methods
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard collectionView.indexPathsForVisibleItems.count > 0 else { return }
         if collectionView.indexPathsForVisibleItems.count > 0 {
             let indexPath = collectionView.indexPathsForVisibleItems[0]
             let item = model.item(at: indexPath)
@@ -136,52 +105,41 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     // MARK: ListItemEditDelegate Methods
-    func quantityDidChange(_ cell: ListItemDetailCell, to quantity: String?) {
+    func quantityDidChange(in cell: EditListItemCell, to quantity: String?) {
         // TODO: Move logic to model
-        guard let indexPath = collectionView.indexPath(for: cell) else {
-            return
-        }
-        
-        try? model.updateQuantity(at: indexPath, quantityStr: quantity)
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        let quantity = Float(quantity ?? "") ?? 0
+        try? model.updateQuantity(at: indexPath, quantity: quantity)
     }
     
-    func unitDidChange(_ cell: ListItemDetailCell, to unit: String?) {
-        guard let indexPath = collectionView.indexPath(for: cell) else {
-            return
-        }
-        
-        do {
-            try model.updateUnit(at: indexPath, unitStr: unit)
-            let item = model.item(at: indexPath)
-            delegate?.didChangeItemUnit(item)
-        } catch {
-            print(error)
-        }
+    func unitDidChange(in cell: EditListItemCell, to unit: String?) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        try? model.updateUnit(at: indexPath, unit: unit)
     }
     
-    func priceDidChange(_ cell: ListItemDetailCell, to price: String?) {
-        guard let indexPath = collectionView.indexPath(for: cell) else {
-            return
-        }
-        
-        do {
-            try model.updatePrice(at: indexPath, priceStr: price)
-        } catch {
-            print(error)
-        }
+    func priceDidChange(in cell: EditListItemCell, to price: String?) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        let price = Float(price ?? "") ?? 0
+        try? model.updatePrice(at: indexPath, price: price)
     }
     
-    func notesDidChange(_ cell: ListItemDetailCell, to text: String) {
-        guard let indexPath = collectionView.indexPath(for: cell) else {
-            return
-        }
+    func notesDidChange(in cell: EditListItemCell, to text: String) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         try? model.updateNotes(at: indexPath, notes: text)
     }
     
-    func removePressed(_ cell: ListItemDetailCell) {
+    func categoryBtnPressed(_ cell: EditListItemCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else {
             return
         }
+        
+        let item = model.item(at: indexPath)
+        let categorySelectorVC = CategorySelectionViewController(currentCategory: item.item?.category, delegate: self)
+        navigationController?.pushViewController(categorySelectorVC, animated: true)
+    }
+    
+    func removePressed(_ cell: EditListItemCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let alert = UIAlertController.makeDeleteDialog(title: nil, message: nil, handler: { [self] _ in
             do {
                 try model.deleteItem(at: indexPath)
@@ -192,28 +150,26 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         present(alert, animated: true)
     }
     
-    func editPressed(_ cell: ListItemDetailCell) {
-        guard let indexPath = collectionView.indexPath(for: cell) else {
-            return
-        }
-        
-        let item = model.item(at: indexPath)
-        let editVC = EditInventoryItemViewController(item: item.item!)
-        navigationController?.pushViewController(editVC, animated: true)
-    }
-}
-
-extension EditListItemsViewController: NSFetchedResultsControllerDelegate {
+    // MARK: - NSFetchedResultsControllerDelegate
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .delete:
-            if let indexPath = indexPath {
-                collectionView.deleteItems(at: [indexPath])
-            }
+            collectionView.deleteItems(at: [indexPath!])
         case .update:
             break
         default:
             collectionView.reloadData()
         }
+    }
+}
+
+extension EditListItemsViewController: CategorySelectorDelegate {
+    func didSelectCategory(_ category: Category) {
+        guard collectionView.indexPathsForVisibleItems.count > 0 else {
+            return
+        }
+        
+        let currIndexPath = collectionView.indexPathsForVisibleItems[0]
+        try? model.updateCategory(to: category, at: currIndexPath)
     }
 }

@@ -60,7 +60,7 @@ class HomeListsViewController: UITableViewController, NSFetchedResultsController
     // MARK: - UITableView Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let list = model.shoppingList(at: indexPath)
-        let detailVC = DetailedListViewController(list: list)
+        let detailVC = EditShoppingListViewController(list: list)
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)
     }

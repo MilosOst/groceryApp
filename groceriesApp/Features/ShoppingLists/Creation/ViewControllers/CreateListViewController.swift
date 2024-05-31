@@ -143,6 +143,7 @@ class CreateListViewController: UITableViewController {
                 for templateItem in templateItems {
                     let listItem = ListItem(context: context)
                     listItem.item = templateItem.item
+                    listItem.unit = templateItem.unit
                     listItem.list = list
                     list.addToItems(listItem)
                 }
