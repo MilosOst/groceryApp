@@ -63,7 +63,6 @@ class ShoppingListCell: UITableViewCell {
         ])
         
         // Configure accessory
-//        accessoryView = UIImageView(image: UIImage(systemName: "ellipsis"))
         accessoryType = .detailButton
     }
     

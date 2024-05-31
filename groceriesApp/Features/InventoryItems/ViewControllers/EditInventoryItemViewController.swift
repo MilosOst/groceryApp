@@ -35,8 +35,16 @@ class EditInventoryItemViewController: UITableViewController, ToggleCellDelegate
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     private func setupUI() {
         title = "Edit Item"
+        let cancelButton = UIBarButtonItem(systemItem: .close)
+        cancelButton.target = self
+        cancelButton.action = #selector(closeSheet)
+        navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = doneButton
     }
     
@@ -60,6 +68,8 @@ class EditInventoryItemViewController: UITableViewController, ToggleCellDelegate
                 textFieldCell.configure(label: "Name", placeholder: "Name", text: model.itemName)
             } else {
                 textFieldCell.configure(label: "Unit", placeholder: "Unit", text: model.itemUnit)
+                textFieldCell.textField.autocorrectionType = .no
+                textFieldCell.textField.autocapitalizationType = .none
             }
             cell = textFieldCell
         case 2:
@@ -89,10 +99,16 @@ class EditInventoryItemViewController: UITableViewController, ToggleCellDelegate
     @objc func donePressed(_ sender: UIBarButtonItem) {
         do {
             try model.saveChanges()
-            navigationController?.popViewController(animated: true)
+            dismiss(animated: true)
+        } catch InventoryItemError.duplicateName {
+            presentAlert(title: "Duplicate Name", message: "This name is already taken. Please choose another.")
         } catch {
             presentPlainErrorAlert()
         }
+    }
+    
+    @objc func closeSheet() {
+        dismiss(animated: true)
     }
     
     // MARK: - Editing Delegates
@@ -115,6 +131,5 @@ class EditInventoryItemViewController: UITableViewController, ToggleCellDelegate
     
     func didSelectCategory(_ category: Category) {
         model.setCategory(category)
-        tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
     }
 }

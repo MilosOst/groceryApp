@@ -68,6 +68,10 @@ class LabelTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     // MARK: - Property Change Delegate Handlers
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.invalidateIntrinsicContentSize() // Fixes clear button sizing issue
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

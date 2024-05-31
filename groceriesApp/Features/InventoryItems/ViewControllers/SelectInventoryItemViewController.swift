@@ -100,6 +100,16 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         }
     }
     
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        // TODO: Present editing view
+        let item = model.item(at: indexPath)
+        let editVC = EditInventoryItemViewController(item: item)
+        let navVC = UINavigationController(rootViewController: editVC)
+        navVC.modalPresentationStyle = .pageSheet
+        navVC.sheetPresentationController?.detents = [.medium()]
+        present(navVC, animated: true)
+    }
+    
     // MARK: - NSFetchedResultsController Delgate
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
@@ -111,6 +121,11 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
             if let indexPath = indexPath {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
+        case .move:
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+            tableView.endUpdates()
         default:
             tableView.reloadData()
         }

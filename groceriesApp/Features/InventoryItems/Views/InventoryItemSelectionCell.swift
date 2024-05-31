@@ -29,12 +29,13 @@ class InventoryItemSelectionCell: UITableViewCell {
         config.imageProperties.tintColor = tintColor
         contentConfiguration = config
         
-        if isFavourite {
-            let imageView = UIImageView(image: UIImage(systemName: "star.fill"))
-            imageView.tintColor = .systemYellow
-            self.accessoryView = imageView
-        } else {
-            self.accessoryView = nil
-        }
+        accessoryType = .detailButton
+//        if isFavourite {
+//            let imageView = UIImageView(image: UIImage(systemName: "star.fill"))
+//            imageView.tintColor = .systemYellow
+//            self.accessoryView = imageView
+//        } else {
+//            self.accessoryView = nil
+//        }
     }
 }
