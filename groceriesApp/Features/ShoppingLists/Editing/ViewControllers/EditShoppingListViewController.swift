@@ -217,13 +217,35 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
         present(alert, animated: true)
     }
     
+    func didSelectMakeList() {
+        let alert = UIAlertController.makeTextFieldAlert(
+            title: "Create Template",
+            message: "Enter the name for your template below.",
+            placeholder: "Name",
+            text: model.listName,
+            handler: { [self] name in
+                do {
+                    let template = try model.createTemplate(name: name)
+                    let editTemplateVC = EditTemplateViewController(template: template)
+                    navigationController?.pushViewController(editTemplateVC, animated: true)
+                } catch EntityCreationError.emptyName {
+                    presentAlert(title: "Invalid Name", message: "Template name must not be empty.")
+                } catch EntityCreationError.duplicateName {
+                    presentAlert(title: "Duplicate Name", message: "This template name is already in use.")
+                } catch {
+                    presentPlainErrorAlert()
+                }
+            })
+        present(alert, animated: true)
+    }
+    
     func didSelectRename() {
         let alert = UIAlertController.makeTextFieldAlert(title: "Rename List", message: "Enter the new name for the list below.", placeholder: "Name", text: model.listName, handler: { [self] newName in
             do {
                 try model.setName(to: newName)
                 title = model.listName
             } catch EntityCreationError.emptyName {
-                presentAlert(title: "Invalid Name", message: "Template name must not be empty.")
+                presentAlert(title: "Invalid Name", message: "List name must not be empty.")
             } catch {
                 presentPlainErrorAlert()
             }

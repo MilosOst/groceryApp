@@ -82,7 +82,6 @@ class ShoppingListItemCell: UITableViewCell {
     
     func configure(with item: ListItem, handler: ((ShoppingListItemCell) -> Void)?) {
         checkBoxHandler = handler
-        nameLabel.text = item.item?.name
         notesLabel.text = item.notes
         notesLabel.isHidden = item.notes == nil
         

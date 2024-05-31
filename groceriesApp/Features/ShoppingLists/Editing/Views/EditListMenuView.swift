@@ -30,6 +30,10 @@ class EditListMenuView: UIView {
             self?.delegate?.didSelectMarkComplete()
         })
         
+        let makeTemplateAction = UIAction(title: "Create Template", image: UIImage(systemName: "list.clipboard"), handler: { [weak self] _ in
+            self?.delegate?.didSelectMakeList()
+        })
+        
         let renameAction = UIAction(title: "Rename", image: UIImage(systemName: "pencil"), handler: { [weak self] _ in
             self?.delegate?.didSelectRename()
         })
@@ -42,7 +46,7 @@ class EditListMenuView: UIView {
             self?.delegate?.didSelectDelete()
         })
         
-        let menu = UIMenu(options: .displayInline, children: [markCompleteAction, renameAction, deleteAction])
+        let menu = UIMenu(options: .displayInline, children: [makeTemplateAction, markCompleteAction, renameAction, deleteAction])
         return menu
     }()
     

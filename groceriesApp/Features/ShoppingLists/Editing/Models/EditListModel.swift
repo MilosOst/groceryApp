@@ -134,6 +134,30 @@ class EditListModel: SelectInventoryItemDelegate {
         try context.save()
     }
     
+    func createTemplate(name: String) throws -> Template {
+        let name = name.trimmed
+        guard !name.isEmpty else { throw EntityCreationError.emptyName }
+        
+        // Verify name uniqueness
+        let validator = TemplateValidator(context: context)
+        guard try validator.isNameUnique(name) else { throw EntityCreationError.duplicateName }
+        
+        let template = Template(context: context)
+        template.name = name
+        template.sortOrder = list.sortOrder
+        for listItem in fetchedResultsController.fetchedObjects ?? [] {
+            let templateItem = TemplateItem(context: context)
+            templateItem.item = listItem.item
+            templateItem.quantity = listItem.quantity
+            templateItem.price = listItem.price
+            templateItem.notes = listItem.notes
+            templateItem.unit = listItem.unit
+            template.addToItems(templateItem)
+        }
+        try context.save()
+        return template
+    }
+    
     // MARK: - SelectInventoryItemDelegate Methods
     func didToggleItem(_ item: InventoryItem) {
         // Check if item already exists

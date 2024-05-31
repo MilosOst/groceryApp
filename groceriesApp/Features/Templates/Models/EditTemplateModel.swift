@@ -123,6 +123,7 @@ class EditTemplateModel: SelectInventoryItemDelegate {
             let listItem = ListItem(context: context)
             listItem.item = templateItem.item
             listItem.quantity = templateItem.quantity
+            listItem.unit = templateItem.unit
             listItem.notes = templateItem.notes
             listItem.price = templateItem.price
             list.addToItems(listItem)

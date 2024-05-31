@@ -10,6 +10,7 @@ import Foundation
 protocol EditListMenuDelegate: AnyObject {
     func didSelectSortOption(_ option: ListItemsSortOption)
     func didSelectDelete()
+    func didSelectMakeList()
     func didSelectMarkComplete()
     func didSelectRename()
 }
