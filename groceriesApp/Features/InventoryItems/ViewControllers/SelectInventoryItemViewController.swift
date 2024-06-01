@@ -16,7 +16,7 @@ protocol SelectInventoryItemDelegate: AnyObject {
 
 private let cellIdentifier = "ItemCell"
 
-class SelectInventoryItemViewController: UITableViewController, UISearchResultsUpdating, NSFetchedResultsControllerDelegate {
+class SelectInventoryItemViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
     
     weak var delegate: SelectInventoryItemDelegate?
     private lazy var model: SelectInventoryItemModel = {
@@ -42,13 +42,12 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     }
     
     private func setupUI() {
-        let filterButton = UIBarButtonItem()
-        filterButton.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
-        navigationItem.rightBarButtonItem = filterButton
-        
         // Set up search controller
         searchController.searchResultsUpdater = self
         searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.enablesReturnKeyAutomatically = false
+        searchController.searchBar.returnKeyType = .done
+        searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
@@ -101,7 +100,6 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        // TODO: Present editing view
         let item = model.item(at: indexPath)
         let editVC = EditInventoryItemViewController(item: item)
         let navVC = UINavigationController(rootViewController: editVC)
@@ -131,7 +129,11 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         }
     }
     
-    // MARK: - UISearchResultsUpdating Methods
+    // MARK: - Searching Methods
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchController.dismiss(animated: true)
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
         do {
