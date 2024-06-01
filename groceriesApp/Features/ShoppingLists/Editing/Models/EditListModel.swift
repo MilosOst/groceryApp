@@ -127,10 +127,7 @@ class EditListModel: SelectInventoryItemDelegate {
     }
     
     func markComplete() throws {
-        for listItem in fetchedResultsController.fetchedObjects ?? [] {
-            listItem.isChecked = true
-        }
-        list.isCompleted = true
+        list.completionDate = .now
         try context.save()
     }
     
@@ -169,7 +166,6 @@ class EditListModel: SelectInventoryItemDelegate {
                 // Item does not exist, create new ListItem
                 let listItem = ListItem(context: context)
                 listItem.item = item
-                listItem.quantity = 1
                 listItem.unit = item.unit
                 list.addToItems(listItem)
                 try context.save()

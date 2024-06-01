@@ -72,10 +72,6 @@ class HomeTemplatesViewController: UITableViewController, NSFetchedResultsContro
         }
     }
     
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        // TODO: Present sheet with options for (rename, favourite, delete)?
-    }
-    
     // MARK: - NSFetchedResultsController Delegate
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         // Prevent updates when not visible

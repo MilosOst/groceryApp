@@ -61,9 +61,6 @@ class ShoppingListCell: UITableViewCell {
             stackView.topAnchor.constraint(equalTo: guide.topAnchor, constant: 8),
             stackView.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -8),
         ])
-        
-        // Configure accessory
-        accessoryType = .detailButton
     }
     
     func configure(with list: ShoppingList) {

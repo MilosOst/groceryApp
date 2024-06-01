@@ -103,9 +103,6 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
     // MARK: - UITableViewDelegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedItem = model.item(at: indexPath)
-        
-//        let destVC = EditListItemsViewController(shoppingList: shoppingList, startItem: selectedItem, delegate: self)
         let item = model.item(at: indexPath)
         let editVC = EditListItemsViewController(shoppingList: model.list, startItem: item)
         let navVC = UINavigationController(rootViewController: editVC)

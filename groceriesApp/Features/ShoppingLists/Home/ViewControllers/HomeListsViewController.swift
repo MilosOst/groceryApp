@@ -71,14 +71,20 @@ class HomeListsViewController: UITableViewController, NSFetchedResultsController
         }
     }
     
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        // TODO: Present confirmation alert
-        let dialog = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let renameAction = UIAlertAction(title: "Rename", style: .default, handler: { _ in })
-        let markCompleteAction = UIAlertAction(title: "Mark Complete", style: .default)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        dialog.addActions([markCompleteAction, renameAction, cancelAction])
-        present(dialog, animated: true)
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let markCompleteAction = UIContextualAction(style: .normal, title: nil, handler: { [weak self] (_, _, handler) in
+            do {
+                try self?.model.markComplete(at: indexPath)
+                handler(true)
+            } catch {
+                handler(false)
+            }
+        })
+        markCompleteAction.backgroundColor = .systemGreen
+        markCompleteAction.image = UIImage(systemName: "checkmark.circle")
+        
+        let config = UISwipeActionsConfiguration(actions: [markCompleteAction])
+        return config
     }
     
     // MARK: - Actions
@@ -98,7 +104,7 @@ class HomeListsViewController: UITableViewController, NSFetchedResultsController
         guard tableView.window != nil else { return }
         switch type {
         case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.deleteRows(at: [indexPath!], with: .fade)
         default:
             tableView.reloadData()
         }

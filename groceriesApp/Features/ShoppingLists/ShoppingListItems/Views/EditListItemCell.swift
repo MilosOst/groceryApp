@@ -110,7 +110,8 @@ class EditListItemCell: UICollectionViewCell, ExpandingTextViewDelegate {
     
     func configure(with item: ListItem, delegate: EditListItemDelegate?) {
         self.delegate = delegate
-        quantityField.setText(item.quantity.formatted())
+        let quantityStr = item.quantity != 0 ? item.quantity.formatted() : nil
+        quantityField.setText(quantityStr)
         unitField.setText(item.unit)
         categoryBtn.setTitle(item.item?.categoryName, for: .normal)
         let priceStr = item.price == 0 ? nil : item.price.formatted()

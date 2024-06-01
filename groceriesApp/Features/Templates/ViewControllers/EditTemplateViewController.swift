@@ -17,6 +17,14 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
         return EditTemplateMenuView(sortOrder: sortOrder, delegate: self)
     }()
     
+    private lazy var costLabel: UIBarButtonItem = {
+        let button = UIBarButtonItem()
+        let attrs = [NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 14), NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
+        button.setTitleTextAttributes(attrs, for: .disabled)
+        button.isEnabled = false
+        return button
+    }()
+    
     init(template: Template) {
         super.init(style: .grouped)
         self.model = EditTemplateModel(template: template, context: coreDataContext, delegate: self)
@@ -63,7 +71,7 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
     
     private func setupToolbar() {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPressed(_:)))
-        setToolbarItems([.flexibleSpace(), addButton], animated: true)
+        setToolbarItems([.flexibleSpace(), costLabel, .flexibleSpace(), addButton], animated: true)
         navigationController?.setToolbarHidden(false, animated: true)
     }
 

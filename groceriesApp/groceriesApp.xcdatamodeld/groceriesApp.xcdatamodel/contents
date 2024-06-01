@@ -32,14 +32,14 @@
         <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="InventoryItem" inverseName="listItems" inverseEntity="InventoryItem"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingList" inverseName="items" inverseEntity="ShoppingList"/>
     </entity>
-    <entity name="ShoppingList" representedClassName="ShoppingList" syncable="YES" codeGenerationType="class">
+    <entity name="ShoppingList" representedClassName="ShoppingList" syncable="YES" codeGenerationType="category">
         <attribute name="checkedItemsCount" optional="YES" attributeType="Integer 16" derived="YES" derivationExpression="items.isChecked.@sum" usesScalarValueType="YES"/>
         <attribute name="completionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="isCompleted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="itemCount" optional="YES" attributeType="Integer 16" derived="YES" derivationExpression="items.@count" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="sortOrder" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="totalCost" optional="YES" attributeType="Double" derived="YES" derivationExpression="items.price.@sum" usesScalarValueType="YES"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ListItem" inverseName="list" inverseEntity="ListItem"/>
     </entity>
     <entity name="Template" representedClassName="Template" syncable="YES" codeGenerationType="class">

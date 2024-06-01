@@ -151,7 +151,6 @@ class EditTemplateModel: SelectInventoryItemDelegate {
             } else {
                 let templateItem = TemplateItem(context: context)
                 templateItem.template = template
-                templateItem.quantity = 1
                 templateItem.unit = item.unit
                 templateItem.item = item
                 try context.save()

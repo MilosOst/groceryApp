@@ -17,7 +17,7 @@ class HomeListsModel {
         self.delegate = delegate
         
         let fetchRequest = ShoppingList.fetchRequest()
-        let predicate = NSPredicate(format: "isCompleted == NO")
+        let predicate = NSPredicate(format: "completionDate == nil")
         let sortByDate = NSSortDescriptor(key: #keyPath(ShoppingList.creationDate), ascending: false)
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = [sortByDate]
@@ -36,6 +36,12 @@ class HomeListsModel {
     
     func shoppingList(at indexPath: IndexPath) -> ShoppingList {
         fetchedResultsController.object(at: indexPath)
+    }
+    
+    func markComplete(at indexPath: IndexPath) throws {
+        let list = fetchedResultsController.object(at: indexPath)
+        list.completionDate = .now
+        try context.save()
     }
     
     func deleteObject(at indexPath: IndexPath) throws {

@@ -18,12 +18,12 @@ class HistoryModel {
         
         // TODO: Separate into sections by day/week?
         let fetchRequest = ShoppingList.fetchRequest()
-        let predicate = NSPredicate(format: "isCompleted == YES")
-        let sortByDate = NSSortDescriptor(key: #keyPath(ShoppingList.creationDate), ascending: false)
+        let predicate = NSPredicate(format: "completionDate != nil")
+        let sortByDate = NSSortDescriptor(key: #keyPath(ShoppingList.completionDate), ascending: false)
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = [sortByDate]
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: #keyPath(ShoppingList.completionDateSection), cacheName: nil)
         fetchedResultsController.delegate = delegate
     }
     
@@ -31,11 +31,25 @@ class HistoryModel {
         try fetchedResultsController.performFetch()
     }
     
-    var numberOfLists: Int {
-        fetchedResultsController.fetchedObjects?.count ?? 0
+    var numberOfSections: Int {
+        fetchedResultsController.sections?.count ?? 0
+    }
+    
+    func numberOfItemsInSection(_ section: Int) -> Int {
+        fetchedResultsController.sections?[section].numberOfObjects ?? 0
+    }
+    
+    func titleForSection(_ section: Int) -> String? {
+        fetchedResultsController.sections?[section].name ?? ""
     }
     
     func shoppingList(at indexPath: IndexPath) -> ShoppingList {
         fetchedResultsController.object(at: indexPath)
+    }
+    
+    func deleteList(at indexPath: IndexPath) throws {
+        let item = shoppingList(at: indexPath)
+        context.delete(item)
+        try context.save()
     }
 }
