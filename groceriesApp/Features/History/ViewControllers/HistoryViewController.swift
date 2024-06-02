@@ -26,7 +26,6 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        // TODO: Only reload on change?
         tableView.reloadData()
     }
     
@@ -46,8 +45,6 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     private func setupUI() {
         title = "History"
         setTitleFont(.poppinsFont(varation: .medium, size: 16))
-        let settingsBtn = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
-        navigationItem.rightBarButtonItem = settingsBtn
     }
 
     // MARK: - Table view data source
@@ -71,6 +68,12 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
         model.titleForSection(section)
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let list = model.shoppingList(at: indexPath)
+        let summaryVC = ListSummaryViewController(shoppingList: list)
+        navigationController?.pushViewController(summaryVC, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             try? model.deleteList(at: indexPath)
@@ -79,11 +82,12 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     
     // MARK: NSFetchedResultsController Delegate
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard isVisible else { return }
         tableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        guard isTopViewController else { return }
+        guard isVisible else { return }
         switch type {
         case .insert:
             tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
@@ -95,7 +99,7 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard isTopViewController else { return }
+        guard isVisible else { return }
         switch type {
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .automatic)
@@ -110,6 +114,7 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard isVisible else { return }
         tableView.endUpdates()
     }
 }

@@ -8,7 +8,6 @@
 import Foundation
 import CoreData
 
-// TODO: Refactor to Generic EntityError?
 enum InventoryItemError: Error {
     case emptyName
     case duplicateName

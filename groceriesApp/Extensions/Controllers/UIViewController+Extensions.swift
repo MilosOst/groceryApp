@@ -34,6 +34,10 @@ import CoreData
         navigationController?.topViewController == self
     }
     
+    var isVisible: Bool {
+        viewIfLoaded?.window != nil
+    }
+    
     // MARK: - Container VC Helpers
     func add(_ child: UIViewController, frame: CGRect? = nil) {
         addChild(child)

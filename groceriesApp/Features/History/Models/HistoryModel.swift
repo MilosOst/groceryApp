@@ -16,7 +16,6 @@ class HistoryModel {
         self.context = context
         self.delegate = delegate
         
-        // TODO: Separate into sections by day/week?
         let fetchRequest = ShoppingList.fetchRequest()
         let predicate = NSPredicate(format: "completionDate != nil")
         let sortByDate = NSSortDescriptor(key: #keyPath(ShoppingList.completionDate), ascending: false)

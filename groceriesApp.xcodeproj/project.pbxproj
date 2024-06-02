@@ -35,6 +35,12 @@
 		547CABCF2BE170350017C3C6 /* groceriesApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 547CABCD2BE170350017C3C6 /* groceriesApp.xcdatamodeld */; };
 		547F4A902BF157FC0055C580 /* ShoppingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547F4A8F2BF157FC0055C580 /* ShoppingListCell.swift */; };
 		548AD1712BEBDBC000063F9F /* EditListItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD1702BEBDBC000063F9F /* EditListItemsViewController.swift */; };
+		548F81D32C0C706A00FBC0E0 /* ListSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548F81D22C0C706A00FBC0E0 /* ListSummaryViewController.swift */; };
+		548F81D52C0C727100FBC0E0 /* ListSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548F81D42C0C727100FBC0E0 /* ListSummaryModel.swift */; };
+		548F81D72C0C764F00FBC0E0 /* ListItemSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548F81D62C0C764F00FBC0E0 /* ListItemSummaryCell.swift */; };
+		548F81D92C0CE38800FBC0E0 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548F81D82C0CE38800FBC0E0 /* UIView+Extensions.swift */; };
+		548F81DB2C0CED7300FBC0E0 /* ListSummaryMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548F81DA2C0CED7300FBC0E0 /* ListSummaryMenuView.swift */; };
+		548F81DD2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548F81DC2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift */; };
 		54A74D102BECD181005C0061 /* ListItemsSortOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A74D0F2BECD181005C0061 /* ListItemsSortOption.swift */; };
 		54A74D412BECE895005C0061 /* InventoryItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */; };
 		54ADAFE02C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFDF2C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift */; };
@@ -118,6 +124,12 @@
 		547CABCE2BE170350017C3C6 /* groceriesApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = groceriesApp.xcdatamodel; sourceTree = "<group>"; };
 		547F4A8F2BF157FC0055C580 /* ShoppingListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListCell.swift; sourceTree = "<group>"; };
 		548AD1702BEBDBC000063F9F /* EditListItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListItemsViewController.swift; sourceTree = "<group>"; };
+		548F81D22C0C706A00FBC0E0 /* ListSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSummaryViewController.swift; sourceTree = "<group>"; };
+		548F81D42C0C727100FBC0E0 /* ListSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSummaryModel.swift; sourceTree = "<group>"; };
+		548F81D62C0C764F00FBC0E0 /* ListItemSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemSummaryCell.swift; sourceTree = "<group>"; };
+		548F81D82C0CE38800FBC0E0 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		548F81DA2C0CED7300FBC0E0 /* ListSummaryMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSummaryMenuView.swift; sourceTree = "<group>"; };
+		548F81DC2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSummaryHeaderView.swift; sourceTree = "<group>"; };
 		54A74D0F2BECD181005C0061 /* ListItemsSortOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemsSortOption.swift; sourceTree = "<group>"; };
 		54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InventoryItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		54ADAFDF2C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
@@ -268,6 +280,9 @@
 			isa = PBXGroup;
 			children = (
 				54515F8B2C0B898000AF03E3 /* ShoppingListHistoryCell.swift */,
+				548F81D62C0C764F00FBC0E0 /* ListItemSummaryCell.swift */,
+				548F81DA2C0CED7300FBC0E0 /* ListSummaryMenuView.swift */,
+				548F81DC2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -278,6 +293,7 @@
 				54ADB0032C03B3CC005EAC13 /* UICollectionViewLayout+Extensions.swift */,
 				54ADAFDF2C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift */,
 				54DA693C2BE787260062F9B3 /* UIStackView+Extensions.swift */,
+				548F81D82C0CE38800FBC0E0 /* UIView+Extensions.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -526,6 +542,7 @@
 			isa = PBXGroup;
 			children = (
 				54C766DE2BF5F63600F0A5CC /* HistoryViewController.swift */,
+				548F81D22C0C706A00FBC0E0 /* ListSummaryViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -534,6 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				54C766E12BF5F72400F0A5CC /* HistoryModel.swift */,
+				548F81D42C0C727100FBC0E0 /* ListSummaryModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -743,6 +761,7 @@
 				54515F942C0B9F8900AF03E3 /* ShoppingList+CoreDataClass.swift in Sources */,
 				54FCFAAD2BF35CAA00FFDF46 /* EditCategoryModel.swift in Sources */,
 				54FD98D72BF4A9D500A60F08 /* EditListMenuView.swift in Sources */,
+				548F81DD2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift in Sources */,
 				54FD98E42BF5173200A60F08 /* HomeRootViewController.swift in Sources */,
 				54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */,
 				54ADB0022C03B373005EAC13 /* TemplateItemEditCell.swift in Sources */,
@@ -765,6 +784,7 @@
 				54A74D412BECE895005C0061 /* InventoryItem+CoreDataClass.swift in Sources */,
 				54A74D102BECD181005C0061 /* ListItemsSortOption.swift in Sources */,
 				54FCFAA02BF23B8B00FFDF46 /* CategorySelectorModel.swift in Sources */,
+				548F81D92C0CE38800FBC0E0 /* UIView+Extensions.swift in Sources */,
 				54ADAFF82C026773005EAC13 /* TemplateCell.swift in Sources */,
 				54DB50E52BE7F21E0050C2CF /* CategorySelectionViewController.swift in Sources */,
 				544501EC2BE96A340018B345 /* InventoryItemSelectionCell.swift in Sources */,
@@ -777,6 +797,7 @@
 				54ADAFFC2C027DDF005EAC13 /* EditTemplateModel.swift in Sources */,
 				54ADAFE72C025336005EAC13 /* CreateTemplateViewController.swift in Sources */,
 				54C766DF2BF5F63600F0A5CC /* HistoryViewController.swift in Sources */,
+				548F81D72C0C764F00FBC0E0 /* ListItemSummaryCell.swift in Sources */,
 				548AD1712BEBDBC000063F9F /* EditListItemsViewController.swift in Sources */,
 				54DA69382BE6C1240062F9B3 /* CreateItemSheetController.swift in Sources */,
 				54ADAFF62C0264C4005EAC13 /* HomeTemplatesModel.swift in Sources */,
@@ -789,10 +810,12 @@
 				54DA69412BE7A5920062F9B3 /* SelectedCategoryCell.swift in Sources */,
 				54DB50E92BE7FF850050C2CF /* NoCategoriesViewCell.swift in Sources */,
 				54FCFAAB2BF3574400FFDF46 /* EditCategoryViewController.swift in Sources */,
+				548F81D52C0C727100FBC0E0 /* ListSummaryModel.swift in Sources */,
 				544501DE2BE940770018B345 /* UIViewController+Extensions.swift in Sources */,
 				54C766EB2BF64B2800F0A5CC /* EditInventoryItemViewController.swift in Sources */,
 				54C766E42BF6005E00F0A5CC /* EditListItemsModel.swift in Sources */,
 				54C766E72BF6278700F0A5CC /* ExpandingTextView.swift in Sources */,
+				548F81DB2C0CED7300FBC0E0 /* ListSummaryMenuView.swift in Sources */,
 				54FCFAA62BF2B18500FFDF46 /* SelectInventoryItemModel.swift in Sources */,
 				54D864652BF206B900BAB0C3 /* UIAlertController+Extensions.swift in Sources */,
 				54DA693F2BE7920A0062F9B3 /* ToggleTableViewCell.swift in Sources */,
@@ -807,6 +830,7 @@
 				54ADAFE32C00B352005EAC13 /* TemplateItemCell.swift in Sources */,
 				54DA693D2BE787260062F9B3 /* UIStackView+Extensions.swift in Sources */,
 				54E45C462BE6228A00FB3419 /* EditShoppingListViewController.swift in Sources */,
+				548F81D32C0C706A00FBC0E0 /* ListSummaryViewController.swift in Sources */,
 				547CABBB2BE16C0E0017C3C6 /* SceneDelegate.swift in Sources */,
 				54ADAFF22C0264A8005EAC13 /* HomeTemplatesViewController.swift in Sources */,
 			);

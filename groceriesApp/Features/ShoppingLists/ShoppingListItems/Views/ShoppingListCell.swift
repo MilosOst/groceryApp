@@ -10,7 +10,7 @@ import UIKit
 class ShoppingListCell: UITableViewCell {
     private let nameLabel = UILabel()
     private let creationDateLabel = UILabel()
-    private let progressView = UIProgressView(progressViewStyle: .bar)
+    private let progressView = UIProgressView(progressViewStyle: .default)
     private let progressLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

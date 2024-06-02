@@ -106,7 +106,6 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     
     // MARK: ListItemEditDelegate Methods
     func quantityDidChange(in cell: EditListItemCell, to quantity: String?) {
-        // TODO: Move logic to model
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let quantity = Float(quantity ?? "") ?? 0
         try? model.updateQuantity(at: indexPath, quantity: quantity)

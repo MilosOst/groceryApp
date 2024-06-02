@@ -44,7 +44,6 @@ class HomeRootViewController: UIViewController {
     
     // MARK: - Actions
     @objc func addButtonPressed(_ sender: UIBarButtonItem) {
-        // TODO: Differentiate between tabs
         let createVC = creationViewController(for: currentTab ?? .lists)
         let navVC = UINavigationController(rootViewController: createVC)
         if currentTab == .templates {

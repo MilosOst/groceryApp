@@ -8,9 +8,6 @@
 import UIKit
 
 class TemplateCell: UITableViewCell {
-    private let nameLabel = UILabel()
-    private let itemCountLabel = UILabel()
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -19,22 +16,43 @@ class TemplateCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init:coder not supported")
     }
+    
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .poppinsFont(varation: .medium, size: 16)
+        return label
+    }()
+    
+    private lazy var itemCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .poppinsFont(varation: .light, size: 14)
+        label.textColor = .secondaryLabel
+        return label
+    }()
+    
+    private lazy var priceLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .poppinsFont(varation: .medium, size: 14)
+        label.textColor = .systemGreen
+        return label
+    }()
 
     private func setupUI() {
-        // TODO: Show name, itemCount, isFavourite
         let containerView = UIStackView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.axis = .vertical
-        containerView.spacing = 6
+        containerView.axis = .horizontal
+        containerView.distribution = .fill
         
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.font = .poppinsFont(varation: .light, size: 16)
+        let infoStack = UIStackView(arrangedSubviews: [nameLabel, itemCountLabel])
+        infoStack.translatesAutoresizingMaskIntoConstraints = false
+        infoStack.axis = .vertical
+        infoStack.spacing = 4
+        infoStack.distribution = .fill
         
-        itemCountLabel.translatesAutoresizingMaskIntoConstraints = false
-        itemCountLabel.font = .poppinsFont(varation: .light, size: 14)
-        itemCountLabel.textColor = .secondaryLabel
-        
-        containerView.addArrangedSubviews([nameLabel, itemCountLabel])
+        containerView.addArrangedSubviews([infoStack, UIView(), priceLabel])
         contentView.addSubview(containerView)
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -42,12 +60,11 @@ class TemplateCell: UITableViewCell {
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
         ])
-        
-        accessoryType = .detailDisclosureButton
     }
     
     func configure(with template: Template) {
         nameLabel.text = template.name
-        itemCountLabel.text = "\(template.itemCount) Items"
+        itemCountLabel.text = "\(template.itemCount) \(template.itemCount != 1 ? "Items": "Item")"
+        priceLabel.text = template.totalCost.currencyStr
     }
 }

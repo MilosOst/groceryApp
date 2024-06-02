@@ -47,6 +47,7 @@
         <attribute name="itemCount" optional="YES" attributeType="Integer 16" derived="YES" derivationExpression="items.@count" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="sortOrder" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="totalCost" optional="YES" attributeType="Double" derived="YES" derivationExpression="items.price.@sum" usesScalarValueType="YES"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateItem" inverseName="template" inverseEntity="TemplateItem"/>
         <uniquenessConstraints>
             <uniquenessConstraint>

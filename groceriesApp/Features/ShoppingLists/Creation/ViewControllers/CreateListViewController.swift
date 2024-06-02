@@ -138,12 +138,15 @@ class CreateListViewController: UITableViewController {
             list.name = listName
             list.creationDate = Date.now
             
-            // TODO: Need to verify this works
+            // TODO: Move to shared module?
             if let selectedTemplate = selectedTemplate, let templateItems = selectedTemplate.items as? Set<TemplateItem> {
                 for templateItem in templateItems {
                     let listItem = ListItem(context: context)
                     listItem.item = templateItem.item
                     listItem.unit = templateItem.unit
+                    listItem.quantity = templateItem.quantity
+                    listItem.price = templateItem.price
+                    listItem.notes = templateItem.notes
                     listItem.list = list
                     list.addToItems(listItem)
                 }
