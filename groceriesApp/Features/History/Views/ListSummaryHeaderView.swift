@@ -84,7 +84,6 @@ class ListSummaryHeaderView: UIView {
     }
     
     func configure(cost: Double, completionDate: Date) {
-        print(cost.currencyStr)
         priceLabel.text = cost.currencyStr
         datePicker.setDate(completionDate, animated: true)
     }

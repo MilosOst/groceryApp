@@ -52,4 +52,33 @@ extension UIAlertController {
         alert.addActions([cancelAction, confirmAction])
         return alert
     }
+    
+    /// Creates an alert for editing the name of some item.
+    /// - Parameters:
+    ///   - name: Current name of the itme
+    ///   - handler: Handler for submission.
+    /// - Returns: The initialized UIAlertController
+    static func editItemNameAlert(name: String, handler: ((String, ItemNameChangeType) -> Void)?) -> UIAlertController {
+        let alert = UIAlertController(title: "Rename Item", message: nil, preferredStyle: .alert)
+        alert.addTextField(configurationHandler: { textField in
+            textField.font = .poppinsFont(varation: .light, size: 14)
+            textField.placeholder = "Name"
+            textField.autocapitalizationType = .sentences
+            textField.text = name
+            textField.clearButtonMode = .whileEditing
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let changeGloballyAction = UIAlertAction(title: "Rename Everywhere", style: .default, handler: { _ in
+            let text = alert.textFields![0].text ?? ""
+            handler?(text, .global)
+        })
+        let changeLocallyAction = UIAlertAction(title: "Rename Here", style: .default, handler: { _ in
+            let text = alert.textFields![0].text ?? ""
+            handler?(text, .local)
+        })
+        
+        alert.addActions([cancelAction, changeLocallyAction, changeGloballyAction])
+        return alert
+    }
 }

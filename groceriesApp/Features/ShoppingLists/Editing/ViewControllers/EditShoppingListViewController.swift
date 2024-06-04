@@ -135,22 +135,26 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
     }
     
     @objc func contextDidChange(_ notification: Notification) {
-        var categoriesDidChange = false
+        // Observe updates to existing Categories or InventoryItems
+        // that are not detected by fetched results controller
+        guard notification.userInfo?.keys.count == 2 else { return }
+        
+        var toRefetch = false
         if let changes = notification.userInfo?["updated"] as? Set<NSManagedObject> {
             for object in changes {
-                if object is Category {
-                    categoriesDidChange = true
+                if object is Category || object is InventoryItem {
+                    toRefetch = true
+                    break
                 }
             }
         }
         
-        // If categories changed, reload data
-        if categoriesDidChange {
+        if toRefetch {
             do {
-                try model.loadData()
+                try model.loadData(forceReload: true)
                 tableView.reloadData()
             } catch {
-                print(error)
+                
             }
         }
     }

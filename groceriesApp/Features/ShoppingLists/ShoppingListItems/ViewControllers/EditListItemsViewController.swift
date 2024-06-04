@@ -46,7 +46,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         }
         
         if let indexPath = model.indexPathForStartItem {
-            collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+            collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
         }
     }
     
@@ -149,13 +149,46 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         present(alert, animated: true)
     }
     
+    func renamePressed(_ cell: EditListItemCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        let item = model.item(at: indexPath)
+        let name = item.item?.name ?? ""
+        let alert = UIAlertController.editItemNameAlert(name: name, handler: { [weak self] (newName, editType) in
+            do {
+                try self?.model.rename(at: indexPath, newName: newName, editType: editType)
+                if editType == .global {
+                    self?.title = newName
+                    
+                }
+            } catch InventoryItemError.emptyName {
+                self?.presentAlert(title: "Empty Name", message: "You must provide a non-empty name.")
+            } catch InventoryItemError.duplicateName {
+                self?.presentAlert(title: "Duplicate Name", message: "This item name is already taken. Please choose another.")
+            } catch {
+                self?.presentPlainErrorAlert()
+            }
+        })
+        
+        present(alert, animated: true)
+    }
+    
     // MARK: - NSFetchedResultsControllerDelegate
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .delete:
             collectionView.deleteItems(at: [indexPath!])
+        case .move:
+            collectionView.performBatchUpdates {
+                collectionView.deleteItems(at: [indexPath!])
+                collectionView.insertItems(at: [newIndexPath!])
+                collectionView.reloadData()
+                collectionView.isPagingEnabled = false // Needs to be disabled to fix bug causing empty view
+                collectionView.scrollToItem(at: newIndexPath!, at: .left, animated: false)
+                collectionView.isPagingEnabled = true
+            }
+            
         case .update:
-            break
+            return
         default:
             collectionView.reloadData()
         }

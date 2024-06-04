@@ -45,7 +45,12 @@ class EditListModel: SelectInventoryItemDelegate {
         return controller
     }
     
-    func loadData() throws {
+    func loadData(forceReload: Bool = false) throws {
+        // If force reload, need to dirty item to notice changes
+        if forceReload, let item = fetchedResultsController.fetchedObjects?.first {
+            item.quantity = item.quantity
+        }
+        
         try fetchedResultsController.performFetch()
     }
     

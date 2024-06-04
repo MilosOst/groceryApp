@@ -90,93 +90,50 @@ class EditListItemsModel {
         try context.save()
     }
     
+    func rename(at indexPath: IndexPath, newName: String, editType: ItemNameChangeType) throws {
+        let newName = newName.trimmed
+        guard !newName.isEmpty else { throw InventoryItemError.emptyName }
+        
+        let listItem = item(at: indexPath)
+        let currInvItem = listItem.item!
+        let currName = currInvItem.name!.trimmed
+        
+        // If name is exact same, do nothing
+        guard newName != currName else { return }
+        
+        // Check if name is same ignoring case
+        if newName.lowercased() == currName.lowercased() {
+            if editType == .global {
+                currInvItem.name = newName
+                try context.save()
+            } else {
+                // Cannot create new item since name is taken
+                throw InventoryItemError.duplicateName
+            }
+        }
+        
+        // Name is different, check uniqueness
+        let nameValidator = InventoryItemValidator(context: context)
+        guard try nameValidator.isNameUnique(newName) else { throw InventoryItemError.duplicateName }
+        if editType == .global {
+            currInvItem.name = newName
+            listItem.quantity = listItem.quantity
+            try context.save()
+        } else {
+            // Name is unique, create new InventoryItem and update ListItem's reference
+            let newInventoryItem = InventoryItem(context: context)
+            newInventoryItem.category = currInvItem.category
+            newInventoryItem.unit = currInvItem.unit
+            newInventoryItem.isFavourite = currInvItem.isFavourite
+            newInventoryItem.name = newName
+            listItem.item = newInventoryItem
+            try context.save()
+        }
+    }
+    
     func deleteItem(at indexPath: IndexPath) throws {
         let item = item(at: indexPath)
         context.delete(item)
         try context.save()
     }
 }
-
-//class EditListItemsModel {
-//    private let shoppingList: ShoppingList
-//    private let context: NSManagedObjectContext
-//    private let fetchedResultsController: NSFetchedResultsController<ListItem>
-//    weak var delegate: NSFetchedResultsControllerDelegate? {
-//        didSet {
-//            fetchedResultsController.delegate = delegate
-//        }
-//    }
-//    
-//    init(shoppingList: ShoppingList, context: NSManagedObjectContext, delegate: NSFetchedResultsControllerDelegate? = nil) {
-//        self.shoppingList = shoppingList
-//        self.context = context
-//        self.delegate = delegate
-//        
-//        let fetchRequest = ListItem.fetchRequest()
-//        let predicate = NSPredicate(format: "list == %@", shoppingList)
-//        let sortDescriptors = [
-//            NSSortDescriptor(key: #keyPath(ListItem.isChecked), ascending: true),
-//            NSSortDescriptor(key: #keyPath(ListItem.item.name), ascending: true)
-//        ]
-//        fetchRequest.predicate = predicate
-//        fetchRequest.sortDescriptors = sortDescriptors
-//        
-//        // If sorted by category, add Category NSSortDescriptor
-//        if shoppingList.sortOrder == ListItemsSortOption.category.rawValue {
-//            let sortByCategory = NSSortDescriptor(key: #keyPath(ListItem.item.category.name), ascending: true)
-//            fetchRequest.sortDescriptors?.insert(sortByCategory, at: 0)
-//        }
-//        
-//        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-//        fetchedResultsController.delegate = delegate
-//    }
-//    
-//    func loadData() throws {
-//        try fetchedResultsController.performFetch()
-//    }
-//    
-//    var numberOfItems: Int {
-//        fetchedResultsController.fetchedObjects?.count ?? 0
-//    }
-//    
-//    func item(at indexPath: IndexPath) -> ListItem {
-//        fetchedResultsController.object(at: indexPath)
-//    }
-//    
-//    func indexPath(for item: ListItem) -> IndexPath? {
-//        fetchedResultsController.indexPath(forObject: item)
-//    }
-//    
-//    func updateQuantity(at indexPath: IndexPath, quantityStr: String?) throws {
-//        let quantity = Float(quantityStr ?? "") ?? 0
-//        let item = item(at: indexPath)
-//        item.quantity = quantity
-//        try context.save()
-//    }
-//    
-//    func updateUnit(at indexPath: IndexPath, unitStr: String?) throws {
-//        let item = item(at: indexPath)
-//        item.item?.unit = unitStr
-//        try context.save()
-//    }
-//    
-//    func updatePrice(at indexPath: IndexPath, priceStr: String?) throws {
-//        let item = item(at: indexPath)
-//        let price = Float(priceStr ?? "") ?? 0
-//        item.price = price
-//        try context.save()
-//    }
-//    
-//    func updateNotes(at indexPath: IndexPath, notes: String) throws {
-//        let item = item(at: indexPath)
-//        let updatedNotes = notes.isTrimmedEmpty ? nil : notes.trimmed
-//        item.notes = updatedNotes
-//        try context.save()
-//    }
-//    
-//    func deleteItem(at indexPath: IndexPath) throws {
-//        let item = item(at: indexPath)
-//        context.delete(item)
-//        try context.save()
-//    }
-//}
