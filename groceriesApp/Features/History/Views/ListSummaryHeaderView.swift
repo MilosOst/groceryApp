@@ -61,7 +61,7 @@ class ListSummaryHeaderView: UIView {
         containerView.spacing = 8
         containerView.isLayoutMarginsRelativeArrangement = true
         containerView.layoutMargins = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
-        containerView.backgroundColor = .secondarySystemBackground
+        containerView.backgroundColor = .secondarySystemGroupedBackground
         containerView.layer.cornerRadius = 8
         
         let leftStack = UIStackView(arrangedSubviews: [totalSpentLabel, dateLabel])

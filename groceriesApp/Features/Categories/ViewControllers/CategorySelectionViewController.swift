@@ -15,6 +15,7 @@ protocol CategorySelectorDelegate: AnyObject {
 private let emptyCellID = "EmptyResultsCell"
 private let categoryCellIdentifier = "CategoryCell"
 
+// TODO: Implement select no category
 class CategorySelectionViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
     weak var delegate: CategorySelectorDelegate?
     let currentCategory: Category?

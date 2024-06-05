@@ -10,6 +10,7 @@
 		5416E82B2C105092002FE57A /* ListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */; };
 		541BB91D2C07999500F37E59 /* EditTemplateMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */; };
 		541BB9222C07B94100F37E59 /* TemplateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB9212C07B94100F37E59 /* TemplateValidator.swift */; };
+		5427CA1C2C10FB7F006F16B9 /* PopulateCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5427CA1B2C10FB7F006F16B9 /* PopulateCoreData.swift */; };
 		543A8E322C08FD7E0087EC3D /* BadgeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543A8E312C08FD7E0087EC3D /* BadgeViewFactory.swift */; };
 		544501DE2BE940770018B345 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501DD2BE940770018B345 /* UIViewController+Extensions.swift */; };
 		544501E12BE94B220018B345 /* InventoryItemCreationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501E02BE94B220018B345 /* InventoryItemCreationState.swift */; };
@@ -100,6 +101,7 @@
 		5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateMenuView.swift; sourceTree = "<group>"; };
 		541BB9212C07B94100F37E59 /* TemplateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateValidator.swift; sourceTree = "<group>"; };
+		5427CA1B2C10FB7F006F16B9 /* PopulateCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopulateCoreData.swift; sourceTree = "<group>"; };
 		543A8E312C08FD7E0087EC3D /* BadgeViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeViewFactory.swift; sourceTree = "<group>"; };
 		544501DD2BE940770018B345 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		544501E02BE94B220018B345 /* InventoryItemCreationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemCreationState.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */,
 				54515F922C0B9F8900AF03E3 /* ShoppingList+CoreDataClass.swift */,
 				54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */,
+				5427CA1B2C10FB7F006F16B9 /* PopulateCoreData.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -772,6 +775,7 @@
 				54FD98D72BF4A9D500A60F08 /* EditListMenuView.swift in Sources */,
 				548F81DD2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift in Sources */,
 				54FD98E42BF5173200A60F08 /* HomeRootViewController.swift in Sources */,
+				5427CA1C2C10FB7F006F16B9 /* PopulateCoreData.swift in Sources */,
 				54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */,
 				54ADB0022C03B373005EAC13 /* TemplateItemEditCell.swift in Sources */,
 				54B630AD2BF3A1FA007874DF /* DoneBarButtonItem.swift in Sources */,
