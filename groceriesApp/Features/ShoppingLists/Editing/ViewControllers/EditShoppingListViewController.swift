@@ -138,7 +138,6 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
         // Observe updates to existing Categories or InventoryItems
         // that are not detected by fetched results controller
         guard notification.userInfo?.keys.count == 2 else { return }
-        
         var toRefetch = false
         if let changes = notification.userInfo?["updated"] as? Set<NSManagedObject> {
             for object in changes {

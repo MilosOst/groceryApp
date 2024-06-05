@@ -27,7 +27,7 @@ class EditListModel: SelectInventoryItemDelegate {
         let predicate = NSPredicate(format: "list == %@", list)
         var sortDescriptors = [
             NSSortDescriptor(key: #keyPath(ListItem.isChecked), ascending: true),
-            NSSortDescriptor(key: #keyPath(ListItem.item.name), ascending: true)
+            NSSortDescriptor(key: #keyPath(ListItem.item.name), ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
         ]
         
         

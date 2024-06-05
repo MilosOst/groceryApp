@@ -186,7 +186,6 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
                 collectionView.scrollToItem(at: newIndexPath!, at: .left, animated: false)
                 collectionView.isPagingEnabled = true
             }
-            
         case .update:
             return
         default:

@@ -136,6 +136,29 @@ class EditTemplateItemsViewController: UIViewController, UICollectionViewDelegat
         navigationController?.pushViewController(categorySelectorVC, animated: true)
     }
     
+    func renamePressed(_ cell: TemplateItemEditCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        let item = model.item(at: indexPath)
+        let name = item.item?.name ?? ""
+        let alert = UIAlertController.editItemNameAlert(name: name, handler: { [weak self] (newName, editType) in
+            do {
+                try self?.model.rename(at: indexPath, newName: newName, editType: editType)
+                if editType == .global {
+                    self?.title = newName
+                    
+                }
+            } catch InventoryItemError.emptyName {
+                self?.presentAlert(title: "Empty Name", message: "You must provide a non-empty name.")
+            } catch InventoryItemError.duplicateName {
+                self?.presentAlert(title: "Duplicate Name", message: "This item name is already taken. Please choose another.")
+            } catch {
+                self?.presentPlainErrorAlert()
+            }
+        })
+        
+        present(alert, animated: true)
+    }
+    
     func removePressed(_ cell: TemplateItemEditCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let alert = UIAlertController.makeDeleteDialog(title: nil, message: nil, handler: { [self] _ in
@@ -153,8 +176,17 @@ class EditTemplateItemsViewController: UIViewController, UICollectionViewDelegat
         switch type {
         case .delete:
             collectionView.deleteItems(at: [indexPath!])
+        case .move:
+            collectionView.performBatchUpdates {
+                collectionView.deleteItems(at: [indexPath!])
+                collectionView.insertItems(at: [newIndexPath!])
+                collectionView.reloadData()
+                collectionView.isPagingEnabled = false // Needs to be disabled to fix bug causing empty view
+                collectionView.scrollToItem(at: newIndexPath!, at: .left, animated: false)
+                collectionView.isPagingEnabled = true
+            }
         case .update:
-            break
+            return
         default:
             collectionView.reloadData()
         }

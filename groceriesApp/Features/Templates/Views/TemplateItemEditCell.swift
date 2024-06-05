@@ -14,6 +14,7 @@ protocol TemplateItemEditDelegate: AnyObject {
     func notesDidChange(_ cell: TemplateItemEditCell, to text: String)
     func categoryBtnPressed(_ cell: TemplateItemEditCell)
     func removePressed(_ cell: TemplateItemEditCell)
+    func renamePressed(_ cell: TemplateItemEditCell)
 }
 
 class TemplateItemEditCell: UICollectionViewCell, ExpandingTextViewDelegate {
@@ -54,6 +55,23 @@ class TemplateItemEditCell: UICollectionViewCell, ExpandingTextViewDelegate {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(categoryBtnPressed(_:)), for: .touchUpInside)
         return btn
+    }()
+    
+    private lazy var renameBtn: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.baseBackgroundColor = .secondarySystemBackground
+        config.baseForegroundColor = .label
+        config.title = "Rename"
+        config.titleTextAttributesTransformer = .init { incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.poppinsFont(varation: .medium, size: 16)
+            return outgoing
+        }
+        
+        let button = UIButton(configuration: config)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(renamePressed(_:)), for: .touchUpInside)
+        return button
     }()
     
     private lazy var removeBtn: UIButton = {
@@ -97,7 +115,7 @@ class TemplateItemEditCell: UICollectionViewCell, ExpandingTextViewDelegate {
         let dismissGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         containerView.addGestureRecognizer(dismissGesture)
         
-        containerView.addArrangedSubviews([quantityField, unitField, priceField, categoryBtn, notesField, removeBtn, UIView()])
+        containerView.addArrangedSubviews([quantityField, unitField, priceField, categoryBtn, notesField, renameBtn, removeBtn, UIView()])
         containerView.setCustomSpacing(20, after: notesField)
         contentView.addSubview(containerView)
         NSLayoutConstraint.activate([
@@ -132,6 +150,10 @@ class TemplateItemEditCell: UICollectionViewCell, ExpandingTextViewDelegate {
     @objc func categoryBtnPressed(_ sender: UIButton) {
         endEditing(true)
         delegate?.categoryBtnPressed(self)
+    }
+    
+    @objc func renamePressed(_ sender: UIButton) {
+        delegate?.renamePressed(self)
     }
     
     @objc func removePressed(_ sender: UIButton) {

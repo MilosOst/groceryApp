@@ -119,22 +119,25 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
     }
     
     @objc func contextDidChange(_ notification: Notification) {
-        var categoriesDidChange = false
+        // Observe updates to existing Categories or InventoryItems
+        // that are not detected by fetched results controller
+        guard notification.userInfo?.keys.count == 2 else { return }
+        var toRefetch = false
         if let changes = notification.userInfo?["updated"] as? Set<NSManagedObject> {
             for object in changes {
-                if object is Category {
-                    categoriesDidChange = true
+                if object is Category || object is InventoryItem {
+                    toRefetch = true
+                    break
                 }
             }
         }
         
-        // If categories changed, reload data
-        if categoriesDidChange {
+        if toRefetch {
             do {
-                try model.loadData()
+                try model.loadData(forceReload: true)
                 tableView.reloadData()
             } catch {
-                print(error)
+                
             }
         }
     }
@@ -148,12 +151,17 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         guard isTopViewController else { return }
         switch type {
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .automatic)
-        default:
-            break
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        @unknown default:
+            tableView.reloadData()
         }
     }
     

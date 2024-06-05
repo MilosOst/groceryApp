@@ -106,6 +106,7 @@ class EditListItemsModel {
             if editType == .global {
                 currInvItem.name = newName
                 try context.save()
+                return
             } else {
                 // Cannot create new item since name is taken
                 throw InventoryItemError.duplicateName

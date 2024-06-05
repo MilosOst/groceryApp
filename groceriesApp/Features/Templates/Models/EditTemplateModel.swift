@@ -26,7 +26,7 @@ class EditTemplateModel: SelectInventoryItemDelegate {
         let fetchRequest = TemplateItem.fetchRequest()
         let predicate = NSPredicate(format: "template == %@", template)
         var sortDescriptors = [
-            NSSortDescriptor(key: #keyPath(TemplateItem.item.name), ascending: true),
+            NSSortDescriptor(key: #keyPath(TemplateItem.item.name), ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
         ]
         
         var sectionKeyPath: String? = nil
@@ -42,7 +42,12 @@ class EditTemplateModel: SelectInventoryItemDelegate {
         return controller
     }
     
-    func loadData() throws {
+    func loadData(forceReload: Bool = false) throws {
+        // If force reload, need to dirty item to notice changes
+        if forceReload, let item = fetchedResultsController.fetchedObjects?.first {
+            item.quantity = item.quantity
+        }
+        
         try fetchedResultsController.performFetch()
     }
     

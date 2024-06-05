@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5416E82B2C105092002FE57A /* ListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */; };
 		541BB91D2C07999500F37E59 /* EditTemplateMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */; };
 		541BB9222C07B94100F37E59 /* TemplateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB9212C07B94100F37E59 /* TemplateValidator.swift */; };
 		543A8E322C08FD7E0087EC3D /* BadgeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543A8E312C08FD7E0087EC3D /* BadgeViewFactory.swift */; };
@@ -96,6 +97,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateMenuView.swift; sourceTree = "<group>"; };
 		541BB9212C07B94100F37E59 /* TemplateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateValidator.swift; sourceTree = "<group>"; };
 		543A8E312C08FD7E0087EC3D /* BadgeViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeViewFactory.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 		547CABCC2BE1700A0017C3C6 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */,
 				54515F922C0B9F8900AF03E3 /* ShoppingList+CoreDataClass.swift */,
 				54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */,
 			);
@@ -806,6 +809,7 @@
 				54C766DF2BF5F63600F0A5CC /* HistoryViewController.swift in Sources */,
 				548F81D72C0C764F00FBC0E0 /* ListItemSummaryCell.swift in Sources */,
 				548AD1712BEBDBC000063F9F /* EditListItemsViewController.swift in Sources */,
+				5416E82B2C105092002FE57A /* ListItem+CoreDataClass.swift in Sources */,
 				54DA69382BE6C1240062F9B3 /* CreateItemSheetController.swift in Sources */,
 				54ADAFF62C0264C4005EAC13 /* HomeTemplatesModel.swift in Sources */,
 				544C80AD2BE27DD3004DF718 /* TextFieldTableViewCell.swift in Sources */,

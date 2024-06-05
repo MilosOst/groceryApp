@@ -62,6 +62,12 @@ class EditInventoryItemModel {
         
         // Verify uniqueness
         guard name != item.name else { return }
+        // If name is same (except for case), simply change
+        guard name.lowercased() != item.name!.lowercased() else {
+            item.name = name
+            return
+        }
+        
         let fetchRequest = InventoryItem.fetchRequest()
         let predicate = NSPredicate(format: "%K =[c] %a", argumentArray: [#keyPath(InventoryItem.name), name])
         fetchRequest.predicate = predicate
