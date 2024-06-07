@@ -43,6 +43,7 @@
 		548F81D92C0CE38800FBC0E0 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548F81D82C0CE38800FBC0E0 /* UIView+Extensions.swift */; };
 		548F81DB2C0CED7300FBC0E0 /* ListSummaryMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548F81DA2C0CED7300FBC0E0 /* ListSummaryMenuView.swift */; };
 		548F81DD2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548F81DC2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift */; };
+		5490E46E2C13818E00D28724 /* NoInventoryItemsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5490E46D2C13818E00D28724 /* NoInventoryItemsViewCell.swift */; };
 		54A4DC6B2C0F5B580096F507 /* ItemNameChangeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A4DC6A2C0F5B580096F507 /* ItemNameChangeType.swift */; };
 		54A4DC6E2C0F60B80096F507 /* InventoryItemValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A4DC6D2C0F60B80096F507 /* InventoryItemValidator.swift */; };
 		54A74D102BECD181005C0061 /* ListItemsSortOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A74D0F2BECD181005C0061 /* ListItemsSortOption.swift */; };
@@ -136,6 +137,7 @@
 		548F81D82C0CE38800FBC0E0 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		548F81DA2C0CED7300FBC0E0 /* ListSummaryMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSummaryMenuView.swift; sourceTree = "<group>"; };
 		548F81DC2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSummaryHeaderView.swift; sourceTree = "<group>"; };
+		5490E46D2C13818E00D28724 /* NoInventoryItemsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInventoryItemsViewCell.swift; sourceTree = "<group>"; };
 		54A4DC6A2C0F5B580096F507 /* ItemNameChangeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemNameChangeType.swift; sourceTree = "<group>"; };
 		54A4DC6D2C0F60B80096F507 /* InventoryItemValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemValidator.swift; sourceTree = "<group>"; };
 		54A74D0F2BECD181005C0061 /* ListItemsSortOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemsSortOption.swift; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 			children = (
 				54DA69402BE7A5920062F9B3 /* SelectedCategoryCell.swift */,
 				544501EB2BE96A340018B345 /* InventoryItemSelectionCell.swift */,
+				5490E46D2C13818E00D28724 /* NoInventoryItemsViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				547CABB92BE16C0E0017C3C6 /* AppDelegate.swift in Sources */,
 				54ADB0002C03B1DE005EAC13 /* EditTemplateItemsModel.swift in Sources */,
 				541BB91D2C07999500F37E59 /* EditTemplateMenuView.swift in Sources */,
+				5490E46E2C13818E00D28724 /* NoInventoryItemsViewCell.swift in Sources */,
 				5478A7C72BE237FF005D1F7D /* UIFont+Extensions.swift in Sources */,
 				54ADAFE32C00B352005EAC13 /* TemplateItemCell.swift in Sources */,
 				54DA693D2BE787260062F9B3 /* UIStackView+Extensions.swift in Sources */,

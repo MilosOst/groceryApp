@@ -10,11 +10,11 @@ import CoreData
 
 protocol SelectInventoryItemDelegate: AnyObject {
     func didToggleItem(_ item: InventoryItem)
-    
     func isItemSelected(_ item: InventoryItem) -> Bool
 }
 
-private let cellIdentifier = "ItemCell"
+private let itemCellID = "ItemCell"
+private let emptyCellID = "EmptyCell"
 
 class SelectInventoryItemViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
     
@@ -25,6 +25,16 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     }()
     
     private let searchController = UISearchController()
+    private var query: String? {
+        searchController.searchBar.text
+    }
+    
+    private var queryIsEmpty: Bool {
+        if let query = query, !query.isTrimmedEmpty {
+            return false
+        }
+        return true
+    }
     
     init(delegate: SelectInventoryItemDelegate? = nil) {
         super.init(style: .grouped)
@@ -52,12 +62,14 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
         
-        let createItemButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createButtonPressed(_:)))
+        let createItemButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createButtonPressed))
         setToolbarItems([.flexibleSpace(), .flexibleSpace(), createItemButton], animated: true)
         navigationController?.setToolbarHidden(false, animated: true)
         navigationItem.titleView = searchController.searchBar
         
-        tableView.register(InventoryItemSelectionCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.delaysContentTouches = false
+        tableView.register(InventoryItemSelectionCell.self, forCellReuseIdentifier: itemCellID)
+        tableView.register(NoInventoryItemsViewCell.self, forCellReuseIdentifier: emptyCellID)
         
     }
 
@@ -67,22 +79,55 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.numberOfItems
+        return max(model.numberOfItems, 1)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! InventoryItemSelectionCell
-        let item = model.item(at: indexPath)
-        cell.configure(name: item.name ?? "", isFavourite: item.isFavourite, isSelected: delegate?.isItemSelected(item) ?? false)
-        return cell
+        // Show empty results if no results and no query
+        if model.numberOfItems == 0 && (query == nil || query!.isTrimmedEmpty) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellID, for: indexPath) as! NoInventoryItemsViewCell
+            cell.onButtonTap = { [weak self] in
+                self?.createButtonPressed()
+            }
+            tableView.separatorStyle = .none
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: itemCellID, for: indexPath) as! InventoryItemSelectionCell
+            if model.numberOfItems == 0 {
+                cell.configure(name: query ?? "", isFavourite: false, isSelected: false)
+            } else {
+                let item = model.item(at: indexPath)
+                cell.configure(name: item.name!, isFavourite: item.isFavourite, isSelected: delegate?.isItemSelected(item) ?? false)
+            }
+            
+            tableView.separatorStyle = .singleLine
+            return cell
+        }
     }
     
     // MARK: - UITableView Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard model.numberOfItems > 1 || !queryIsEmpty else { return }
+        
         tableView.deselectRow(at: indexPath, animated: true)
-        let item = model.item(at: indexPath)
+        var item: InventoryItem
+        if model.numberOfItems > 0 {
+            item = model.item(at: indexPath)
+        } else {
+            do {
+                let query = searchController.searchBar.text ?? ""
+                item = try model.createItem(with: query)
+            } catch {
+                presentPlainErrorAlert()
+                return
+            }
+        }
+        
         delegate?.didToggleItem(item)
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return model.numberOfItems > 0
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -114,10 +159,19 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .automatic)
         case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+            // If previously no results, reload row to use actual item
+            if model.numberOfItems == 1 {
+                tableView.reloadRows(at: [newIndexPath!], with: .automatic)
+            } else {
+                tableView.insertRows(at: [newIndexPath!], with: .automatic)
+                tableView.scrollToRow(at: newIndexPath!, at: .middle, animated: true)
+            }
         case .delete:
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+            // If no results after deletion, reload to show empty/search view
+            if model.numberOfItems == 0 {
+                tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            } else {
+                tableView.deleteRows(at: [indexPath!], with: .automatic)
             }
         case .move:
             tableView.beginUpdates()
@@ -146,7 +200,7 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     }
     
     // MARK: - Actions
-    @objc func createButtonPressed(_ sender: UIBarButtonItem) {
+    @objc func createButtonPressed() {
         let createItemVC = CreateItemSheetController()
         createItemVC.modalPresentationStyle = .pageSheet
         if let sheetPresentationController = createItemVC.sheetPresentationController {

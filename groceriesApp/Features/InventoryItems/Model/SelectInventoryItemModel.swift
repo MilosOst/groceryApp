@@ -44,6 +44,19 @@ class SelectInventoryItemModel {
         return fetchedResultsController.object(at: indexPath)
     }
     
+    func createItem(with name: String) throws -> InventoryItem {
+        let name = name.trimmed
+        guard !name.isEmpty else { throw InventoryItemError.emptyName }
+        
+        let validator = InventoryItemValidator(context: context)
+        guard try validator.isNameUnique(name) else { throw InventoryItemError.duplicateName }
+        
+        let item = InventoryItem(context: context)
+        item.name = name
+        try context.save()
+        return item
+    }
+    
     func deleteItem(at indexPath: IndexPath) throws {
         let object = fetchedResultsController.object(at: indexPath)
         context.delete(object)

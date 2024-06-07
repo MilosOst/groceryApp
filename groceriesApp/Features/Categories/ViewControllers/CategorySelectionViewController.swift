@@ -68,10 +68,15 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
         return max(model.numberOfCategories, 1)
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return model.numberOfCategories > 0
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if model.numberOfCategories == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellID, for: indexPath) as! NoCategoriesViewCell
             cell.onTap = { [weak self] in self?.addButtonPressed() }
+            tableView.separatorStyle = .none
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: categoryCellIdentifier, for: indexPath)
@@ -82,6 +87,7 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
             cell.contentConfiguration = config
             cell.backgroundColor = (category == currentCategory) ? .systemGreen.withAlphaComponent(0.4) : .systemBackground
             cell.accessoryType = .detailButton
+            tableView.separatorStyle = .singleLine
             return cell
         }
     }
@@ -150,12 +156,16 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .delete:
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+            if model.numberOfCategories == 0 {
+                tableView.reloadRows(at: [indexPath!], with: .automatic)
+            } else {
+                tableView.deleteRows(at: [indexPath!], with: .automatic)
             }
         case .insert:
-            if let newIndexPath = newIndexPath {
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            if model.numberOfCategories == 1 {
+                tableView.reloadRows(at: [newIndexPath!], with: .automatic)
+            } else {
+                tableView.insertRows(at: [newIndexPath!], with: .automatic)
             }
         default:
             tableView.reloadData()
