@@ -25,6 +25,8 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
         return CategorySelectorModel(context: context, controllerDelegate: self, initialCategory: currentCategory)
     }()
     
+    private let searchController = UISearchController(searchResultsController: nil)
+    
     init(currentCategory: Category?, delegate: CategorySelectorDelegate?) {
         self.currentCategory = currentCategory
         self.delegate = delegate
@@ -44,14 +46,14 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
     private func setupUI() {
         tableView.register(NoCategoriesViewCell.self, forCellReuseIdentifier: emptyCellID)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: categoryCellIdentifier)
+        tableView.delaysContentTouches = false
         title = "Categories"
         
-        let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         
-        let createCategoryBtn = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(addButtonPressed(_:)))
+        let createCategoryBtn = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(addButtonPressed))
         createCategoryBtn.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
         navigationItem.rightBarButtonItem = createCategoryBtn
         setPlainBackButton()
@@ -63,16 +65,16 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.numberOfCategories
+        return max(model.numberOfCategories, 1)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // If no results, display empty view
-        var cell: UITableViewCell
         if model.numberOfCategories == 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: emptyCellID, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellID, for: indexPath) as! NoCategoriesViewCell
+            cell.onTap = { [weak self] in self?.addButtonPressed() }
+            return cell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: categoryCellIdentifier, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: categoryCellIdentifier, for: indexPath)
             var config = UIListContentConfiguration.cell()
             let category = model.category(at: indexPath)
             config.textProperties.font = .poppinsFont(varation: .light, size: 14)
@@ -80,9 +82,8 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
             cell.contentConfiguration = config
             cell.backgroundColor = (category == currentCategory) ? .systemGreen.withAlphaComponent(0.4) : .systemBackground
             cell.accessoryType = .detailButton
+            return cell
         }
-        
-        return cell
     }
     
     // MARK: - UITableView Delegate Methods
@@ -111,10 +112,12 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
     }
     
     // MARK: - Actions
-    @objc func addButtonPressed(_ sender: UIButton) {
+    @objc func addButtonPressed() {
         let alertController = UIAlertController(title: "Create Category", message: nil, preferredStyle: .alert)
+        let defaultText = searchController.searchBar.text
         alertController.addTextField { (textField) in
             textField.placeholder = "Name"
+            textField.text = defaultText
             textField.font = .poppinsFont(varation: .light, size: 14)
             textField.autocapitalizationType = .sentences
         }

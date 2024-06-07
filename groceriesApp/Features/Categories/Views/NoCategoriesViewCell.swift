@@ -8,6 +8,7 @@
 import UIKit
 
 class NoCategoriesViewCell: UITableViewCell {
+    var onTap: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,9 +26,20 @@ class NoCategoriesViewCell: UITableViewCell {
         label.font = .poppinsFont(varation: .medium, size: 16)
         label.textAlignment = .center
         
-        let createButton = UIButton(type: .system)
+        var config = UIButton.Configuration.borderedProminent()
+        config.baseBackgroundColor = .systemBlue
+        config.baseForegroundColor = .white
+        config.title = "New Category"
+        config.titleTextAttributesTransformer = .init { incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.poppinsFont(varation: .medium, size: 16)
+            return outgoing
+        }
+        
+        
+        let createButton = UIButton(configuration: config)
         createButton.translatesAutoresizingMaskIntoConstraints = false
-        createButton.setTitle("New Category", for: .normal)
+        createButton.removeTarget(self, action: nil, for: .allEvents)
         createButton.addTarget(self, action: #selector(createBtnPressed(_:)), for: .touchUpInside)
         
         let stackView = UIStackView(arrangedSubviews: [label, createButton])
@@ -45,12 +57,10 @@ class NoCategoriesViewCell: UITableViewCell {
             label.widthAnchor.constraint(equalTo: stackView.widthAnchor)
         ])
         
-        isUserInteractionEnabled = false
         selectionStyle = .none
     }
     
     @objc func createBtnPressed(_ sender: UIButton) {
-        // TODO: Add functionality
-        print("pressed")
+        onTap?()
     }
 }
