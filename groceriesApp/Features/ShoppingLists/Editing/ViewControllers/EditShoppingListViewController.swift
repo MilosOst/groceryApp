@@ -100,6 +100,11 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
         return model.sectionName(for: section)
     }
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return (section == 0) ? 40 : 25
+    }
+    
+    
     // MARK: - UITableViewDelegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

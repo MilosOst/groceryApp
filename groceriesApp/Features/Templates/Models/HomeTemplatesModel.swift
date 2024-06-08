@@ -17,7 +17,6 @@ class HomeTemplatesModel {
         self.context = context
         self.delegate = delegate
         
-        // TODO: Sort by favourites?
         let fetchRequest = Template.fetchRequest()
         let sortByName = NSSortDescriptor(key: #keyPath(Template.name), ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))
         fetchRequest.sortDescriptors = [sortByName]

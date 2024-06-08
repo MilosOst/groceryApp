@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaults = UserDefaults.standard
         let isPreloaded = defaults.bool(forKey: "isPreloaded")
         if !isPreloaded {
-//            try? populateCoreData(context: self.persistentContainer.viewContext)
+            try? populateCoreData(context: self.persistentContainer.viewContext)
             defaults.set(true, forKey: "isPreloaded")
         }
         

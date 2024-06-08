@@ -94,6 +94,10 @@ class EditTemplateViewController: UITableViewController, NSFetchedResultsControl
         return model.sectionName(for: section)
     }
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return (section == 0) ? 40 : 25
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             try? model.deleteItem(at: indexPath)

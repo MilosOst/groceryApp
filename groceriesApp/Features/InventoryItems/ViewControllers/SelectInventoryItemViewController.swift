@@ -51,6 +51,14 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         tableView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Show keyboard for search bar
+        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+            self?.searchController.searchBar.becomeFirstResponder()
+        }
+    }
+    
     private func setupUI() {
         // Set up search controller
         searchController.searchResultsUpdater = self
@@ -70,7 +78,6 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         tableView.delaysContentTouches = false
         tableView.register(InventoryItemSelectionCell.self, forCellReuseIdentifier: itemCellID)
         tableView.register(NoInventoryItemsViewCell.self, forCellReuseIdentifier: emptyCellID)
-        
     }
 
     // MARK: - UITableViewDataSource Delegate
@@ -95,9 +102,11 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
             let cell = tableView.dequeueReusableCell(withIdentifier: itemCellID, for: indexPath) as! InventoryItemSelectionCell
             if model.numberOfItems == 0 {
                 cell.configure(name: query ?? "", isSelected: false)
+                cell.accessoryType = .none
             } else {
                 let item = model.item(at: indexPath)
                 cell.configure(name: item.name!, isSelected: delegate?.isItemSelected(item) ?? false)
+                cell.accessoryType = .detailButton
             }
             
             tableView.separatorStyle = .singleLine
@@ -145,6 +154,7 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        guard model.numberOfItems > 0 else { return }
         let item = model.item(at: indexPath)
         let editVC = EditInventoryItemViewController(item: item)
         let navVC = UINavigationController(rootViewController: editVC)

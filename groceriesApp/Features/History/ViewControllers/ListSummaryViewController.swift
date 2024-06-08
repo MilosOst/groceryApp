@@ -126,6 +126,23 @@ class ListSummaryViewController: UITableViewController, NSFetchedResultsControll
         }
     }
     
+    func removeUnchecked() {
+        do {
+            try model.removeUncheckedItems()
+            summaryHeaderView.configure(cost: model.totalSpent, completionDate: model.completionDate)
+        } catch {
+            presentPlainErrorAlert()
+        }
+    }
+    
+    func checkAll() {
+        do {
+            try model.checkAllItems()
+        } catch {
+            presentPlainErrorAlert()
+        }
+    }
+    
     // MARK: - NSFetchedResultsControllerDelegate
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
@@ -138,8 +155,14 @@ class ListSummaryViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        if type == .delete {
+        switch type {
+        case .move:
             tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        default:
+            tableView.reloadData()
         }
     }
     

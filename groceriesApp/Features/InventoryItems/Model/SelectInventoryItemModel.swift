@@ -8,7 +8,6 @@
 import Foundation
 import CoreData
 
-// TODO: Add sort order ??
 class SelectInventoryItemModel {
     private let context: NSManagedObjectContext
     private let fetchedResultsController: NSFetchedResultsController<InventoryItem>

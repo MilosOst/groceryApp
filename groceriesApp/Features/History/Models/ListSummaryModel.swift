@@ -78,6 +78,24 @@ class ListSummaryModel {
         try context.save()
     }
     
+    func removeUncheckedItems() throws {
+        for item in fetchedResultsController.fetchedObjects ?? [] {
+            if !item.isChecked {
+                context.delete(item)
+            }
+        }
+        try context.save()
+    }
+    
+    func checkAllItems() throws {
+        for item in fetchedResultsController.fetchedObjects ?? [] {
+            if !item.isChecked {
+                item.isChecked = true
+            }
+        }
+        try context.save()
+    }
+    
     func deleteList() throws {
         context.delete(list)
         try context.save()
