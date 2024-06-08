@@ -89,7 +89,7 @@ class ShoppingListHistoryCell: UITableViewCell {
             dateLabel.text = dateFormatter.string(from: completionDate)
         }
         
-        let itemCountStr = "\(list.checkedItemsCount) \(list.checkedItemsCount != 1 ? "Items" : "Item")"
+        let itemCountStr = "\(list.itemCount) \(list.itemCount != 1 ? "Items" : "Item")"
         itemCountLabel.text = itemCountStr
         priceLabel.text = list.totalCost.currencyStr
     }

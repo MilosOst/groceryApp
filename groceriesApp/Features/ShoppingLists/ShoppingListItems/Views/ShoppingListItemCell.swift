@@ -66,7 +66,7 @@ class ShoppingListItemCell: UITableViewCell {
         nameNotesStack.translatesAutoresizingMaskIntoConstraints = false
         nameNotesStack.axis = .vertical
         nameNotesStack.distribution = .fill
-        nameNotesStack.spacing = 0
+        nameNotesStack.spacing = 4
         
         stackView.addArrangedSubviews([checkButton, nameNotesStack, UIView(), priceLabel])
         contentView.addSubview(stackView)
