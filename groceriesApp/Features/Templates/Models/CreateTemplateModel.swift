@@ -28,10 +28,6 @@ class CreateTemplateModel {
         creationState.sortOrder = order
     }
     
-    func setFavourite(_ isFavourite: Bool) {
-        creationState.isFavourite = isFavourite
-    }
-    
     private func validateData() throws {
         let name = creationState.name.trimmed
         guard !name.isEmpty else { throw EntityCreationError.emptyName }
@@ -50,7 +46,6 @@ class CreateTemplateModel {
         try validateData()
         let template = Template(context: context)
         template.name = creationState.name.trimmed
-        template.isFavourite = creationState.isFavourite
         template.sortOrder = creationState.sortOrder.rawValue
         try? context.save()
     }

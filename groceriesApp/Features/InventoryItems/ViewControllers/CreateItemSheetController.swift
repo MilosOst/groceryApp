@@ -18,7 +18,7 @@ class CreateItemSheetController: UINavigationController {
 }
 
 // TODO: Change some delegates to callbacks?
-fileprivate class CreateItemViewController: UITableViewController, LabelTextFieldCellDelegate, ToggleCellDelegate {
+fileprivate class CreateItemViewController: UITableViewController, LabelTextFieldCellDelegate {
     private let textFieldCellIdentifier = "TextFieldCell"
     private let toggleCellIdentifier = "ToggleCell"
     private let categoryCellIdentifier = "CategoryCell"
@@ -55,7 +55,6 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
     private func setupUI() {
         tableView.register(LabelTextFieldTableViewCell.self, forCellReuseIdentifier: textFieldCellIdentifier)
         tableView.register(SelectedCategoryCell.self, forCellReuseIdentifier: categoryCellIdentifier)
-        tableView.register(ToggleTableViewCell.self, forCellReuseIdentifier: toggleCellIdentifier)
         
         // Set up navbar
         let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closePressed))
@@ -72,27 +71,18 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
-        switch indexPath.row {
-        case 0, 2:
+        if indexPath.row == 0 || indexPath.row == 2 {
             cell = configureTextFieldCell(tableView, indexPath: indexPath)
-        case 1:
+        } else {
             let categoryCell = tableView.dequeueReusableCell(withIdentifier: categoryCellIdentifier, for: indexPath) as! SelectedCategoryCell
             categoryCell.configure(categoryName: model.categoryName)
             cell = categoryCell
-        case 3:
-            let toggleCell = tableView.dequeueReusableCell(withIdentifier: toggleCellIdentifier, for: indexPath) as! ToggleTableViewCell
-            toggleCell.configure(label: "Favourite", isActive: model.itemState.isFavourite)
-            toggleCell.delegate = self
-            cell = toggleCell
-        default:
-            cell = UITableViewCell()
         }
-        
         return cell
     }
     
@@ -147,9 +137,5 @@ fileprivate class CreateItemViewController: UITableViewController, LabelTextFiel
             model.setUnit(text)
         }
         doneButton.isEnabled = model.canSave
-    }
-    
-    func toggleDidChange(_ newValue: Bool) {
-        model.setFavourite(newValue)
     }
 }

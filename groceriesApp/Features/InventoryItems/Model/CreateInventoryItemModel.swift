@@ -41,10 +41,6 @@ class CreateInventoryItemModel: CategorySelectorDelegate {
         itemState.category = category
     }
     
-    func setFavourite(_ isFavourite: Bool) {
-        itemState.isFavourite = isFavourite
-    }
-    
     func createItem() throws {
         // Verify name is non-empty
         let name = itemState.name.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -64,7 +60,6 @@ class CreateInventoryItemModel: CategorySelectorDelegate {
         item.name = name
         item.category = itemState.category
         item.unit = itemState.unit
-        item.isFavourite = itemState.isFavourite
         try context.save()
     }
     

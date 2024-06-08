@@ -94,10 +94,10 @@ class SelectInventoryItemViewController: UITableViewController, UISearchResultsU
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: itemCellID, for: indexPath) as! InventoryItemSelectionCell
             if model.numberOfItems == 0 {
-                cell.configure(name: query ?? "", isFavourite: false, isSelected: false)
+                cell.configure(name: query ?? "", isSelected: false)
             } else {
                 let item = model.item(at: indexPath)
-                cell.configure(name: item.name!, isFavourite: item.isFavourite, isSelected: delegate?.isItemSelected(item) ?? false)
+                cell.configure(name: item.name!, isSelected: delegate?.isItemSelected(item) ?? false)
             }
             
             tableView.separatorStyle = .singleLine

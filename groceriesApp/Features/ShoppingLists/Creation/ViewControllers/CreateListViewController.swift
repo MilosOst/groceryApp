@@ -164,9 +164,8 @@ class CreateListViewController: UITableViewController {
     // MARK: - CoreData Methods
     private func fetchTemplates() async throws {
         let fetchRequest: NSFetchRequest = Template.fetchRequest()
-        let sortByFavourite = NSSortDescriptor(key: #keyPath(Template.isFavourite), ascending: false)
         let sortByName = NSSortDescriptor(key: #keyPath(Template.name), ascending: true)
-        fetchRequest.sortDescriptors = [sortByFavourite, sortByName]
+        fetchRequest.sortDescriptors = [sortByName]
         
         try await context.perform {
             let results = try fetchRequest.execute()

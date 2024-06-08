@@ -11,7 +11,7 @@ private let nameCellID = "NameCell"
 private let favouriteCellID = "FavouriteCell"
 private let sortOrderCellID = "SortOrderCell"
 
-class CreateTemplateViewController: UITableViewController, LabelTextFieldCellDelegate, ToggleCellDelegate {
+class CreateTemplateViewController: UITableViewController, LabelTextFieldCellDelegate {
     private lazy var doneButton: DoneBarButtonItem = {
         let button = DoneBarButtonItem(target: self, selector: #selector(donePressed(_:)))
         button.isEnabled = false
@@ -34,7 +34,6 @@ class CreateTemplateViewController: UITableViewController, LabelTextFieldCellDel
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(LabelTextFieldTableViewCell.self, forCellReuseIdentifier: nameCellID)
-        tableView.register(ToggleTableViewCell.self, forCellReuseIdentifier: favouriteCellID)
         tableView.register(LabeledPickerViewCell.self, forCellReuseIdentifier: sortOrderCellID)
         setupUI()
     }
@@ -52,7 +51,7 @@ class CreateTemplateViewController: UITableViewController, LabelTextFieldCellDel
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,16 +60,11 @@ class CreateTemplateViewController: UITableViewController, LabelTextFieldCellDel
             cell.configure(label: "Name", placeholder: "Name", text: model.creationState.name)
             cell.delegate = self
             return cell
-        } else if indexPath.row == 1 {
+        } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: sortOrderCellID, for: indexPath) as! LabeledPickerViewCell
             cell.configure(label: "Sort Order", options: sortOptions, selectedObject: model.creationState.sortOrder, onSelect: { [weak self] index in
                 self?.model.setSortOrder(self?.sortOptions[index] ?? .category)
             })
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: favouriteCellID, for: indexPath) as! ToggleTableViewCell
-            cell.configure(label: "Favourite", isActive: model.creationState.isFavourite)
-            cell.delegate = self
             return cell
         }
     }
@@ -97,9 +91,5 @@ class CreateTemplateViewController: UITableViewController, LabelTextFieldCellDel
     func textDidChange(inCell cell: LabelTextFieldTableViewCell, to text: String?) {
         model.setName(text)
         doneButton.isEnabled = model.canSave
-    }
-    
-    func toggleDidChange(_ newValue: Bool) {
-        model.setFavourite(newValue)
     }
 }

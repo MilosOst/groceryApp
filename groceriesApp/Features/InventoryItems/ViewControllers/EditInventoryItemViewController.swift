@@ -11,7 +11,7 @@ private let labelTextFieldCellID = "NameCell"
 private let toggleCellID = "ToggleCell"
 private let categoryCellID = "CategoryCell"
 
-class EditInventoryItemViewController: UITableViewController, ToggleCellDelegate, LabelTextFieldCellDelegate, CategorySelectorDelegate {
+class EditInventoryItemViewController: UITableViewController, LabelTextFieldCellDelegate, CategorySelectorDelegate {
     private let model: EditInventoryItemModel
     private lazy var doneButton: DoneBarButtonItem = {
         return DoneBarButtonItem(target: self, selector: #selector(donePressed(_:)))
@@ -54,7 +54,7 @@ class EditInventoryItemViewController: UITableViewController, ToggleCellDelegate
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -76,11 +76,6 @@ class EditInventoryItemViewController: UITableViewController, ToggleCellDelegate
             let categoryCell = tableView.dequeueReusableCell(withIdentifier: categoryCellID, for: indexPath) as! SelectedCategoryCell
             categoryCell.configure(categoryName: model.category?.name)
             cell = categoryCell
-        case 3:
-            let toggleCell = tableView.dequeueReusableCell(withIdentifier: toggleCellID, for: indexPath) as! ToggleTableViewCell
-            toggleCell.delegate = self
-            toggleCell.configure(label: "Favourite", isActive: model.isFavourite)
-            cell = toggleCell
         default:
             cell = UITableViewCell()
         }
@@ -123,10 +118,6 @@ class EditInventoryItemViewController: UITableViewController, ToggleCellDelegate
             model.setUnit(to: text)
         }
         doneButton.isEnabled = model.canSave
-    }
-    
-    func toggleDidChange(_ newValue: Bool) {
-        model.setIsFavourite(to: newValue)
     }
     
     func didSelectCategory(_ category: Category?) {

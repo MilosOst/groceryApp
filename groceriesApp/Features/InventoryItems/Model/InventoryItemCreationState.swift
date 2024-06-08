@@ -11,5 +11,4 @@ struct InventoryItemCreationState {
     var name = ""
     var category: Category?
     var unit: String?
-    var isFavourite: Bool = false
 }

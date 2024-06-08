@@ -14,7 +14,7 @@ class EditInventoryItemModel {
     private let context: NSManagedObjectContext
     
     init(item: InventoryItem, context: NSManagedObjectContext) {
-        self.editState = InventoryItemCreationState(name: item.name ?? "", category: item.category, unit: item.unit, isFavourite: item.isFavourite)
+        self.editState = InventoryItemCreationState(name: item.name ?? "", category: item.category, unit: item.unit)
         self.item = item
         self.context = context
     }
@@ -29,10 +29,6 @@ class EditInventoryItemModel {
     
     var category: Category? {
         editState.category
-    }
-    
-    var isFavourite: Bool {
-        editState.isFavourite
     }
     
     var canSave: Bool {
@@ -50,10 +46,6 @@ class EditInventoryItemModel {
     
     func setUnit(to unit: String?) {
         editState.unit = unit ?? ""
-    }
-    
-    func setIsFavourite(to newVal: Bool) {
-        editState.isFavourite = newVal
     }
     
     private func validateName() throws {
@@ -85,7 +77,6 @@ class EditInventoryItemModel {
         item.name = editState.name.trimmed
         item.unit = editState.unit
         item.category = editState.category
-        item.isFavourite = editState.isFavourite
         try context.save()
     }
 }

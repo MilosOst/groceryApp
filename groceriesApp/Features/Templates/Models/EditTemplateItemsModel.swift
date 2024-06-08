@@ -123,7 +123,6 @@ class EditTemplateItemsModel {
             let newInventoryItem = InventoryItem(context: context)
             newInventoryItem.category = currInvItem.category
             newInventoryItem.unit = currInvItem.unit
-            newInventoryItem.isFavourite = currInvItem.isFavourite
             newInventoryItem.name = newName
             listItem.item = newInventoryItem
             try context.save()

@@ -10,8 +10,6 @@
         </uniquenessConstraints>
     </entity>
     <entity name="InventoryItem" representedClassName="InventoryItem" syncable="YES" codeGenerationType="category">
-        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
-        <attribute name="isFavourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="unit" optional="YES" attributeType="String"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="items" inverseEntity="Category"/>
@@ -43,7 +41,6 @@
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ListItem" inverseName="list" inverseEntity="ListItem"/>
     </entity>
     <entity name="Template" representedClassName="Template" syncable="YES" codeGenerationType="class">
-        <attribute name="isFavourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="itemCount" optional="YES" attributeType="Integer 16" derived="YES" derivationExpression="items.@count" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="sortOrder" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>

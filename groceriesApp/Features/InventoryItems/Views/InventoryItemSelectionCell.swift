@@ -16,13 +16,12 @@ class InventoryItemSelectionCell: UITableViewCell {
         fatalError("init:coder not supported")
     }
     
-    func configure(name: String, isFavourite: Bool, isSelected: Bool) {
+    func configure(name: String, isSelected: Bool) {
         var config = UIListContentConfiguration.cell()
         config.text = name
         config.textProperties.font = .poppinsFont(varation: .light, size: 16)
         
         // Set up image view indicating selection
-        
         let imageName = isSelected ? "checkmark.circle.fill" : "circle"
         let tintColor: UIColor = isSelected ? .systemGreen : .systemBlue
         config.image = UIImage(systemName: imageName)
