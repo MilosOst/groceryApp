@@ -195,7 +195,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
 }
 
 extension EditListItemsViewController: CategorySelectorDelegate {
-    func didSelectCategory(_ category: Category) {
+    func didSelectCategory(_ category: Category?) {
         guard collectionView.indexPathsForVisibleItems.count > 0 else {
             return
         }

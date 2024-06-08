@@ -129,7 +129,7 @@ class EditInventoryItemViewController: UITableViewController, ToggleCellDelegate
         model.setIsFavourite(to: newValue)
     }
     
-    func didSelectCategory(_ category: Category) {
+    func didSelectCategory(_ category: Category?) {
         model.setCategory(category)
     }
 }

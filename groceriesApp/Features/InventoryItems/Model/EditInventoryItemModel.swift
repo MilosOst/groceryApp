@@ -44,7 +44,7 @@ class EditInventoryItemModel {
         editState.name = name ?? ""
     }
     
-    func setCategory(_ category: Category) {
+    func setCategory(_ category: Category?) {
         editState.category = category
     }
     

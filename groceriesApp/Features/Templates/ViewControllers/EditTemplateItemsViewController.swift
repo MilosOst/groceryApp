@@ -69,8 +69,8 @@ class EditTemplateItemsViewController: UIViewController, UICollectionViewDelegat
         navigationItem.leftBarButtonItem = closeButton
         let doneButton = DoneBarButtonItem(target: self, selector: #selector(closeSheet(_:)))
         navigationItem.rightBarButtonItem = doneButton
-//        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.poppinsFont(varation: .light, size: 16)], for: .normal)
         title = model.startItem.item?.name
+        setPlainBackButton()
         setTitleFont(.poppinsFont(varation: .medium, size: 16))
     }
     
@@ -194,7 +194,7 @@ class EditTemplateItemsViewController: UIViewController, UICollectionViewDelegat
 }
 
 extension EditTemplateItemsViewController: CategorySelectorDelegate {
-    func didSelectCategory(_ category: Category) {
+    func didSelectCategory(_ category: Category?) {
         guard collectionView.indexPathsForVisibleItems.count > 0 else {
             return
         }

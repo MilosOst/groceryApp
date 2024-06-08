@@ -9,13 +9,12 @@ import UIKit
 import CoreData
 
 protocol CategorySelectorDelegate: AnyObject {
-    func didSelectCategory(_ category: Category)
+    func didSelectCategory(_ category: Category?)
 }
 
 private let emptyCellID = "EmptyResultsCell"
 private let categoryCellIdentifier = "CategoryCell"
 
-// TODO: Implement select no category
 class CategorySelectionViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
     weak var delegate: CategorySelectorDelegate?
     let currentCategory: Category?
@@ -44,7 +43,6 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
     }
     
     private func setupUI() {
-        tableView.register(NoCategoriesViewCell.self, forCellReuseIdentifier: emptyCellID)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: categoryCellIdentifier)
         tableView.delaysContentTouches = false
         title = "Categories"
@@ -61,11 +59,14 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
 
     // MARK: - UITableViewDataSource Methods
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(model.numberOfCategories, 1)
+        if section == 0 {
+            return model.numberOfCategories
+        }
+        return 1 // For selecting no category
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -73,29 +74,36 @@ class CategorySelectionViewController: UITableViewController, NSFetchedResultsCo
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if model.numberOfCategories == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellID, for: indexPath) as! NoCategoriesViewCell
-            cell.onTap = { [weak self] in self?.addButtonPressed() }
-            tableView.separatorStyle = .none
-            return cell
-        } else {
+        if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: categoryCellIdentifier, for: indexPath)
             var config = UIListContentConfiguration.cell()
-            let category = model.category(at: indexPath)
             config.textProperties.font = .poppinsFont(varation: .light, size: 14)
-            config.text = category.name?.capitalized
+            config.text = "Uncategorized"
             cell.contentConfiguration = config
-            cell.backgroundColor = (category == currentCategory) ? .systemGreen.withAlphaComponent(0.4) : .systemBackground
-            cell.accessoryType = .detailButton
-            tableView.separatorStyle = .singleLine
+            cell.accessoryType = .none
             return cell
         }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: categoryCellIdentifier, for: indexPath)
+        var config = UIListContentConfiguration.cell()
+        let category = model.category(at: indexPath)
+        config.textProperties.font = .poppinsFont(varation: .light, size: 14)
+        config.text = category.name?.capitalized
+        cell.contentConfiguration = config
+        cell.backgroundColor = (category == currentCategory) ? .systemGreen.withAlphaComponent(0.4) : .systemBackground
+        cell.accessoryType = .detailButton
+        return cell
     }
     
     // MARK: - UITableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard model.numberOfCategories > 0 else { return }
-        let category = model.category(at: indexPath)
+        var category: Category?
+        if indexPath.section == 1 { // Uncategorized selection
+            category = nil
+        } else {
+            category = model.category(at: indexPath)
+        }
+        
         delegate?.didSelectCategory(category)
         navigationController?.popViewController(animated: true)
     }

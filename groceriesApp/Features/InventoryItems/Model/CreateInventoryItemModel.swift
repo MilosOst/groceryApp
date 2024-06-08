@@ -37,7 +37,7 @@ class CreateInventoryItemModel: CategorySelectorDelegate {
         itemState.unit = unit ?? ""
     }
     
-    func setCategory(_ category: Category) {
+    func setCategory(_ category: Category?) {
         itemState.category = category
     }
     
@@ -68,7 +68,7 @@ class CreateInventoryItemModel: CategorySelectorDelegate {
         try context.save()
     }
     
-    func didSelectCategory(_ category: Category) {
+    func didSelectCategory(_ category: Category?) {
         setCategory(category)
     }
 }

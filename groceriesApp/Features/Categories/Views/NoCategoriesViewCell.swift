@@ -7,6 +7,7 @@
 
 import UIKit
 
+// TODO: Remove? Not needed?
 class NoCategoriesViewCell: UITableViewCell {
     var onTap: (() -> Void)?
 

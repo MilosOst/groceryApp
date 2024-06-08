@@ -81,7 +81,7 @@ class EditTemplateItemsModel {
         try context.save()
     }
     
-    func updateCategory(to category: Category, at indexPath: IndexPath) throws {
+    func updateCategory(to category: Category?, at indexPath: IndexPath) throws {
         let item = item(at: indexPath)
         item.item?.category = category
         item.quantity = item.quantity // Mark as dirty so fetched results controller notices change
