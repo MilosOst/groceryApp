@@ -46,6 +46,7 @@
 		5490E46E2C13818E00D28724 /* NoInventoryItemsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5490E46D2C13818E00D28724 /* NoInventoryItemsViewCell.swift */; };
 		54A4DC6B2C0F5B580096F507 /* ItemNameChangeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A4DC6A2C0F5B580096F507 /* ItemNameChangeType.swift */; };
 		54A4DC6E2C0F60B80096F507 /* InventoryItemValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A4DC6D2C0F60B80096F507 /* InventoryItemValidator.swift */; };
+		54A61B462C178FCD009AAC42 /* EmptyResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A61B452C178FCD009AAC42 /* EmptyResultsView.swift */; };
 		54A74D102BECD181005C0061 /* ListItemsSortOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A74D0F2BECD181005C0061 /* ListItemsSortOption.swift */; };
 		54A74D412BECE895005C0061 /* InventoryItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */; };
 		54ADAFE02C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ADAFDF2C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift */; };
@@ -86,6 +87,7 @@
 		54E45C442BE5734E00FB3419 /* NoTemplatesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E45C432BE5734E00FB3419 /* NoTemplatesViewCell.swift */; };
 		54E45C462BE6228A00FB3419 /* EditShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E45C452BE6228A00FB3419 /* EditShoppingListViewController.swift */; };
 		54E45C532BE6623500FB3419 /* SelectInventoryItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E45C522BE6623500FB3419 /* SelectInventoryItemViewController.swift */; };
+		54ECA2202C18A07C005C9A25 /* UITableViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ECA21F2C18A07C005C9A25 /* UITableViewController+Extensions.swift */; };
 		54FCFAA02BF23B8B00FFDF46 /* CategorySelectorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFA9F2BF23B8B00FFDF46 /* CategorySelectorModel.swift */; };
 		54FCFAA42BF282B600FFDF46 /* CategoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAA32BF282B600FFDF46 /* CategoryError.swift */; };
 		54FCFAA62BF2B18500FFDF46 /* SelectInventoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFAA52BF2B18500FFDF46 /* SelectInventoryItemModel.swift */; };
@@ -140,6 +142,7 @@
 		5490E46D2C13818E00D28724 /* NoInventoryItemsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInventoryItemsViewCell.swift; sourceTree = "<group>"; };
 		54A4DC6A2C0F5B580096F507 /* ItemNameChangeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemNameChangeType.swift; sourceTree = "<group>"; };
 		54A4DC6D2C0F60B80096F507 /* InventoryItemValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemValidator.swift; sourceTree = "<group>"; };
+		54A61B452C178FCD009AAC42 /* EmptyResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResultsView.swift; sourceTree = "<group>"; };
 		54A74D0F2BECD181005C0061 /* ListItemsSortOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemsSortOption.swift; sourceTree = "<group>"; };
 		54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InventoryItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		54ADAFDF2C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
@@ -180,6 +183,7 @@
 		54E45C432BE5734E00FB3419 /* NoTemplatesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTemplatesViewCell.swift; sourceTree = "<group>"; };
 		54E45C452BE6228A00FB3419 /* EditShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShoppingListViewController.swift; sourceTree = "<group>"; };
 		54E45C522BE6623500FB3419 /* SelectInventoryItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInventoryItemViewController.swift; sourceTree = "<group>"; };
+		54ECA21F2C18A07C005C9A25 /* UITableViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+Extensions.swift"; sourceTree = "<group>"; };
 		54FCFA9F2BF23B8B00FFDF46 /* CategorySelectorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorModel.swift; sourceTree = "<group>"; };
 		54FCFAA32BF282B600FFDF46 /* CategoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryError.swift; sourceTree = "<group>"; };
 		54FCFAA52BF2B18500FFDF46 /* SelectInventoryItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInventoryItemModel.swift; sourceTree = "<group>"; };
@@ -280,6 +284,7 @@
 		544C80AB2BE27DC1004DF718 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				54A61B442C178FB3009AAC42 /* Indicators */,
 				543A8E302C08FD680087EC3D /* Badges */,
 				54C766E52BF6269400F0A5CC /* Editing */,
 				54B630AB2BF3A1E9007874DF /* Buttons */,
@@ -315,6 +320,7 @@
 			children = (
 				544501DD2BE940770018B345 /* UIViewController+Extensions.swift */,
 				54D864642BF206B900BAB0C3 /* UIAlertController+Extensions.swift */,
+				54ECA21F2C18A07C005C9A25 /* UITableViewController+Extensions.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -459,6 +465,14 @@
 				547F4A8F2BF157FC0055C580 /* ShoppingListCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		54A61B442C178FB3009AAC42 /* Indicators */ = {
+			isa = PBXGroup;
+			children = (
+				54A61B452C178FCD009AAC42 /* EmptyResultsView.swift */,
+			);
+			path = Indicators;
 			sourceTree = "<group>";
 		};
 		54ADAFE12C00B333005EAC13 /* Views */ = {
@@ -772,6 +786,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54ADAFE02C0090FB005EAC13 /* UIBarButtonItem+Extensions.swift in Sources */,
+				54ECA2202C18A07C005C9A25 /* UITableViewController+Extensions.swift in Sources */,
 				544501E12BE94B220018B345 /* InventoryItemCreationState.swift in Sources */,
 				54515F942C0B9F8900AF03E3 /* ShoppingList+CoreDataClass.swift in Sources */,
 				54FCFAAD2BF35CAA00FFDF46 /* EditCategoryModel.swift in Sources */,
@@ -819,6 +834,7 @@
 				5416E82B2C105092002FE57A /* ListItem+CoreDataClass.swift in Sources */,
 				54DA69382BE6C1240062F9B3 /* CreateItemSheetController.swift in Sources */,
 				54ADAFF62C0264C4005EAC13 /* HomeTemplatesModel.swift in Sources */,
+				54A61B462C178FCD009AAC42 /* EmptyResultsView.swift in Sources */,
 				544C80AD2BE27DD3004DF718 /* TextFieldTableViewCell.swift in Sources */,
 				54ADB0042C03B3CC005EAC13 /* UICollectionViewLayout+Extensions.swift in Sources */,
 				54AF986E2BEA7B8F001A5B79 /* ShoppingListItemCell.swift in Sources */,
@@ -1019,7 +1035,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1053,7 +1069,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

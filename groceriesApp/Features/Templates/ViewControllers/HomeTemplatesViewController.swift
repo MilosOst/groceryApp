@@ -46,6 +46,13 @@ class HomeTemplatesViewController: UITableViewController, NSFetchedResultsContro
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let numberOfTemplates = model.numberOfTemplates
+        if numberOfTemplates == 0 {
+            tableView.setEmptyBackgroundView("No Templates Found", message: "Create a Template using the button in the top right corner.", imageName: "list.clipboard")
+        } else {
+            tableView.restore()
+        }
+        
         return model.numberOfTemplates
     }
 

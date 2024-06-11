@@ -47,6 +47,13 @@ class HomeListsViewController: UITableViewController, NSFetchedResultsController
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let numberOfLists = model.numberOfLists
+        if numberOfLists == 0 {
+            tableView.setEmptyBackgroundView("No Lists Found", message: "Create a List using the button in the top right corner.", imageName: "list.bullet.clipboard")
+        } else {
+            tableView.restore()
+        }
+        
         return model.numberOfLists
     }
     

@@ -49,6 +49,12 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
+        if model.numberOfSections == 0 {
+            tableView.setEmptyBackgroundView("No History Entries", message: "Lists will appear here once marked completed.", imageName: "clock")
+        } else {
+            tableView.restore()
+        }
+        
         return model.numberOfSections
     }
 
