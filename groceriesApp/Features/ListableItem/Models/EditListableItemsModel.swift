@@ -1,44 +1,24 @@
 //
-//  EditListItemsModel.swift
+//  EditListableItemsModel.swift
 //  groceriesApp
 //
-//  Created by Milos Abcd on 2024-05-16.
+//  Created by Milos Abcd on 2024-06-15.
 //
 
-import Foundation
 import CoreData
 
-class EditListItemsModel {
-    private let shoppingList: ShoppingList
-    private let context: NSManagedObjectContext
-    let startItem: ListItem
-    private weak var delegate: NSFetchedResultsControllerDelegate?
-    private let fetchedResultsController: NSFetchedResultsController<ListItem>
+/// Abstract class for generic editing model for collection of ListableItems
+class EditListableItemsModel<T: ListableItem & NSManagedObject> {
+    internal var fetchedResultsController: NSFetchedResultsController<T>
+    internal let context: NSManagedObjectContext
+    internal weak var delegate: NSFetchedResultsControllerDelegate?
+    internal let startItem: T
     
-    init(list: ShoppingList, startItem: ListItem, context: NSManagedObjectContext, delegate: NSFetchedResultsControllerDelegate?) {
-        self.shoppingList = list
-        self.startItem = startItem
+    init(fetchedResultsController: NSFetchedResultsController<T>, context: NSManagedObjectContext, delegate: NSFetchedResultsControllerDelegate?, startItem: T) {
+        self.fetchedResultsController = fetchedResultsController
         self.context = context
         self.delegate = delegate
-        
-        
-        let fetchRequest = ListItem.fetchRequest()
-        let predicate = NSPredicate(format: "list == %@", shoppingList)
-        let sortDescriptors = [
-            NSSortDescriptor(key: #keyPath(ListItem.isChecked), ascending: true),
-            NSSortDescriptor(key: #keyPath(ListItem.item.name), ascending: true)
-        ]
-        fetchRequest.predicate = predicate
-        fetchRequest.sortDescriptors = sortDescriptors
-        
-        // If sorted by category, add Category NSSortDescriptor
-        if shoppingList.sortOrder == ListItemsSortOption.category.rawValue {
-            let sortByCategory = NSSortDescriptor(key: #keyPath(ListItem.item.category.name), ascending: true)
-            fetchRequest.sortDescriptors?.insert(sortByCategory, at: 0)
-        }
-        
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController.delegate = delegate
+        self.startItem = startItem
     }
     
     func loadData() throws {
@@ -49,12 +29,12 @@ class EditListItemsModel {
         fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
-    var indexPathForStartItem: IndexPath? {
-        fetchedResultsController.indexPath(forObject: startItem)
+    func item(at indexPath: IndexPath) -> T {
+        fetchedResultsController.object(at: indexPath)
     }
     
-    func item(at indexPath: IndexPath) -> ListItem {
-        fetchedResultsController.object(at: indexPath)
+    var indexPathForStartItem: IndexPath? {
+        fetchedResultsController.indexPath(forObject: startItem)
     }
     
     // MARK: - Editing

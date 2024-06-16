@@ -1,16 +1,17 @@
 //
-//  EditListViewController.swift
+//  EditListableItemsViewController.swift
 //  groceriesApp
 //
-//  Created by Milos Abcd on 2024-05-08.
+//  Created by Milos Abcd on 2024-06-15.
 //
 
-import UIKit
 import CoreData
+import UIKit
 
 private let cellId = "ItemCell"
 
-class EditListItemsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, EditListItemDelegate, NSFetchedResultsControllerDelegate {
+
+class EditListableItemsViewController<T: ListableItem & NSManagedObject>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NSFetchedResultsControllerDelegate, EditListableItemCellDelegate {
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewLayout.makeFullScreenHorizontalPagingLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -18,17 +19,21 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.keyboardDismissMode = .none
-        collectionView.register(EditListItemCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(EditListableItemCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.allowsSelection = false
         collectionView.delaysContentTouches = false
         return collectionView
     }()
     
-    private var model: EditListItemsModel!
-
-    init(shoppingList: ShoppingList, startItem: ListItem) {
+    internal var model: EditListableItemsModel<T>!
+    
+    init(model: EditListableItemsModel<T>) {
+        self.model = model
         super.init(nibName: nil, bundle: nil)
-        self.model = EditListItemsModel(list: shoppingList, startItem: startItem, context: coreDataContext, delegate: self)
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -52,29 +57,28 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        // Update current collectionViewCell in case InventoryItem was edited
-        if collectionView.indexPathsForVisibleItems.count > 0 {
-            let indexPath = collectionView.indexPathsForVisibleItems[0]
+        if let indexPath = collectionView.indexPathsForVisibleItems.first {
             collectionView.reloadItems(at: [indexPath])
         }
     }
     
-    private func setupUI() {
+    // Fix access level
+    func setupUI() {
         view.addSubview(collectionView)
         collectionView.frame = view.frame
         edgesForExtendedLayout = .bottom
         view.backgroundColor = .systemBackground
         
-        // Set up navbar items
-        let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeSheet(_:)))
+        // Navbar setup
+        let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeSheet))
         navigationItem.leftBarButtonItem = closeButton
-        let doneButton = DoneBarButtonItem(target: self, selector: #selector(closeSheet(_:)))
+        let doneButton = DoneBarButtonItem(target: self, selector: #selector(closeSheet))
         navigationItem.rightBarButtonItem = doneButton
         title = model.startItem.item?.name
         setTitleFont(.poppinsFont(varation: .medium, size: 16))
     }
     
-    // MARK: - UICollectionViewDataSource Methods
+    // MARK: - CollectionViewDataSource
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -84,50 +88,44 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! EditListItemCell
-        let listItem = model.item(at: indexPath)
-        cell.configure(with: listItem, delegate: self)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! EditListableItemCell
+        let item = model.item(at: indexPath)
+        cell.configure(with: item, delegate: self)
         return cell
     }
     
     // MARK: - UICollectionViewDelegate Methods
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView.indexPathsForVisibleItems.count > 0 {
-            let indexPath = collectionView.indexPathsForVisibleItems[0]
+        if let indexPath = collectionView.indexPathsForVisibleItems.first {
             let item = model.item(at: indexPath)
             title = item.item?.name
         }
     }
     
-    // MARK: - Actions
-    @objc func closeSheet(_ sender: UIBarButtonItem) {
-        dismiss(animated: true)
-    }
-    
-    // MARK: ListItemEditDelegate Methods
-    func quantityDidChange(in cell: EditListItemCell, to quantity: String?) {
+    // MARK: - EditListableItemCell Delegate
+    func quantityDidChange(in cell: EditListableItemCell, to quantity: String?) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let quantity = Float(quantity ?? "") ?? 0
         try? model.updateQuantity(at: indexPath, quantity: quantity)
     }
     
-    func unitDidChange(in cell: EditListItemCell, to unit: String?) {
+    func unitDidChange(in cell: EditListableItemCell, to unit: String?) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         try? model.updateUnit(at: indexPath, unit: unit)
     }
     
-    func priceDidChange(in cell: EditListItemCell, to price: String?) {
+    func priceDidChange(in cell: EditListableItemCell, to price: String?) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let price = Float(price ?? "") ?? 0
         try? model.updatePrice(at: indexPath, price: price)
     }
     
-    func notesDidChange(in cell: EditListItemCell, to text: String) {
+    func notesDidChange(in cell: EditListableItemCell, to text: String) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         try? model.updateNotes(at: indexPath, notes: text)
     }
     
-    func categoryBtnPressed(_ cell: EditListItemCell) {
+    func categoryBtnPressed(_ cell: EditListableItemCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else {
             return
         }
@@ -137,7 +135,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         navigationController?.pushViewController(categorySelectorVC, animated: true)
     }
     
-    func removePressed(_ cell: EditListItemCell) {
+    func removePressed(_ cell: EditListableItemCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let alert = UIAlertController.makeDeleteDialog(title: nil, message: nil, handler: { [self] _ in
             do {
@@ -149,7 +147,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         present(alert, animated: true)
     }
     
-    func renamePressed(_ cell: EditListItemCell) {
+    func renamePressed(_ cell: EditListableItemCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let item = model.item(at: indexPath)
         let name = item.item?.name ?? ""
@@ -172,8 +170,15 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
         present(alert, animated: true)
     }
     
+    
+    // MARK: - Actions
+    @objc func closeSheet() {
+        dismiss(animated: true)
+    }
+    
     // MARK: - NSFetchedResultsControllerDelegate
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        // TODO: Try using .reconfigureItems() func
         switch type {
         case .delete:
             collectionView.deleteItems(at: [indexPath!])
@@ -194,7 +199,7 @@ class EditListItemsViewController: UIViewController, UICollectionViewDelegate, U
     }
 }
 
-extension EditListItemsViewController: CategorySelectorDelegate {
+extension EditListableItemsViewController: CategorySelectorDelegate {
     func didSelectCategory(_ category: Category?) {
         guard collectionView.indexPathsForVisibleItems.count > 0 else {
             return

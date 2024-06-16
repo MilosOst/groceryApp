@@ -52,7 +52,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="TemplateItem" representedClassName="TemplateItem" syncable="YES" codeGenerationType="class">
+    <entity name="TemplateItem" representedClassName="TemplateItem" syncable="YES" codeGenerationType="category">
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Float" minValueString="0" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>

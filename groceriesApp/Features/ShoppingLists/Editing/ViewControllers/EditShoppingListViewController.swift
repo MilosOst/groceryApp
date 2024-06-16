@@ -109,7 +109,8 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = model.item(at: indexPath)
-        let editVC = EditListItemsViewController(shoppingList: model.list, startItem: item)
+//        let editVC = EditListItemsViewController(shoppingList: model.list, startItem: item)
+        let editVC = EditShoppingListItemsViewController(shoppingList: model.list, startItem: item)
         let navVC = UINavigationController(rootViewController: editVC)
         navVC.modalPresentationStyle = .formSheet
         navVC.sheetPresentationController?.detents = [.medium()]
