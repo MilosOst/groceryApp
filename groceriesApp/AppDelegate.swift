@@ -35,18 +35,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    // MARK: - CoreData
+    private let databaseName = "groceriesApp.sqlite"
+    
+    private var oldStoreURL: URL {
+        let directory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        return directory.appendingPathComponent(databaseName)
+    }
+    
+    private var sharedStoreURL: URL {
+        let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.MilosOst.KaufList")!
+        return container.appendingPathComponent(databaseName)
+    }
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "groceriesApp")
+        if !FileManager.default.fileExists(atPath: oldStoreURL.path) {
+            print("Old store doesn't exist, using new store")
+            container.persistentStoreDescriptions.first!.url = sharedStoreURL
+        }
+        
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        
+        migrateStore(for: container)
+        container.viewContext.automaticallyMergesChangesFromParent = true
         return container
     }()
     
-    // MARK: - Core Data Saving support
+    private func migrateStore(for container: NSPersistentContainer) {
+        let coordinator = container.persistentStoreCoordinator
+        guard let oldStore = coordinator.persistentStore(for: oldStoreURL) else {
+            print("Old store no longer exists")
+            return
+        }
+        
+        // Migrate from old store to shared store
+        do {
+            let _ = try coordinator.migratePersistentStore(oldStore, to: sharedStoreURL, type: .sqlite)
+        } catch {
+            fatalError("Unable to migrate to shared store")
+        }
+        
+        // Delete old store once finished
+        do {
+            try FileManager.default.removeItem(at: oldStoreURL)
+        } catch {
+            print("Unable to delete old store")
+        }
+    }
     
+    
+    // MARK: - Core Data Saving support
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {
