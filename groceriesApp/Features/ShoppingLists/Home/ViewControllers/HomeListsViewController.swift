@@ -85,6 +85,11 @@ class HomeListsViewController: UITableViewController, NSFetchedResultsController
                 try self?.model.markComplete(at: indexPath)
                 WidgetCenter.shared.reloadAllTimelines()
                 handler(true)
+                
+                // Ask for review if conditions are met
+                let completionCount = UserDefaults.standard.integer(forKey: "completionCount")
+                UserDefaults.standard.setValue(completionCount + 1, forKey: "completionCount")
+                self?.requestReview()
             } catch {
                 handler(false)
             }

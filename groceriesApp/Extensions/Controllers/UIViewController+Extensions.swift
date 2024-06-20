@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import StoreKit
 
 @nonobjc extension UIViewController {
     func setTitleFont(_ font: UIFont) {
@@ -61,5 +62,16 @@ import CoreData
     
     var coreDataContext: NSManagedObjectContext {
         (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    }
+    
+    /// Requests an app review if the given conditions are met.
+    func requestReview() {
+        // Verify conditions are met
+        let completionCount = UserDefaults.standard.integer(forKey: "completionCount")
+        if [1, 10, 50].contains(completionCount) {
+            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+            }
+        }
     }
 }

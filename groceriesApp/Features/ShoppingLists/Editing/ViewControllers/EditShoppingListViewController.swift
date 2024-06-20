@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import WidgetKit
+import StoreKit
 
 private let cellIdentifier = "ItemCell"
 
@@ -269,6 +270,12 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
         do {
             try model.markComplete()
             WidgetCenter.shared.reloadAllTimelines()
+            
+            // Ask for review if conditions are met
+            let completionCount = UserDefaults.standard.integer(forKey: "completionCount")
+            UserDefaults.standard.setValue(completionCount + 1, forKey: "completionCount")
+            requestReview()
+            
             navigationController?.popViewController(animated: true)
         } catch {
             presentPlainErrorAlert()
