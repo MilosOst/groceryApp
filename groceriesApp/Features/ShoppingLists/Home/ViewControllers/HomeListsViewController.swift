@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import WidgetKit
 
 private let cellID = "ListCell"
 
@@ -82,6 +83,7 @@ class HomeListsViewController: UITableViewController, NSFetchedResultsController
         let markCompleteAction = UIContextualAction(style: .normal, title: nil, handler: { [weak self] (_, _, handler) in
             do {
                 try self?.model.markComplete(at: indexPath)
+                WidgetCenter.shared.reloadAllTimelines()
                 handler(true)
             } catch {
                 handler(false)
@@ -99,6 +101,7 @@ class HomeListsViewController: UITableViewController, NSFetchedResultsController
         let alert = UIAlertController.makeDeleteDialog(title: "Delete List?", message: "This action cannot be undone.", handler: { [self] _ in
             do {
                 try self.model.deleteObject(at: indexPath)
+                WidgetCenter.shared.reloadAllTimelines()
             } catch {
                 self.presentPlainErrorAlert()
             }

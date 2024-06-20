@@ -7,10 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		540288382C231A3D00357366 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540288372C231A3D00357366 /* PersistenceController.swift */; };
+		540288392C231B8500357366 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540288372C231A3D00357366 /* PersistenceController.swift */; };
+		5402883A2C231B8500357366 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540288372C231A3D00357366 /* PersistenceController.swift */; };
 		5416E82B2C105092002FE57A /* ListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */; };
+		541B87BB2C22E0E200E310FD /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 541B87BA2C22E0E200E310FD /* Intents.framework */; };
+		541B87C22C22E0E200E310FD /* ListProgressIntentHandler.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 541B87B92C22E0E200E310FD /* ListProgressIntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		541BB91D2C07999500F37E59 /* EditTemplateMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */; };
 		541BB9222C07B94100F37E59 /* TemplateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541BB9212C07B94100F37E59 /* TemplateValidator.swift */; };
 		5427CA1C2C10FB7F006F16B9 /* PopulateCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5427CA1B2C10FB7F006F16B9 /* PopulateCoreData.swift */; };
+		542C23112C217D80005C96B3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542C23102C217D80005C96B3 /* WidgetKit.framework */; };
+		542C23132C217D80005C96B3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542C23122C217D80005C96B3 /* SwiftUI.framework */; };
+		542C23162C217D80005C96B3 /* ListProgressWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C23152C217D80005C96B3 /* ListProgressWidgetBundle.swift */; };
+		542C23182C217D80005C96B3 /* ListProgressWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542C23172C217D80005C96B3 /* ListProgressWidget.swift */; };
+		542C231A2C217D81005C96B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 542C23192C217D81005C96B3 /* Assets.xcassets */; };
+		542C231E2C217D81005C96B3 /* ListProgressWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 542C230E2C217D80005C96B3 /* ListProgressWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		542C23232C217D95005C96B3 /* groceriesApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 547CABCD2BE170350017C3C6 /* groceriesApp.xcdatamodeld */; };
+		542C23242C217D99005C96B3 /* InventoryItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */; };
+		542C23252C217D99005C96B3 /* ShoppingList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54515F922C0B9F8900AF03E3 /* ShoppingList+CoreDataClass.swift */; };
+		542C23262C217D99005C96B3 /* TemplateItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B880802C1D7BBC00FB1EEA /* TemplateItem+CoreDataClass.swift */; };
+		542C23272C217D99005C96B3 /* PopulateCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5427CA1B2C10FB7F006F16B9 /* PopulateCoreData.swift */; };
+		542C23292C217DAB005C96B3 /* ListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */; };
+		542C232A2C217DBB005C96B3 /* ListableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8807E2C1D7AF200FB1EEA /* ListableItem.swift */; };
+		542C232B2C2181F7005C96B3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54515F902C0B9DA600AF03E3 /* Double+Extensions.swift */; };
+		542C232D2C219941005C96B3 /* ListProgressConfgurationIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 542C232C2C219941005C96B3 /* ListProgressConfgurationIntent.intentdefinition */; };
 		543A8E322C08FD7E0087EC3D /* BadgeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543A8E312C08FD7E0087EC3D /* BadgeViewFactory.swift */; };
 		544501DE2BE940770018B345 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501DD2BE940770018B345 /* UIViewController+Extensions.swift */; };
 		544501E12BE94B220018B345 /* InventoryItemCreationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501E02BE94B220018B345 /* InventoryItemCreationState.swift */; };
@@ -18,10 +38,21 @@
 		544501EC2BE96A340018B345 /* InventoryItemSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544501EB2BE96A340018B345 /* InventoryItemSelectionCell.swift */; };
 		544C80A92BE2755D004DF718 /* CreateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544C80A82BE2755D004DF718 /* CreateListViewController.swift */; };
 		544C80AD2BE27DD3004DF718 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544C80AC2BE27DD3004DF718 /* TextFieldTableViewCell.swift */; };
+		544DD6032C2317C300C25A6C /* ListProgressConfgurationIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 542C232C2C219941005C96B3 /* ListProgressConfgurationIntent.intentdefinition */; };
 		54515F8C2C0B898000AF03E3 /* ShoppingListHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54515F8B2C0B898000AF03E3 /* ShoppingListHistoryCell.swift */; };
 		54515F912C0B9DA600AF03E3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54515F902C0B9DA600AF03E3 /* Double+Extensions.swift */; };
 		54515F942C0B9F8900AF03E3 /* ShoppingList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54515F922C0B9F8900AF03E3 /* ShoppingList+CoreDataClass.swift */; };
 		546211872BE4241D002CE98E /* TemplateSelectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546211862BE4241D002CE98E /* TemplateSelectionCellView.swift */; };
+		546DF7322C230BED00A1D301 /* ListProgressConfgurationIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 542C232C2C219941005C96B3 /* ListProgressConfgurationIntent.intentdefinition */; };
+		546DF7332C230CBF00A1D301 /* ListProgressIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541B87BD2C22E0E200E310FD /* ListProgressIntentHandler.swift */; };
+		546DF7342C230CCC00A1D301 /* ListProgressIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541B87BD2C22E0E200E310FD /* ListProgressIntentHandler.swift */; };
+		546DF7352C230CED00A1D301 /* groceriesApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 547CABCD2BE170350017C3C6 /* groceriesApp.xcdatamodeld */; };
+		546DF7362C230CFB00A1D301 /* InventoryItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */; };
+		546DF7372C230CFB00A1D301 /* ShoppingList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54515F922C0B9F8900AF03E3 /* ShoppingList+CoreDataClass.swift */; };
+		546DF7382C230CFB00A1D301 /* ListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */; };
+		546DF7392C230CFB00A1D301 /* PopulateCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5427CA1B2C10FB7F006F16B9 /* PopulateCoreData.swift */; };
+		546DF73A2C230CFB00A1D301 /* TemplateItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B880802C1D7BBC00FB1EEA /* TemplateItem+CoreDataClass.swift */; };
+		546DF73B2C230D0900A1D301 /* ListableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8807E2C1D7AF200FB1EEA /* ListableItem.swift */; };
 		5478A7C02BE23718005D1F7D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BB2BE23718005D1F7D /* Poppins-Regular.ttf */; };
 		5478A7C12BE23718005D1F7D /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BC2BE23718005D1F7D /* Poppins-Thin.ttf */; };
 		5478A7C22BE23718005D1F7D /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5478A7BD2BE23718005D1F7D /* Poppins-Medium.ttf */; };
@@ -103,6 +134,23 @@
 		54FE5B5D2C1DBDCE00A9D5FF /* EditShoppingListItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FE5B5C2C1DBDCE00A9D5FF /* EditShoppingListItemsViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		541B87C02C22E0E200E310FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 547CABAD2BE16C0E0017C3C6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 541B87B82C22E0E200E310FD;
+			remoteInfo = ListProgressIntentHandler;
+		};
+		542C231C2C217D81005C96B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 547CABAD2BE16C0E0017C3C6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 542C230D2C217D80005C96B3;
+			remoteInfo = ListProgressWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		54129E142C20CB7700405949 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -110,6 +158,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				541B87C22C22E0E200E310FD /* ListProgressIntentHandler.appex in Embed Foundation Extensions */,
+				542C231E2C217D81005C96B3 /* ListProgressWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -117,11 +167,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		540288372C231A3D00357366 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		54129E182C20CBC900405949 /* groceriesApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = groceriesApp.entitlements; sourceTree = "<group>"; };
 		5416E8292C105092002FE57A /* ListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		541B87B92C22E0E200E310FD /* ListProgressIntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ListProgressIntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		541B87BA2C22E0E200E310FD /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		541B87BD2C22E0E200E310FD /* ListProgressIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListProgressIntentHandler.swift; sourceTree = "<group>"; };
+		541B87BF2C22E0E200E310FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		541B87C92C22E16500E310FD /* ListProgressIntentHandler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ListProgressIntentHandler.entitlements; sourceTree = "<group>"; };
 		541BB91C2C07999500F37E59 /* EditTemplateMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateMenuView.swift; sourceTree = "<group>"; };
 		541BB9212C07B94100F37E59 /* TemplateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateValidator.swift; sourceTree = "<group>"; };
 		5427CA1B2C10FB7F006F16B9 /* PopulateCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopulateCoreData.swift; sourceTree = "<group>"; };
+		542C230E2C217D80005C96B3 /* ListProgressWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ListProgressWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		542C23102C217D80005C96B3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		542C23122C217D80005C96B3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		542C23152C217D80005C96B3 /* ListProgressWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListProgressWidgetBundle.swift; sourceTree = "<group>"; };
+		542C23172C217D80005C96B3 /* ListProgressWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListProgressWidget.swift; sourceTree = "<group>"; };
+		542C23192C217D81005C96B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		542C231B2C217D81005C96B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		542C23222C217D8A005C96B3 /* ListProgressWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ListProgressWidgetExtension.entitlements; sourceTree = "<group>"; };
+		542C232C2C219941005C96B3 /* ListProgressConfgurationIntent.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = ListProgressConfgurationIntent.intentdefinition; sourceTree = "<group>"; };
 		543A8E312C08FD7E0087EC3D /* BadgeViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeViewFactory.swift; sourceTree = "<group>"; };
 		544501DD2BE940770018B345 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		544501E02BE94B220018B345 /* InventoryItemCreationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemCreationState.swift; sourceTree = "<group>"; };
@@ -217,6 +282,23 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		541B87B62C22E0E200E310FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				541B87BB2C22E0E200E310FD /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		542C230B2C217D80005C96B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				542C23132C217D80005C96B3 /* SwiftUI.framework in Frameworks */,
+				542C23112C217D80005C96B3 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		547CABB22BE16C0E0017C3C6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -259,6 +341,38 @@
 				541BB9212C07B94100F37E59 /* TemplateValidator.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		541B87BC2C22E0E200E310FD /* ListProgressIntentHandler */ = {
+			isa = PBXGroup;
+			children = (
+				541B87C92C22E16500E310FD /* ListProgressIntentHandler.entitlements */,
+				541B87BD2C22E0E200E310FD /* ListProgressIntentHandler.swift */,
+				541B87BF2C22E0E200E310FD /* Info.plist */,
+			);
+			path = ListProgressIntentHandler;
+			sourceTree = "<group>";
+		};
+		542C230F2C217D80005C96B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				542C23102C217D80005C96B3 /* WidgetKit.framework */,
+				542C23122C217D80005C96B3 /* SwiftUI.framework */,
+				541B87BA2C22E0E200E310FD /* Intents.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		542C23142C217D80005C96B3 /* ListProgressWidget */ = {
+			isa = PBXGroup;
+			children = (
+				542C23152C217D80005C96B3 /* ListProgressWidgetBundle.swift */,
+				542C23172C217D80005C96B3 /* ListProgressWidget.swift */,
+				542C23192C217D81005C96B3 /* Assets.xcassets */,
+				542C231B2C217D81005C96B3 /* Info.plist */,
+				542C232C2C219941005C96B3 /* ListProgressConfgurationIntent.intentdefinition */,
+			);
+			path = ListProgressWidget;
 			sourceTree = "<group>";
 		};
 		543A8E302C08FD680087EC3D /* Badges */ = {
@@ -428,7 +542,11 @@
 		547CABAC2BE16C0E0017C3C6 = {
 			isa = PBXGroup;
 			children = (
+				542C23222C217D8A005C96B3 /* ListProgressWidgetExtension.entitlements */,
 				547CABB72BE16C0E0017C3C6 /* groceriesApp */,
+				542C23142C217D80005C96B3 /* ListProgressWidget */,
+				541B87BC2C22E0E200E310FD /* ListProgressIntentHandler */,
+				542C230F2C217D80005C96B3 /* Frameworks */,
 				547CABB62BE16C0E0017C3C6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -437,6 +555,8 @@
 			isa = PBXGroup;
 			children = (
 				547CABB52BE16C0E0017C3C6 /* groceriesApp.app */,
+				542C230E2C217D80005C96B3 /* ListProgressWidgetExtension.appex */,
+				541B87B92C22E0E200E310FD /* ListProgressIntentHandler.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -444,12 +564,12 @@
 		547CABB72BE16C0E0017C3C6 /* groceriesApp */ = {
 			isa = PBXGroup;
 			children = (
+				547CABCC2BE1700A0017C3C6 /* CoreData */,
 				54129E182C20CBC900405949 /* groceriesApp.entitlements */,
 				544C80AA2BE27DBD004DF718 /* Shared */,
 				5478A7C82BE23BFD005D1F7D /* Features */,
 				5478A7C52BE237A0005D1F7D /* Extensions */,
 				5478A7BA2BE236FE005D1F7D /* Fonts */,
-				547CABCC2BE1700A0017C3C6 /* CoreData */,
 				547CABB82BE16C0E0017C3C6 /* AppDelegate.swift */,
 				547CABBA2BE16C0E0017C3C6 /* SceneDelegate.swift */,
 				547CABC12BE16C0F0017C3C6 /* Assets.xcassets */,
@@ -468,6 +588,7 @@
 				54515F922C0B9F8900AF03E3 /* ShoppingList+CoreDataClass.swift */,
 				54A74D3F2BECE895005C0061 /* InventoryItem+CoreDataClass.swift */,
 				5427CA1B2C10FB7F006F16B9 /* PopulateCoreData.swift */,
+				540288372C231A3D00357366 /* PersistenceController.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -733,6 +854,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		541B87B82C22E0E200E310FD /* ListProgressIntentHandler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 541B87C32C22E0E200E310FD /* Build configuration list for PBXNativeTarget "ListProgressIntentHandler" */;
+			buildPhases = (
+				541B87B52C22E0E200E310FD /* Sources */,
+				541B87B62C22E0E200E310FD /* Frameworks */,
+				541B87B72C22E0E200E310FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ListProgressIntentHandler;
+			productName = ListProgressIntentHandler;
+			productReference = 541B87B92C22E0E200E310FD /* ListProgressIntentHandler.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		542C230D2C217D80005C96B3 /* ListProgressWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 542C231F2C217D81005C96B3 /* Build configuration list for PBXNativeTarget "ListProgressWidgetExtension" */;
+			buildPhases = (
+				542C230A2C217D80005C96B3 /* Sources */,
+				542C230B2C217D80005C96B3 /* Frameworks */,
+				542C230C2C217D80005C96B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ListProgressWidgetExtension;
+			productName = ListProgressWidgetExtension;
+			productReference = 542C230E2C217D80005C96B3 /* ListProgressWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		547CABB42BE16C0E0017C3C6 /* groceriesApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 547CABC92BE16C0F0017C3C6 /* Build configuration list for PBXNativeTarget "groceriesApp" */;
@@ -745,6 +900,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				542C231D2C217D81005C96B3 /* PBXTargetDependency */,
+				541B87C12C22E0E200E310FD /* PBXTargetDependency */,
 			);
 			name = groceriesApp;
 			packageProductDependencies = (
@@ -763,6 +920,12 @@
 				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
+					541B87B82C22E0E200E310FD = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					542C230D2C217D80005C96B3 = {
+						CreatedOnToolsVersion = 15.2;
+					};
 					547CABB42BE16C0E0017C3C6 = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -784,11 +947,28 @@
 			projectRoot = "";
 			targets = (
 				547CABB42BE16C0E0017C3C6 /* groceriesApp */,
+				542C230D2C217D80005C96B3 /* ListProgressWidgetExtension */,
+				541B87B82C22E0E200E310FD /* ListProgressIntentHandler */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		541B87B72C22E0E200E310FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		542C230C2C217D80005C96B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				542C231A2C217D81005C96B3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		547CABB32BE16C0E0017C3C6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -806,6 +986,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		541B87B52C22E0E200E310FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				546DF7352C230CED00A1D301 /* groceriesApp.xcdatamodeld in Sources */,
+				546DF7322C230BED00A1D301 /* ListProgressConfgurationIntent.intentdefinition in Sources */,
+				546DF7382C230CFB00A1D301 /* ListItem+CoreDataClass.swift in Sources */,
+				546DF7332C230CBF00A1D301 /* ListProgressIntentHandler.swift in Sources */,
+				546DF73B2C230D0900A1D301 /* ListableItem.swift in Sources */,
+				546DF73A2C230CFB00A1D301 /* TemplateItem+CoreDataClass.swift in Sources */,
+				546DF7372C230CFB00A1D301 /* ShoppingList+CoreDataClass.swift in Sources */,
+				546DF7362C230CFB00A1D301 /* InventoryItem+CoreDataClass.swift in Sources */,
+				546DF7392C230CFB00A1D301 /* PopulateCoreData.swift in Sources */,
+				540288392C231B8500357366 /* PersistenceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		542C230A2C217D80005C96B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				542C23262C217D99005C96B3 /* TemplateItem+CoreDataClass.swift in Sources */,
+				542C23232C217D95005C96B3 /* groceriesApp.xcdatamodeld in Sources */,
+				542C23182C217D80005C96B3 /* ListProgressWidget.swift in Sources */,
+				5402883A2C231B8500357366 /* PersistenceController.swift in Sources */,
+				542C23162C217D80005C96B3 /* ListProgressWidgetBundle.swift in Sources */,
+				542C232B2C2181F7005C96B3 /* Double+Extensions.swift in Sources */,
+				544DD6032C2317C300C25A6C /* ListProgressConfgurationIntent.intentdefinition in Sources */,
+				542C232A2C217DBB005C96B3 /* ListableItem.swift in Sources */,
+				542C23252C217D99005C96B3 /* ShoppingList+CoreDataClass.swift in Sources */,
+				542C23242C217D99005C96B3 /* InventoryItem+CoreDataClass.swift in Sources */,
+				542C23292C217DAB005C96B3 /* ListItem+CoreDataClass.swift in Sources */,
+				542C23272C217D99005C96B3 /* PopulateCoreData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		547CABB12BE16C0E0017C3C6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -819,10 +1035,12 @@
 				548F81DD2C0CF2E300FBC0E0 /* ListSummaryHeaderView.swift in Sources */,
 				54FD98E42BF5173200A60F08 /* HomeRootViewController.swift in Sources */,
 				5427CA1C2C10FB7F006F16B9 /* PopulateCoreData.swift in Sources */,
+				540288382C231A3D00357366 /* PersistenceController.swift in Sources */,
 				54DA693B2BE786150062F9B3 /* LabelTextFieldTableViewCell.swift in Sources */,
 				54B630AD2BF3A1FA007874DF /* DoneBarButtonItem.swift in Sources */,
 				544501EA2BE968DC0018B345 /* String+Extensions.swift in Sources */,
 				54ADAFFA2C027DD8005EAC13 /* EditTemplateViewController.swift in Sources */,
+				546DF7342C230CCC00A1D301 /* ListProgressIntentHandler.swift in Sources */,
 				54ADAFF02C025C3B005EAC13 /* EntityCreationError.swift in Sources */,
 				54C766ED2BF64B5D00F0A5CC /* EditInventoryItemModel.swift in Sources */,
 				541BB9222C07B94100F37E59 /* TemplateValidator.swift in Sources */,
@@ -833,6 +1051,7 @@
 				54FD98DB2BF4EC3D00A60F08 /* HomeListsViewController.swift in Sources */,
 				54ADAFEA2C02560F005EAC13 /* CreateTemplateModel.swift in Sources */,
 				54ADAFEC2C025672005EAC13 /* CreateTemplateObject.swift in Sources */,
+				542C232D2C219941005C96B3 /* ListProgressConfgurationIntent.intentdefinition in Sources */,
 				543A8E322C08FD7E0087EC3D /* BadgeViewFactory.swift in Sources */,
 				54C766E92BF62FFB00F0A5CC /* LabelTextFieldView.swift in Sources */,
 				54A74D412BECE895005C0061 /* InventoryItem+CoreDataClass.swift in Sources */,
@@ -902,6 +1121,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		541B87C12C22E0E200E310FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 541B87B82C22E0E200E310FD /* ListProgressIntentHandler */;
+			targetProxy = 541B87C02C22E0E200E310FD /* PBXContainerItemProxy */;
+		};
+		542C231D2C217D81005C96B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 542C230D2C217D80005C96B3 /* ListProgressWidgetExtension */;
+			targetProxy = 542C231C2C217D81005C96B3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		547CABC32BE16C0F0017C3C6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -914,6 +1146,134 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		541B87C42C22E0E200E310FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ListProgressIntentHandler/ListProgressIntentHandler.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4LPKAW9W52;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ListProgressIntentHandler/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ListProgressIntentHandler;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MilosOst.KaufList.ListProgressIntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		541B87C52C22E0E200E310FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ListProgressIntentHandler/ListProgressIntentHandler.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4LPKAW9W52;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ListProgressIntentHandler/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ListProgressIntentHandler;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MilosOst.KaufList.ListProgressIntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		542C23202C217D81005C96B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ListProgressWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4LPKAW9W52;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ListProgressWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ListProgressWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MilosOst.KaufList.ListProgressWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		542C23212C217D81005C96B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ListProgressWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4LPKAW9W52;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ListProgressWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ListProgressWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MilosOst.KaufList.ListProgressWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		547CABC72BE16C0F0017C3C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1036,6 +1396,7 @@
 		547CABCA2BE16C0F0017C3C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = groceriesApp/groceriesApp.entitlements;
@@ -1071,6 +1432,7 @@
 		547CABCB2BE16C0F0017C3C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = groceriesApp/groceriesApp.entitlements;
@@ -1106,6 +1468,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		541B87C32C22E0E200E310FD /* Build configuration list for PBXNativeTarget "ListProgressIntentHandler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				541B87C42C22E0E200E310FD /* Debug */,
+				541B87C52C22E0E200E310FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		542C231F2C217D81005C96B3 /* Build configuration list for PBXNativeTarget "ListProgressWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				542C23202C217D81005C96B3 /* Debug */,
+				542C23212C217D81005C96B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		547CABB02BE16C0E0017C3C6 /* Build configuration list for PBXProject "groceriesApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

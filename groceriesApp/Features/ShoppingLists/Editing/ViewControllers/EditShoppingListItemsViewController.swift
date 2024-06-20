@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WidgetKit
 
 class EditShoppingListItemsViewController: EditListableItemsViewController<ListItem> {
     init(shoppingList: ShoppingList, startItem: ListItem) {
@@ -15,5 +16,23 @@ class EditShoppingListItemsViewController: EditListableItemsViewController<ListI
     
     required init?(coder: NSCoder) {
         fatalError("init:coder not supported")
+    }
+    
+    override func priceDidChange(in cell: EditListableItemCell, to price: String?) {
+        super.priceDidChange(in: cell, to: price)
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+    
+    override func removePressed(_ cell: EditListableItemCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        let alert = UIAlertController.makeDeleteDialog(title: nil, message: nil, handler: { [self] _ in
+            do {
+                try model.deleteItem(at: indexPath)
+                WidgetCenter.shared.reloadAllTimelines()
+            } catch {
+                presentPlainErrorAlert()
+            }
+        })
+        present(alert, animated: true)
     }
 }

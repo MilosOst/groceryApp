@@ -7,11 +7,13 @@
 
 import UIKit
 import CoreData
+import WidgetKit
 
 private let cellIdentifier = "ItemCell"
 
+// TODO: Refactor to make smaller?
 class EditShoppingListViewController: UITableViewController, NSFetchedResultsControllerDelegate, EditListMenuDelegate {
-    private var model: EditListModel!
+    public private(set) var model: EditListModel!
     private lazy var optionsMenu: EditListMenuView = {
         return EditListMenuView(sortOrder: ListItemsSortOption(rawValue: model.list.sortOrder) ?? .category, delegate: self)
     }()
@@ -20,6 +22,7 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
     init(list: ShoppingList) {
         super.init(style: .grouped)
         self.model = EditListModel(list: list, context: coreDataContext, delegate: self)
+        hidesBottomBarWhenPushed = true
     }
     
     required init?(coder: NSCoder) {
@@ -122,6 +125,7 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             try? model.deleteItem(at: indexPath)
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
     
@@ -135,6 +139,7 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
         guard let indexPath = tableView.indexPath(for: sender) else { return }
         do {
             try model.checkedItem(at: indexPath)
+            WidgetCenter.shared.reloadAllTimelines()
         } catch {
             presentPlainErrorAlert()
         }
@@ -215,6 +220,7 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
         let alert = UIAlertController.makeDeleteDialog(title: "Delete List?", message: "Are you sure you want to delete this list? This action cannot be undone.", handler: { [self] _ in
             do {
                 try self.model.deleteList()
+                WidgetCenter.shared.reloadAllTimelines()
                 navigationController?.popViewController(animated: true)
             } catch {
                 presentPlainErrorAlert()
@@ -262,6 +268,7 @@ class EditShoppingListViewController: UITableViewController, NSFetchedResultsCon
     func didSelectMarkComplete() {
         do {
             try model.markComplete()
+            WidgetCenter.shared.reloadAllTimelines()
             navigationController?.popViewController(animated: true)
         } catch {
             presentPlainErrorAlert()

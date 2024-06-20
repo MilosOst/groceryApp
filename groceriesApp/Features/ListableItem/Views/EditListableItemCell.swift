@@ -133,7 +133,8 @@ class EditListableItemCell: UICollectionViewCell, ExpandingTextViewDelegate {
         quantityField.setText(quantityStr)
         unitField.setText(item.unit)
         categoryBtn.setTitle(item.item?.categoryName, for: .normal)
-        let priceStr = item.price == 0 ? nil : item.price.formatted()
+//        let priceStr = item.price == 0 ? nil : item.price.formatted()
+        let priceStr = item.price == 0 ? nil : String(format: "%.2f", item.price)
         priceField.setText(priceStr)
         notesField.setText(text: item.notes)
     }

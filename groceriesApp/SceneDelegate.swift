@@ -63,6 +63,58 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let context = URLContexts.first else { return }
+        handleDeepLink(context: context)
+    }
 
+    private func handleDeepLink(context: UIOpenURLContext) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        // Currently only allows widget ShoppingList deep links
+        let string = context.url.relativeString
+        guard string.starts(with: "kaufList://shoppingList/") else { return }
+        
+        // Verify existing active ShoppingList with given id exists
+        let parts = string.split(separator: "shoppingList/")
+        guard parts.count == 2 else { return }
+        let objectURI = String(parts[1])
+        guard let objectIDURL = URL(string: objectURI) else { return }
+        
+        // Search in CoreData for corresponding object id
+        let container = appDelegate.persistentContainer
+        let coordinator = container.persistentStoreCoordinator
+        
+        // FIXME: Crash here on invalid URI
+        guard let objectID = coordinator.managedObjectID(forURIRepresentation: objectIDURL) else {
+            return
+        }
+        
+        // Fetch list
+        guard let list = try? container.viewContext.existingObject(with: objectID) as? ShoppingList, list.completionDate == nil else {
+            return
+        }
+
+        
+        // TODO: Handle tab bar controller
+        guard let tabBarController = window?.rootViewController as? UITabBarController, let rootVC = tabBarController.selectedViewController as? UINavigationController else {
+            return
+        }
+        
+        // Close current EditVC if exists
+        if let currentEditVC = rootVC.topViewController as? EditShoppingListViewController {
+            // If showing current list, do nothing, else dismiss
+            if currentEditVC.model.list == list {
+                return
+            } else {
+                rootVC.popViewController(animated: true)
+            }
+        }
+        
+        let editVC = EditShoppingListViewController(list: list)
+        rootVC.pushViewController(editVC, animated: true)
+    }
 }
 
