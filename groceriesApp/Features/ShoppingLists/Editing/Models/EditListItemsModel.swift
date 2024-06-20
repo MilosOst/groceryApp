@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import WidgetKit
 
 class EditListItemsModel: EditListableItemsModel<ListItem> {
     private let shoppingList: ShoppingList
@@ -32,5 +33,10 @@ class EditListItemsModel: EditListableItemsModel<ListItem> {
         fetchedResultsController.delegate = delegate
         
         super.init(fetchedResultsController: fetchedResultsController, context: context, delegate: delegate, startItem: startItem)
+    }
+    
+    override func rename(at indexPath: IndexPath, newName: String, editType: ItemNameChangeType) throws {
+        try super.rename(at: indexPath, newName: newName, editType: editType)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }

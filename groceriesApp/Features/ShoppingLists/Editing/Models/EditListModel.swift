@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import WidgetKit
 
 class EditListModel: SelectInventoryItemDelegate {
     let list: ShoppingList
@@ -178,6 +179,8 @@ class EditListModel: SelectInventoryItemDelegate {
         } catch {
             print(error)
         }
+        
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func isItemSelected(_ item: InventoryItem) -> Bool {

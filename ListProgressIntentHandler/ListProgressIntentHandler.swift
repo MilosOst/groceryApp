@@ -38,10 +38,7 @@ extension IntentHandler: ListProgressConfigurationIntentHandling {
     }
     
     func provideShoppingListOptionsCollection(for intent: ListProgressConfigurationIntent) async throws -> INObjectCollection<IntentShoppingList> {
-        let context = container.viewContext
-        let fetchRequest = ShoppingList.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "completionDate == nil")
-        var results: [IntentShoppingList] = fetchActiveLists()
+        let results: [IntentShoppingList] = fetchActiveLists()
         let collection = INObjectCollection(items: results)
         return collection
     }

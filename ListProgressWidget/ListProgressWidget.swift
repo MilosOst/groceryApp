@@ -129,11 +129,7 @@ struct ListProgressIntentProvider: IntentTimelineProvider {
     }
     
     func getTimeline(for configuration: ListProgressConfigurationIntent, in context: Context, completion: @escaping (Timeline<ListProgressEntry>) -> Void) {
-        var entry = ListProgressEntry(date: Date(), name: "Snapshot", checkedItems: 0, totalItems: 0, totalCost: 0)
-        if let shoppingList = fetchShoppingList(for: configuration) {
-            entry = ListProgressEntry(date: Date(), name: shoppingList.name!, checkedItems: shoppingList.checkedItemsCount, totalItems: shoppingList.itemCount, totalCost: shoppingList.totalCost, identifier: shoppingList.objectID.uriRepresentation().absoluteString)
-        }
-        
+        let entry = progressEntry(for: configuration)
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
     }
