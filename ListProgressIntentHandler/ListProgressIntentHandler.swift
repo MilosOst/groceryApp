@@ -16,32 +16,37 @@ class IntentHandler: INExtension {
 
 
 extension IntentHandler: ListProgressConfigurationIntentHandling {
-    func provideShoppingListOptionsCollection(for intent: ListProgressConfigurationIntent) async throws -> INObjectCollection<IntentShoppingList> {
-        let container = PersistenceController.shared.container
-        
+    private var container: NSPersistentContainer {
+        PersistenceController.shared.container
+    }
+    
+    private func fetchActiveLists() -> [IntentShoppingList] {
         let context = container.viewContext
         let fetchRequest = ShoppingList.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "completionDate == nil")
         var results = [IntentShoppingList]()
+        
+        // Perform fetch and map to intent entity
         do {
             let lists = try context.fetch(fetchRequest)
-            results = lists.map {
-                let list = IntentShoppingList(identifier: $0.objectID.uriRepresentation().absoluteString, display: $0.name!)
-                list.totalCost = $0.totalCost as NSNumber
-                list.totalItems = $0.itemCount as NSNumber
-                list.checkedItems = $0.checkedItemsCount as NSNumber
-                return list
-            }
+            results = lists.map { IntentShoppingList(identifier: $0.objectID.uriRepresentation().absoluteString, display: $0.name!) }
         } catch {
             
         }
         
+        return results
+    }
+    
+    func provideShoppingListOptionsCollection(for intent: ListProgressConfigurationIntent) async throws -> INObjectCollection<IntentShoppingList> {
+        let context = container.viewContext
+        let fetchRequest = ShoppingList.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "completionDate == nil")
+        var results: [IntentShoppingList] = fetchActiveLists()
         let collection = INObjectCollection(items: results)
         return collection
     }
     
     func defaultShoppingList(for intent: ListProgressConfigurationIntent) -> IntentShoppingList? {
-        // TODO: Show first list by default
-        return nil
+        return fetchActiveLists().first
     }
 }
