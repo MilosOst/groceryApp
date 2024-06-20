@@ -33,6 +33,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBar.viewControllers = [homeNavVC, historyNavVC]
         window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
+        
+        if let urlContext = connectionOptions.urlContexts.first {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+                handleDeepLink(context: urlContext)
+            }
+            
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
