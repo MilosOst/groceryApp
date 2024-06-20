@@ -23,6 +23,16 @@ class EditShoppingListItemsViewController: EditListableItemsViewController<ListI
         WidgetCenter.shared.reloadAllTimelines()
     }
     
+    override func quantityDidChange(in cell: EditListableItemCell, to quantity: String?) {
+        super.quantityDidChange(in: cell, to: quantity)
+        WidgetCenter.shared.reloadTimelines(ofKind: "com.MilosOst.KaufList.ListItemsWidget")
+    }
+    
+    override func unitDidChange(in cell: EditListableItemCell, to unit: String?) {
+        super.unitDidChange(in: cell, to: unit)
+        WidgetCenter.shared.reloadTimelines(ofKind: "com.MilosOst.KaufList.ListItemsWidget")
+    }
+    
     override func removePressed(_ cell: EditListableItemCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let alert = UIAlertController.makeDeleteDialog(title: nil, message: nil, handler: { [self] _ in
